@@ -1,0 +1,22 @@
+    <form-wizard (finalSubmit)="gotoFinalSubmit($event)">  
+      <wizard-step [title]="'Assign Asset'" [maxStepWidth]="'200px'" [isValid]="step1Validition">
+        <form [formGroup]="myForm1" style="border-left:#fff;"  novalidate (ngSubmit)="save(myForm1.value, myForm1.valid)">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for=""><b>Select device to Assing</b></label>
+                    <select class="form-control" id = "unassignedDevice" formControlName="unassignedDevice">
+                      <option value="">Select One</option>
+                      <option *ngFor="let asset of data" [value]="asset.uuid" >{{asset.vendor}}-{{asset.model}} ( {{asset.macAddress}} )</option>
+                    </select>
+                    <error-messages [control]="myForm1.controls.unassignedDevice" class="text-danger"></error-messages>
+              </div>
+            </div>
+          </div>
+         
+
+        </form>
+  </wizard-step>
+      
+  
+  </form-wizard>

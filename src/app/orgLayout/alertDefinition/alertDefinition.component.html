@@ -1,0 +1,23 @@
+
+<tabs-panel (onTabChanged)="mainTabChanged($event)">  
+    <tab [title]="'Users'" [tabID]="'alertUsersTab'" [tabIcon]="'fa fa-user'" [maxStepWidth]="'200px'">
+    <div *ngIf="mainTab=='alertUsersTab'" style="min-height: 500px;width: 100%">
+        <alert-TeamUsers></alert-TeamUsers>
+    </div>
+    </tab>
+    <tab [title]="'Teams'" [tabID]="'alertTeamsTab'" [tabIcon]="'fa fa-users'" [maxStepWidth]="'200px'">
+    <div *ngIf="mainTab=='alertTeamsTab'" style="min-height: 500px;width: 100%">
+        <alert-TeamProfiles></alert-TeamProfiles>
+    </div>
+    </tab>
+    <tab [title]="'Notifications & Modes'" [tabID]="'alertNotificationTab'" [tabIcon]="'fa fa-square'" [maxStepWidth]="'200px'">
+    <div *ngIf="mainTab=='alertNotificationTab'" style="min-height: 500px;width: 100%">
+        <alert-Notification></alert-Notification>
+    </div>
+    </tab>
+    <tab [title]="'Escalation Profile'" [tabID]="'alertEscalationTab'" [tabIcon]="'fa fa-level-up'" [maxStepWidth]="'200px'">
+    <div *ngIf="mainTab=='alertEscalationTab'" style="min-height: 500px;width: 100%">
+            <alert-EscalationProfile></alert-EscalationProfile>
+    </div>
+    </tab>
+</tabs-panel>

@@ -1,0 +1,33 @@
+<form-wizard (finalSubmit)="gotoFinalSubmit($event)">
+  <wizard-step [title]="'Media Asset Group'" [maxStepWidth]="'200px'" [isValid]="step1Validition">
+    <form [formGroup]="myFormProfile" style="border-left:#fff;" novalidate (ngSubmit)="save(myFormProfile.value, myFormProfile.valid)">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="form-group">
+            <label for=""><b> Asset Group Name</b></label>
+            <input type="text" class="form-control" formControlName="profileName">
+            <error-messages [control]="myFormProfile.controls.profileName" class="text-danger"></error-messages>
+          </div>
+        </div>
+      </div>
+    </form>
+  </wizard-step>      
+      <wizard-step [title]="'Media Select Asset Group'" (onLoad)="onPageAssetGroup($event)"  [maxStepWidth]="'200px'" [isValid]="step2Validition">
+          <form [formGroup]="myFormAssetGroup" style="border-left:#fff;" novalidate (ngSubmit)="save(myFormAssetGroup.value, myFormAssetGroup.valid)">
+      <div class="row">
+          <div class="col-sm-12">
+            <p align="center">
+              <b>Select Media Asset Group To Be Added
+                </b></p>
+          </div>
+        </div>
+        <hr/>
+        <div class="row">
+                <div class="container">
+                  <dual-list [source]="sourceAssets" [(destination)]="targetAssets" height="150px"  ngDefaultControl></dual-list>
+                </div>
+            </div>
+     </form>
+  </wizard-step>
+ 
+</form-wizard>

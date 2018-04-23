@@ -1,0 +1,24 @@
+
+<button hidden  class="btn btn-sm btn-success chartRefreshButton" data-toggle="tooltip" title="" (click)="refreshData($event)" >Refresh</button>
+<button hidden   class="btn btn-sm btn-success chartFilterButton" data-toggle="tooltip" title="" (click)="filterChartData($event)" >Filter</button>
+<collection-table
+        [collectionTableData]= tableData
+        [columns]= columns
+        [hideWizardButtons]=true
+        [hideSearchBox]=false
+        tableID = "dbTable"
+        [tableTitle] ="tableTitle"
+        addButtonID="addAssetInventory"
+         modifyButtonID="modifyAssetInventory"
+        deleteButtonID="deleteAssetInventory"
+        enableUnselectOnExit="yes"
+        [rowsOnPage] = 3
+        sortBy = "username"
+        sortOrder = "asc"
+        [rowsOnPageButtons] = [1,3,5,10,15]
+        (deleteButtonClicked)="validationModal.open('lg')"
+        (addModifyButtonClicked)="validationModal.open('lg')"
+        (selectedData) = "selectedRowData($event)"
+        (selectedWizardOperation) = "selectedWizardOperation($event)"
+        >
+    </collection-table>

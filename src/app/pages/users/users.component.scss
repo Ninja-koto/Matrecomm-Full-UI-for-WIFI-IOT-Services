@@ -1,0 +1,56 @@
+/*@import "../../theme/sass/conf/conf";
+
+.modal {
+  padding-top: 300px;
+
+  .modal-content {
+    color: $dropdown-text;
+
+    .modal-header {
+      border: none;
+    }
+
+    .modal-footer {
+      border: none;
+    }
+
+    .close {
+      outline: none;
+    }
+  }
+}
+
+.modal-buttons .btn {
+  margin-right: 20px;
+}
+*/
+.ng-valid[required] {
+            border-left: 5px solid #5cb85c; /* green */
+        }
+        .ng-invalid {
+            border-left: 5px solid #d9534f; /* red */
+        }
+        .header-style {
+            color: #fff;
+            background-color: #128477;
+        }
+
+
+table.collTable tbody tr {
+  -webkit-user-select: none;
+  /* Chrome/Safari */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* IE10+ */
+  /* Rules below not implemented in browsers yet */
+  -o-user-select: none;
+  user-select: none;
+  cursor: pointer;
+}
+table.collTable tbody tr:hover td {
+  background: #cdeffc !important;
+}
+.selected{
+  background: #9edff8 !important;
+}

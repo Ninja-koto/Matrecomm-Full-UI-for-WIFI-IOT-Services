@@ -1,0 +1,174 @@
+<form-wizard (finalSubmit)="gotoFinalSubmit($event)">  
+   <wizard-step [title]="'DataCenter Details'" [maxStepWidth]="'200px'" [isValid]="step1Validition">
+<form [formGroup]="myForm1" style="border-left:#fff;"  onload="loadingForm1($event)" novalidate (ngSubmit)="save(myForm1.value, myForm1.valid)">
+        <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label for="">Data Center Name</label>
+                      <input type="text" class="form-control" formControlName="dataCenterName" placeholder="Data Center Name">
+                      <error-messages [control]="myForm1.controls.dataCenterName" class="text-danger"></error-messages>
+                </div>
+              </div>
+        </div>
+        <div class="row"> 
+            <div class="col-sm-12">
+              <div class="form-group">
+                    <label for="">Address</label>
+                    <textarea  rows="1" class="form-control" formControlName="address">
+                    </textarea>
+                    <error-messages [control]="myForm1.controls.address" class="text-danger"></error-messages>          
+              </div>
+            </div>
+          </div>
+
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="">Continent</label>
+                      <select class="form-control" id = "Continent" formControlName="continent" (change)="getCountries($event)">
+                        <option *ngFor="let continentName of continentNames" [value]="continentName.value" >{{continentName.display}}</option>
+                      </select>
+                      <error-messages [control]="myForm1.controls.continent" class="text-danger"></error-messages>
+                </div>
+              </div>
+             <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="">Country</label>
+                      <select class="form-control" formControlName="country">
+                        <option value="">Select One</option>
+                        <option *ngFor="let countriesName of countries" [value]="countriesName">{{countriesName}}</option>
+                      </select>
+                      <error-messages [control]="myForm1.controls.country" class="text-danger"></error-messages>
+                </div>
+              </div>              
+            </div>
+
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="">City</label>
+                      <input type="text" class="form-control" formControlName="city" placeholder="City">
+                      <error-messages [control]="myForm1.controls.city" class="text-danger"></error-messages>
+                </div>
+              </div>
+           
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="">Zipcode</label>
+                      <input type="text" class="form-control" formControlName="zipcode" placeholder="zipcode" maxlength="6">
+                      <error-messages [control]="myForm1.controls.zipcode" class="text-danger"></error-messages>
+                </div>
+              </div>
+            </div>
+</form>
+        
+  </wizard-step>
+  <wizard-step [title]="'Instance Details'" [maxStepWidth]="'200px'" [isValid]="step2Validition">
+        <form [formGroup]="myForm2" style="border-left:#fff;"  novalidate (ngSubmit)="save(myForm2.value, myForm2.valid)">
+        <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                      <label for="">Host Name</label>
+                      <input type="text" class="form-control" formControlName="serverName">
+                      <error-messages [control]="myForm2.controls.serverName" class="text-danger"></error-messages>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="">Description</label>
+                      <input type="text" class="form-control" formControlName="description">
+                        <error-messages [control]="myForm2.controls.description" class="text-danger"></error-messages>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="">IPv4 Address</label>
+                      <input type="text" class="form-control" formControlName="ipv4Address">
+                      <error-messages [control]="myForm2.controls.ipv4Address" class="text-danger"></error-messages>
+                </div>
+              </div>
+            
+           
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="">IPv6 Address</label>
+                      <input type="text" class="form-control" formControlName="ipv6Address">
+                      <error-messages [control]="myForm2.controls.ipv6Address" class="text-danger"></error-messages>
+                </div>
+              </div>
+          </div>
+
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label for="">Service Port Numbers</label>
+                      <input type="number" class="form-control" formControlName="servicePortNumbers">
+                      <error-messages [control]="myForm2.controls.servicePortNumbers" class="text-danger"></error-messages>
+                </div>
+              </div>
+            </div>      
+        </form>
+  </wizard-step>
+  <wizard-step [title]="'Admin Information'" [maxStepWidth]="'200px'" [isValid]="step3Validition">
+        <form [formGroup]="myForm3" style="border-left:#fff;"  novalidate (ngSubmit)="save(myForm3.value, myForm3.valid)" >
+        <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group">
+                      <label for="">First Name</label>
+                      <input type="text" class="form-control" formControlName="firstName" placeholder="First Name">
+                      <error-messages [control]="myForm3.controls.firstName" class="text-danger"></error-messages>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="">Middle Name</label>
+                      <input type="text" class="form-control" formControlName="middleName" placeholder="Middle Name">
+                      <error-messages [control]="myForm3.controls.middleName" class="text-danger"></error-messages>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="">Last Name</label>
+                      <input type="text" class="form-control" formControlName="lastName" placeholder="Last Name">
+                      <error-messages [control]="myForm3.controls.lastName" class="text-danger"></error-messages>
+                </div>
+              </div>             
+            </div>
+
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="">Company Name</label>
+                      <input type="text" class="form-control" formControlName="companyName" placeholder="Company Name">
+                      <error-messages [control]="myForm3.controls.companyName" class="text-danger"></error-messages>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="">E-Mail</label>
+                      <input type="text" class="form-control" formControlName="email" placeholder="E-Mail">
+                      <error-messages [control]="myForm3.controls.email" class="text-danger"></error-messages>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="">Office Phone</label>
+                      <input type="text" class="form-control" formControlName="officePhone" placeholder="Office Phone">
+                      <error-messages [control]="myForm3.controls.officePhone" class="text-danger"></error-messages>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="">Mobile Phone</label>
+                      <input type="text" class="form-control" formControlName="mobilePhone" placeholder="Mobile Phone">
+                      <error-messages [control]="myForm3.controls.mobilePhone" class="text-danger"></error-messages>
+                </div>
+              </div>
+            </div>
+        </form>
+  </wizard-step>
+</form-wizard>

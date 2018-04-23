@@ -1,0 +1,152 @@
+    <form-wizard (finalSubmit)="gotoFinalSubmit($event)">  
+  <wizard-step [title]="'Logo & Login'" [maxStepWidth]="'200px'" [isValid]="step1Validition">
+       <form [formGroup]="myFormLoginDetails" style="border-left:#fff;"   novalidate (ngSubmit)="save(myFormLoginDetails.value, myFormLoginDetails.valid)">  
+              <div class ="row">
+                <div class="col-sm-6">
+                <div class="form-group">
+                  <label for=""><b>Enter Login Portal Name</b></label>
+                      <input type="text" class="form-control" formControlName="portalName" placeholder="Portal Name">
+                      <error-messages [control]="myFormLoginDetails.controls.portalName" class="text-danger"></error-messages>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for=""><b>Login-User Authentication method</b></label>
+                      <select class="form-control" id = "loginMethod" formControlName="loginMethod">
+                        <option *ngFor="let loginMethod of loginMethods" [value]="loginMethod.value" >{{loginMethod.display}}</option>
+                      </select>
+                      <error-messages [control]="myFormLoginDetails.controls.loginMethod" class="text-danger"></error-messages>
+                </div>
+              </div>             
+              </div>      
+           <div class ="row">
+               <div class="col-sm-12">
+               <div class="form-group">  
+            <label> <b> CaptivePortal Logo</b></label>
+              </div>   
+               </div>         
+             <div class="col-sm-4" style="width: 150px;height: 100px;">
+                <div class="form-group">
+                  <input type="file" id="fileSelect" name="file" accept="image/gif,image/jpeg,image/png" (change)="onImageLogoChange($event)" class="form-control" formControlName="logoImage">
+                  <error-messages [control]="myFormLoginDetails.controls.logoImage" class="text-danger"></error-messages>
+                </div>
+              </div>
+             <div class="col-sm-4">
+              <div class="form-group">
+                   <button id="loadFile" [disabled]="disableImageLogoLoadButton" class="btn btn-sm btn-success" title="" (click)="logoLoadInitiated($event)" >Load Profile</button>
+              </div>
+              </div>
+         
+              <div *ngIf="showImageLogo">
+                <div class="col-sm-4" style="width: 150px;height: 100px;">
+                  <button type="button" class="close close-image" (click)="closeImage($event)">
+                    <span aria-hidden="true">✖</span><span class="sr-only">Close</span>
+                  </button>
+                <img id="imageUrl" style="width: 150px;height: 60px;" src="{{imageLogoURL}}" alt="your image" />
+                </div>
+              </div>
+           </div>       
+           <div class="row">
+               <div class="col-sm-12">
+                  <div class="form-group">  
+              <label> 
+                <input type="checkbox" id="userMacAuthentication" value="true" style="margin-right: 0" formControlName="userMacAuthentication"/>
+                 <b>User MAC Authentication </b></label>
+                  <error-messages [control]="myFormLoginDetails.controls.userMacAuthentication" class="text-danger"></error-messages>                 
+               </div>
+               </div>
+            </div>      
+                <div class="row">
+               <div class="col-sm-12">
+                 <div class="form-group">      
+                <label>
+                <input type="checkbox" id="authenticateUserBasedOnAP" value="true" style="margin-right: 0" formControlName="authenticateUserBasedOnAP"/>
+                <b>Authenticate Users Based on AccessPoint </b></label>  
+                </div>
+               </div> 
+              </div>          
+          <div class ="row">
+              <div class="col-sm-12">
+           <div class="form-group">       
+        <label> <b> Select Terms and Conditions File</b></label>  
+              </div>      
+              </div>         
+             <div class="col-sm-4" style="width: 150px;height: 100px;">
+                <div class="form-group">
+                  <input type="file" id="termsAndConditions" name="termsAndConditions" accept=".txt" (change)="onFileChange($event)" class="form-control" formControlName="termsAndConditions">
+                </div>
+              </div>
+             <div class="col-sm-4">
+              <div class="form-group">
+                   <button id="loadFile" [disabled]="disableTermsLoadButton" class="btn btn-sm btn-success" title="" (click)="termsLoadInitiated($event)" >Load Profile</button>
+              </div>
+              </div>
+           </div>
+              <div *ngIf="showTerms">
+ <div class="col-md-12" style="height: 100px; overflow: auto;" id="tcDivContainer">               
+			<button type="button" class="close close-image1" style="display: block;" (click)="closeTermsImage($event)">
+				<span aria-hidden="true">✖</span><span class="sr-only">Close</span>
+			</button>
+	<div style="height: 100%; overflow: auto; border-style: solid; border-width: 1px; display: block;" id="tcDiv">
+	{{termsStr}}
+  </div>
+</div>
+      </div>
+
+   </form>
+  </wizard-step>
+   <wizard-step [title]="'Login Options'" [maxStepWidth]="'200px'" [isValid]="step2Validition">
+       <form [formGroup]="myFormLoginOptions" style="border-left:#fff;"   novalidate (ngSubmit)="save(myFormLoginOptions.value, myFormLoginOptions.valid)">  
+              <div class ="row">
+                <div class="col-sm-6">
+                <div class="form-group">
+                  <label for=""><b> Enter Landing Page URL</b></label>
+                      <input type="text" class="form-control" formControlName="landingURL" placeholder="Enter URL">
+                      <error-messages [control]="myFormLoginOptions.controls.landingURL" class="text-danger"></error-messages>
+                </div>
+              </div>
+               <div class="col-sm-6">
+                <div class="form-group">
+                  <label for=""><b>  Enter OTP Valid Period (in Mins)</b></label>
+                      <input type="number" class="form-control" formControlName="otpValidPeriod" placeholder="OTP Valid Period">
+                      <error-messages [control]="myFormLoginOptions.controls.otpValidPeriod" class="text-danger"></error-messages>
+                </div>
+              </div>              
+              </div>  
+             <div class ="row">
+                <div class="col-sm-6">
+                <div class="form-group">
+                  <label for=""><b>  Enter Quite Period (in Mins)</b></label>
+                      <input type="number" class="form-control" formControlName="quitePeriod" placeholder="Quite Period">
+                      <error-messages [control]="myFormLoginOptions.controls.quitePeriod" class="text-danger"></error-messages>
+                </div>
+              </div>
+                <div class="col-sm-6">
+                <div class="form-group">
+                  <label for=""><b>  Enter User ID Length</b></label>
+                      <input type="number" class="form-control" formControlName="userIdLength" placeholder="User ID length">
+                      <error-messages [control]="myFormLoginOptions.controls.userIdLength" class="text-danger"></error-messages>
+                </div>
+              </div>            
+              </div>                                   
+           <div class="row">
+               <div class="col-sm-12">
+                  <div class="form-group">  
+              <label> 
+                <input type="checkbox" id="allowUserToRegisterFromPortal" value="true" style="margin-right: 0" formControlName="allowUserToRegisterFromPortal"/>
+                 <b>Allow user to Register from Portal </b></label>
+               </div>
+               </div>
+            </div>      
+                <div class="row">
+               <div class="col-sm-12">
+                 <div class="form-group">      
+                <label>
+                <input type="checkbox" id="allowAuthorisedUsersOnlyToRegistration" value="true" style="margin-right: 0" formControlName="allowAuthorisedUsersOnlyToRegistration"/>
+                <b>Allow only Authorised Users to Register</b></label>  
+                </div>
+               </div> 
+              </div>         
+   </form>
+  </wizard-step>
+  </form-wizard>

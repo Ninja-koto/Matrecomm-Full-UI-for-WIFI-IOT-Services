@@ -1,0 +1,32 @@
+<!--<data-center></data-center>
+<email-server></email-server>
+<sms-gateway></sms-gateway>
+<admin-details></admin-details>
+<productMgr-organization></productMgr-organization>-->
+<tabs-panel (onTabChanged)="mainTabChanged($event)">  
+    <tab [title]="'Data Center'" [tabID]="'dataCenterTab'" [tabIcon]="'fa fa-envelope'" [maxStepWidth]="'200px'">
+    <div *ngIf="mainTab=='dataCenterTab'" style="min-height: 500px;width: 100%">
+        <data-center></data-center>
+    </div>
+    </tab>
+    <tab [title]="'E-Mail'" [tabID]="'emailServerTab'" [tabIcon]="'fa fa-envelope'" [maxStepWidth]="'200px'">
+    <div *ngIf="mainTab=='emailServerTab'" style="min-height: 500px;width: 100%">
+        <email-server></email-server>
+    </div>
+    </tab>
+    <tab [title]="'SMS Server'" [tabID]="'smsServerTab'" [tabIcon]="'fa fa-comment'" [maxStepWidth]="'200px'">
+    <div *ngIf="mainTab=='smsServerTab'" style="min-height: 500px;width: 100%">
+        <sms-gateway></sms-gateway>
+    </div>
+    </tab>
+    <tab [title]="'Admin'" [tabID]="'adminTab'" [tabIcon]="'fa fa-user'" [maxStepWidth]="'200px'">
+    <div *ngIf="mainTab=='adminTab'" style="min-height: 500px;width: 100%">
+        <admin-details></admin-details>
+    </div>
+    </tab>
+    <tab [title]="'Organizations'" [tabID]="'organizationsTab'" [tabIcon]="'fa fa-user'" [maxStepWidth]="'200px'">
+    <div *ngIf="mainTab=='organizationsTab'" style="min-height: 500px;width: 100%">
+        <productMgr-organization></productMgr-organization>
+    </div>
+    </tab>
+</tabs-panel>

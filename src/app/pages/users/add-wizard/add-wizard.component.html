@@ -1,0 +1,63 @@
+    <form-wizard (finalSubmit)="gotoFinalSubmit($event)">  
+      <wizard-step [title]="'Step1gdgdgdfdf'" [maxStepWidth]="'200px'" [isValid]="step1Validition">
+        <div class="container" style="width: 100%">
+          
+          <form [formGroup]="myForm" novalidate (ngSubmit)="save(myForm.value, myForm.valid)">
+            <div class="form-group">
+              <label for="">Name</label>
+              <input type="text" class="form-control" formControlName="name">
+              <small [hidden]="myForm.controls.name.valid || (myForm.controls.name.pristine && !submitted)" class="text-danger">
+                    Name is required (minimum 5 characters).
+                  </small>
+              <!--<pre class="margin-20">{{ myForm.controls.name.errors | json }}</pre>-->
+            </div>
+            <div class="form-group" formGroupName="address">
+              <label for="">Address</label>
+              <input type="text" class="form-control" formControlName="street">
+              <small [hidden]="myForm.controls.address.controls.street.valid || (myForm.controls.address.controls.street.pristine && !submitted)" class="text-danger">
+                    Street required
+                  </small>
+            </div>
+            <div class="form-group" formGroupName="address">
+              <label for="">Postcode</label>
+              <input type="text" class="form-control" formControlName="postcode">
+            </div>
+          </form>
+        </div>
+  </wizard-step>
+      <wizard-step [title]="'Step2fdfdfdf'" [isValid]="true">
+        <div>
+        <h1>Step2</h1>
+        <p class="lead">You can also control when to show/hide navigation buttons.</p>
+        <form>
+          <div  class="form-check">
+            <label class="form-check-label">
+              <input  name="showNext" type="checkbox">
+              Show Next button
+            </label>
+          </div>
+          <div  class="form-check">
+            <label  class="form-check-label">
+              <input  name="showPrev" type="checkbox">
+              Show Previous button
+            </label>
+          </div>
+        </form>
+        </div>
+  </wizard-step>
+      <wizard-step [title]="'Step3fdfdfdfdfdf'" [isValid]="true">
+        <div>
+        <h1>Step3</h1>
+        <p class="lead" class="lead">Check below if you want to access secret step</p>
+        <form>
+          <div class="form-check">
+            <label  class="form-check-label">
+              <input  name="secret" type="checkbox">
+              I want to know the secret
+            </label>
+          </div>
+        </form>
+        </div>
+  </wizard-step>
+  
+  </form-wizard>

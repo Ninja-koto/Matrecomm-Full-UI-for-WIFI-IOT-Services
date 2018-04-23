@@ -1,0 +1,194 @@
+<tree-sidebar
+ (sidebar)='Click($event)'
+></tree-sidebar>
+
+    <!--<ba-page-top></ba-page-top>-->
+    <!--<page-top></page-top>-->
+    <page-top showTasks="true" (tasksClicked)="showHideTasks($event)" ></page-top>
+    <div class="al-main" (click)="clickDetectedInMain($event)">
+        <app-menu [@slideInOut]="menuState" [items]="taskItems" (taskSelected)="taskSelected($event)"></app-menu>
+        <div >
+            <modal  [animation]="animation" [keyboard]="keyboard" [backdrop]="'static'" (onClose)="closed()" (onDismiss)="dismissed()"
+                    (onOpen)="opened()" #validationModal1>
+                    <form #modalForm="ngForm">
+                        <modal-header [show-close]="true">
+                            <h4 class="modal-title">Task Details</h4>
+                        </modal-header>
+                        <modal-body>
+                          ID : {{currentTask._id}}    <br>
+                          Name : {{currentTask.name}}<br>
+                          Status : {{currentTask.status}}<br>
+                          Description : {{currentTask.description}}<br>
+                        </modal-body>
+                        <modal-footer>
+                      </modal-footer>
+                    </form>
+                </modal>
+              <button type="button" class="taskMenuLItem" style="float: left;display:none;" id="modalButton"
+               (click)="validationModal1.open('lg')">
+              </button>
+          </div>
+      <div class="al-content">
+        <ba-content-top></ba-content-top>
+          <div>
+          <modal [animation]="animation" [keyboard]="keyboard" [backdrop]="'static'" (onClose)="closed()" (onDismiss)="dismissed()"
+              (onOpen)="opened()" #validationModal>
+              <form #modalForm="ngForm">
+                  <modal-header [show-close]="true">
+                      <h4 class="modal-title">Device Configuration</h4>
+                  </modal-header>
+                  <modal-body>
+                    
+                    <!--<testFolder-wizard [data]="{}" 
+                    [operation]="'Add'" 
+                    (closeModal)="close1($event)" 
+                    (closeModalWizard)="validationModal.dismiss()"></testFolder-wizard>-->
+                    <aruba-APIN0205 *ngIf="(currentAssetModel=='APIN0205')&&(currentAssetVendor=='Aruba')"
+                    [data]="currAssetData" 
+                    [operation]="'Modify'" 
+                    (closeModal)="close1($event)" 
+                    (finalSubmitData)="configureDevice($event)"
+                    (closeModalWizard)="validationModal.dismiss()">
+                    </aruba-APIN0205>
+                    <matrecomm-VehiFi *ngIf="(currentAssetModel=='VehiFi')&&(currentAssetVendor=='MatreComm')"
+                    [data]="currAssetData" 
+                    [operation]="'Modify'" 
+                    (closeModal)="close1($event)" 
+                    (finalSubmitData)="configureDevice($event)"
+                    (closeModalWizard)="validationModal.dismiss()">
+                    </matrecomm-VehiFi>
+                  </modal-body>
+                  <modal-footer>
+                </modal-footer>
+              </form>
+          </modal>
+          </div>
+
+
+
+        <div class="row">
+          <div class="col-md-12">
+            <marquee id="hmenu" behavior="scroll" direction="left" onmouseover="this.stop();" onmouseout="this.start();">
+                <b>Please select a Floor/ Vehicle-Route in the side tree</b>
+            </marquee>
+          </div>
+          <div class="col-md-12" *ngIf="currLocationName!=''" style="color: green;font-size: 16px;">
+            <b>Current Location Details => {{currLocationName}}</b>
+          </div>
+        </div>
+
+        <div class="row" >
+          <div class="col-md-12" style="color: red;font-size: 16px;text-align: center;">
+          <b>{{fMapErrMsg}}</b>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-3" *ngIf="currFloorAssetTreeData.length>0">
+            <ba-card baCardClass="with-scroll button-panel">
+              <div style="min-height: 300px;">
+              <asset-tree 
+                [treeData]="currFloorAssetTreeData"
+                [errMsg]="assetTreeErrMsg"
+                (notify)="assetTreeSelectionChanged($event)">
+              </asset-tree>
+              </div>
+            </ba-card>
+          </div>
+          
+          <div class="col-md-9" *ngIf="currentAssignedAsset.length>0">
+          <ba-card  baCardClass="with-scroll button-panel">
+            <div style="min-height: 300px;">
+               <div class="row">
+                 <div class="col-md-12">
+                  <button id="configure" class="btn btn-xs btn-warning" 
+                  data-toggle="tooltip" title="" (click)="validationModal.open('lg')">
+                  Configure</button>
+                 </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                <!--<div class="card card-inverse" style="max-width: 20rem;background-color: #333; border-color: #333;">-->
+                        <div class="card card-inverse" style="border-color: #fff;">
+                        <div class="card-header" style="background-color: #232121; 
+                                            background: -webkit-linear-gradient(/*left,*/#232121, white);
+                                            background: -o-linear-gradient(/*right,*/#232121, white);
+                                            background: -moz-linear-gradient(/*right,*/#232121, white);
+                                            background: linear-gradient(/*right,*/#232121, white); border-color: #fff;color: #000;">
+
+                            <div>     
+                            Location Details:
+                            </div>
+                        </div>
+                        <div class="card-block">
+                            <!--<h4 class="card-title">Ugg Boots</h4>-->
+                            <div style="height: 50px;">
+                              <div *ngIf="locType=='floor'" class="row col-md-12">
+                                <div class="col-md-6"><b>Floor : </b>{{currentAssignedAsset[0].Floor}}</div>
+                                <div class="col-md-6"><b>Building : </b>{{currentAssignedAsset[0].Building}}</div>
+                              </div>
+                              <div class="row col-md-12">
+                                <div class="col-md-6"><b>City : </b>{{currentAssignedAsset[0].City}}</div>
+                                <div *ngIf="locType=='floor'" class="col-md-6"><b>Country : </b>{{currentAssignedAsset[0].Country}}</div>
+                                <div *ngIf="locType=='vehicle'" class="col-md-6"><b>Route : </b>{{locName}}</div>
+                              </div>
+                            </div>
+                        </div>
+                </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                <!--<div class="card card-inverse" style="max-width: 20rem;background-color: #333; border-color: #333;">-->
+                        <div class="card card-inverse" style="border-color: #fff;">
+                        <div class="card-header" style="background-color: #232121; 
+                                            background: -webkit-linear-gradient(/*left,*/#232121, white);
+                                            background: -o-linear-gradient(/*right,*/#232121, white);
+                                            background: -moz-linear-gradient(/*right,*/#232121, white);
+                                            background: linear-gradient(/*right,*/#232121, white); border-color: #fff;color: #000;">
+
+                            <div>Device Details:</div>
+                        </div>
+                        <div class="card-block">
+                            <!--<h4 class="card-title">Ugg Boots</h4>-->
+                            <div style="height: 50px;">
+                              <div class="row col-md-12">
+                                <div class="col-md-6"><b>Vendor : </b>{{currentAssignedAsset[0].vendor}}</div>
+                                <div class="col-md-6"><b>Model : </b>{{currentAssignedAsset[0].model}}</div>
+                              </div>
+                              <div class="row col-md-12">
+                                <div class="col-md-6"><b>OS Version : </b>{{currentAssignedAsset[0].OSVersion}}</div>
+                                <div class="col-md-6"><b>Device ID : </b>{{currentAssignedAsset[0].macAddress}}</div>
+                              </div>
+                              <div class="row col-md-12">
+                                <div class="col-md-6"><b>System UP Time : </b>{{currentAssignedAsset[0].sysUpTime}}</div>
+                                <div class="col-md-6"><b>Serial Number : </b>{{currentAssignedAsset[0].serialNumber}}</div>
+                              </div>
+                            </div>
+                        </div>
+                </div>
+                </div>
+              </div>
+
+             
+            </div>
+            </ba-card>
+          </div>
+        </div>
+              
+      </div>      
+    </div>
+    <footer class="al-footer clearfix">
+      <!--<div class="al-footer-right">Created with <i class="ion-heart"></i></div>-->
+      <div class="al-footer-main clearfix">
+        <div class="al-copy">&copy; <a href="http://matrecomm.com/">MatreComm Technologies Pvt Ltd </a> 2017</div>
+        <!--<ul class="al-share clearfix">
+          <li><i class="socicon socicon-facebook"></i></li>
+          <li><i class="socicon socicon-twitter"></i></li>
+          <li><i class="socicon socicon-google"></i></li>
+          <li><i class="socicon socicon-github"></i></li>
+        </ul>-->
+      </div>
+    </footer>
+    <ba-back-top position="200"></ba-back-top>
+  

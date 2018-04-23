@@ -1,0 +1,24 @@
+<ba-card>
+<app-ngxline-chart
+    [viewName]="getNameSpace('radiusAcctActiveSessions')"
+    [pipeLine]="getClientRadiusStatsQuery()"
+    [getFrom]="'aggregate'"
+    [filterData]="true"
+    [getFrom]="'aggregate'"
+    [lTitle]="'UserNames'"
+    chartTitle = "Client Statistics"
+    yAxisLabel = 'Data Usage(MB)'
+    xAxisLabel = 'Date'>
+</app-ngxline-chart>
+</ba-card>
+<ba-card>
+<app-ngxline-chart
+    [viewName]="getNameSpace('assetStatsFromRadiusData')"
+    [pipeLine]="getDateRangeForRadiusData()"
+    [getFrom]="'aggregate'"
+    [lTitle]="'Assets'"
+    chartTitle = "Asset Statistics"
+    yAxisLabel = 'Data Usage(MB)'
+    xAxisLabel = 'Date'>
+</app-ngxline-chart>
+</ba-card>

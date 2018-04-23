@@ -1,0 +1,153 @@
+
+<!--<div id="draggable" class="ui-widget-content">
+  <p>Drag me to my target</p>
+</div>
+ 
+<div id="droppable" class="ui-widget-header">
+  <p>Drop here</p>
+</div>-->
+    <div >
+ <modal  [animation]="animation" [keyboard]="keyboard" [backdrop]="'static'" (onClose)="closed()" (onDismiss)="dismissed()"
+        (onOpen)="opened()" #validationModal>
+        <form #modalForm="ngForm">
+            <modal-header [show-close]="true">
+                <h4 class="modal-title">Assign Asset to the Floor</h4>
+            </modal-header>
+            <modal-body>
+              <div *ngIf="floorUUID!=''&&floorUUID!='undefined'">
+                    <assignAssets-wizard 
+                    [data]="floorUnAssignedAssetsData" 
+                    [locationStruct]="locationStruct"
+                    [xPos]="offsetX2"
+                    [yPos]="offsetY2"
+                    [floorUUID]="floorUUID"
+                    [operation]="'add'" 
+                    (closeModal)="close1($event)" 
+                    (closeModalWizard)="validationModal.dismiss()">
+                    </assignAssets-wizard>
+              </div>
+              <div *ngIf="floorUUID==''||floorUUID=='undefined'">
+                Please select Floor...
+              </div>
+            </modal-body>
+            <modal-footer>
+           </modal-footer>
+        </form>
+    </modal>
+    </div>
+
+    <div >
+      <modal  [animation]="animation" [keyboard]="keyboard"  (onClose)="closed()" (onDismiss)="dismissed()"
+             (onOpen)="opened()" #validationModal1>
+             <form #modalForm="ngForm">
+                 <modal-header [show-close]="true">
+                     <h4 class="modal-title">Alert</h4>
+                 </modal-header>
+                 <modal-body>
+                   <div style="height:300px;">
+                    <h3 style="color:red;">Are you sure.. You want to delete..?</h3>
+                      <div class="card-block">
+                          <table class="rwd-table">
+                              <tr>
+                                <td><b>MAC : </b></td>
+                                <td>{{currentClickedAssetData.macAddress}}</td>
+                                <td><b>IP : </b></td>
+                                <td>{{currentClickedAssetData.ipAddress}}</td>
+                              </tr>
+                              <tr>
+                                <td><b>Building : </b></td>
+                                <td>{{currentClickedAssetData.Building}}</td>
+                                <td><b>City : </b></td>
+                                <td>{{currentClickedAssetData.City}}</td>
+                              </tr>
+                              <tr>
+                                <td><b>Model : </b></td>
+                                <td>{{currentClickedAssetData.model}}</td>
+                                <td><b>Vendor : </b></td>
+                                <td>{{currentClickedAssetData.vendor}}</td>
+                              </tr>
+                            </table>
+                      </div>
+
+                    </div>
+                    <div class="row col-md-12">                    
+                      <button class="btn btn-xs btn-primary" data-toggle="tooltip" title="" (click)="validationModal1.dismiss();proceedToDeleteAsset($event)" >OK</button>                  
+                      <button class="btn btn-xs btn-default" data-toggle="tooltip" title="" (click)="validationModal1.dismiss()" >Cancel</button>
+                    </div>
+                   
+                 </modal-body>
+                 <modal-footer>
+                </modal-footer>
+             </form>
+      </modal>
+    </div>
+    <button class="btn btn-xs btn-primary" id="alertModalButton" hidden data-toggle="tooltip" title="" (click)="validationModal1.open('lg')" ></button>
+
+<div >
+<label><u> Place Devices on Floor Map </u></label>
+	<div class="row col-md-12">
+		<span id="drag1" class="drag"> <img class="img" id="wi-fi-img" (ondragstart)="dragStart($event)" src="assets/img/wi-fi.png" style="width:40px;height:40px; -webkit-user-drag: true"/>  </span>
+		<!--<span id="drag2" class="drag"> <img class="img" src="assets/img/firewall1.png" style="width:40px;height:40px;"/>  </span>
+		<span id="drag3" class="drag"> <img class="img" src="assets/img/switch2.png" style="width:40px;height:40px;"/>  </span>-->
+  </div>
+</div>
+<div class="row col-md-12">
+  <div style="float: left;">{{offsetX1}}&nbsp;&nbsp;:&nbsp;&nbsp;</div>
+  <div style="float: left;">{{offsetY1}}&nbsp;&nbsp;</div>
+  <!--<div style="float: left;">{{offsetX2}}&nbsp;&nbsp;:&nbsp;&nbsp;</div>
+  <div style="float: left;">{{offsetY2}}</div>-->
+</div>
+<div class="row">
+  <div class="col-md-9" style="color: green;font-size: 16px;">
+    <b>Current Location Details => {{currentLocationName}}</b>
+  </div>
+  <div class="col-md-3">
+    <div style="float: left;">
+    <button id="floorMapRefrash" class="btn btn-xs btn-success" data-toggle="tooltip" title="" (click)="close1($event);refreshData($event)" >Refresh Map</button>
+    </div>
+    <div style="float: left;display: none;" id="refreshSpinner">
+    <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+    <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+</div>
+
+
+    <div id="context-menu">
+	  <ul class="dropdown-menu" role="menu">
+	    <li><a tabindex="-1" href="">Delete</a></li>
+	  </ul>
+	</div>
+  <div class="row" >
+    <div class="col-md-12" style="color: red;font-size: 16px;text-align: center;">
+    <b>{{floorMapErrorMsg}}</b>
+    </div>
+  </div>
+    <div  id="heat"  style="z-index:1;width:1000px;height:550px;border:1px solid black;position: absolute; background-size: contain;/*background-image: url('assets/img/floorMap.jpg');*/"
+          [ngStyle]="{'background-image': floorMapImage}"
+          (drop)="onDrop($event)"
+          (dragenter)="dragenter($event)"
+          (dragleave)="dragleave($event)"
+          (dragend)="dragend($event)"
+          (dragover)="dragover($event)">
+      <!--<div *ngFor="let asset of floorAssetsData">
+        <div id="grad2" style="height: 150px;
+                      width: 150px;    border-radius: 100%; position : absolute;
+                      background: -webkit-radial-gradient(circle, red, yellow, green);
+                      background: -o-radial-gradient(circle, red, yellow, green);
+                      background: -moz-radial-gradient(circle, red, yellow, green);
+                      background: radial-gradient(circle, red, yellow, green);" 
+                      [ngStyle]="{'left':getXpos(asset),'top':getYpos(asset)}">
+                      
+        </div>
+      </div>-->
+    </div>
+    <div id="droppable"  style="width:1000px;height:550px;border:1px solid black;position: absolute; margin-top: -550px;">
+      
+
+    </div>
+
+
+    
+
+

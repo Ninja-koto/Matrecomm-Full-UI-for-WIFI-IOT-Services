@@ -1,0 +1,28 @@
+ 
+   <!--<div  [ngStyle]="{'width':chartWidth, 'height':chartHeight}" >-->
+        <button hidden   class="btn btn-sm btn-success chartRefreshButton" data-toggle="tooltip" title="" (click)="refreshData($event)" >Refresh</button>
+        <button hidden   class="btn btn-sm btn-success chartFilterButton" data-toggle="tooltip" title="" (click)="filterChartData($event)" >Filter</button>
+        <div *ngIf="showChart" >
+          <div [ngStyle]="{'width':chartWidth, 'height':chartHeight}">
+            <div *ngIf="!removeChartTitle">
+              <div class="col-md-12 pull-left">
+                  <h3>{{chartTitle}} </h3>
+              </div>
+            </div>
+            <ngx-charts-bar-vertical-stacked
+            [scheme]="colorScheme"
+            [results]="chartData"
+            [gradient]="gradient"
+            [xAxis]="showXAxis"
+            [yAxis]="showYAxis"
+            [legend]="showLegend"
+            [legendTitle]="legendTitle"
+            [showXAxisLabel]="showXAxisLabel"
+            [showYAxisLabel]="showYAxisLabel"
+            [xAxisLabel]="xAxisLabel"
+            [yAxisLabel]="yAxisLabel"
+            (select)="onSelect($event)">
+          </ngx-charts-bar-vertical-stacked>
+          </div>
+        </div>
+            

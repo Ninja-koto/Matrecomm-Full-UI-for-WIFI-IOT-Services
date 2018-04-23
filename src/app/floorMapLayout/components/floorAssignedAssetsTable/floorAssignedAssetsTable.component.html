@@ -1,0 +1,22 @@
+<!--<div (mouseleave)="resetClock()" (mouseenter)="resetClock()">-->
+    <div>
+    <ba-card baCardClass="with-scroll table-panel">    
+   <collection-table
+        [collectionTableData]= tableData
+        [columns]= columns
+        [hideWizardButtons]=true
+        [hideSearchBox]=false
+        tableID = "floorAssignedAssets"
+        tableTitle ="Floor Assigned Assets"
+        addButtonID=""
+         modifyButtonID=""
+        deleteButtonID=""
+        enableUnselectOnExit="yes"
+        [rowsOnPage] = 3
+        sortBy = ""
+        sortOrder = "asc"
+        [rowsOnPageButtons] = [1,3,5,10,15]
+        >
+    </collection-table>
+    </ba-card>
+</div>

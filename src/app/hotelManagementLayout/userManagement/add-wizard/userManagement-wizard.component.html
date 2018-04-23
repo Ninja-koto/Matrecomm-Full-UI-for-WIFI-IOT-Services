@@ -1,0 +1,126 @@
+<form-wizard (finalSubmit)="gotoFinalSubmit($event)">
+  <wizard-step [title]="'User Management Details'" [maxStepWidth]="'200px'" [isValid]="step1Validition">
+    <form [formGroup]="myFormUserManagement" style="border-left:#fff;" novalidate (ngSubmit)="save(myFormUserManagement.value, myFormUserManagement.valid)">
+       <div class="row">
+        <div class="col-sm-12">
+          <p align="center">
+            <b><i>Please enter "User Management" details</i>
+              <hr>
+              </b></p>
+        </div>
+      </div>
+      <div class="row">
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label for=""><b>First Name</b></label>
+                  <input type="text" class="form-control" formControlName="firstName" placeholder="First Name">
+                    <error-messages [control]="myFormUserManagement.controls.firstName" class="text-danger"></error-messages>
+            </div>
+          </div>
+         <div class="col-sm-4">
+            <div class="form-group">
+              <label for=""><b>Last Name</b></label>
+              <input type="text" class="form-control" formControlName="lastName" placeholder="Last Name">        
+                <error-messages [control]="myFormUserManagement.controls.lastName" class="text-danger"></error-messages>
+            </div>
+          </div>
+          <div class="col-sm-4">
+              <div class="form-group">
+                <label for=""><b>Room No.</b></label>
+                <input type="text" class="form-control" formControlName="roomNumber" placeholder="Room Number">                    
+                  <error-messages [control]="myFormUserManagement.controls.roomNumber" class="text-danger"></error-messages>
+              </div>
+            </div>
+        </div> 
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label for=""><b>Mobile Number</b></label>
+                  <input type="number" class="form-control" formControlName="mobileNumber" placeholder="Mobile Number">
+                    <error-messages [control]="myFormUserManagement.controls.mobileNumber" class="text-danger"></error-messages>
+            </div>
+          </div>
+         <div class="col-sm-4">
+            <div class="form-group">
+              <label for=""><b>E-Mail</b></label>
+              <input type="text" class="form-control" formControlName="emailId" placeholder="Email Id">        
+                <error-messages [control]="myFormUserManagement.controls.emailId" class="text-danger"></error-messages>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label for=""><b>Voucher</b></label>
+              <input type="text" class="form-control"  formControlName="voucher" placeholder="Voucher" >
+              <error-messages [control]="myFormUserManagement.controls.voucher" class="text-danger"></error-messages>
+            </div>
+          </div>
+        </div> 
+
+        <div class="row">
+            <div class="col-sm-4">
+              <div class="form-group">
+                <label for=""><b>Check In Time</b></label>
+                <input class="picker-input form-control" style="color: #000000;" [ngModel]="checkInTimeValue | date: 'short'" 
+                [(dateTimePicker)]="checkInTimeValue" 
+                readonly formControlName="checkInTime"
+                placeholder="Click Here"
+                (dateTimePickerChange) = "checkInAndCheckOutTimeChanged($event,'fromStart')" />             
+                <error-messages [control]="myFormUserManagement.controls.checkInTime" class="text-danger"></error-messages>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group">
+                <label for=""><b> Check Out Time</b></label>
+                <input class="picker-input form-control" style="color: #000000;" [ngModel]="checkOutTimeValue | date: 'short'" 
+                [(dateTimePicker)]="checkOutTimeValue" 
+                readonly formControlName="checkOutTime"
+                placeholder="Click Here"
+                (dateTimePickerChange) = "checkInAndCheckOutTimeChanged($event,'fromEnd')" />
+                 <error-messages [control]="myFormUserManagement.controls.checkOutTime" class="text-danger"></error-messages>      
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+            <small [ngStyle] = "{'display':showTimeErrorMsg}"  class="text-danger">{{timeErrMsg}}</small>
+            </div>
+        </div>
+    </form>
+  </wizard-step>
+  <wizard-step [title]="'User Data Details'" [maxStepWidth]="'200px'" [isValid]="step2Validition">
+    <form [formGroup]="myFormUserData" style="border-left:#fff;" novalidate (ngSubmit)="save(myFormUserData.value, myFormUserData.valid)">
+       <div class="row">
+        <div class="col-sm-12">
+          <p align="center">
+            <b><i>Please enter "User Data" details</i>
+              <hr>
+              </b></p>
+        </div>
+      </div>
+      <div class="row">
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label for=""><b>Data Rate (MB)</b></label>
+                  <input type="number" class="form-control" formControlName="dataRate" placeholder="Data Rate">
+                    <error-messages [control]="myFormUserData.controls.dataRate" class="text-danger"></error-messages>
+            </div>
+          </div>
+         <div class="col-sm-4">
+            <div class="form-group">
+              <label for=""><b>Data Limit (MB)</b></label>
+              <input type="number" class="form-control" formControlName="dataLimit" placeholder="Data Limit">        
+                <error-messages [control]="myFormUserData.controls.dataLimit" class="text-danger"></error-messages>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label for=""><b>Time Limit (Mins)</b></label>
+              <input type="number" class="form-control" formControlName="durationLimit" placeholder="Time Limit">        
+                <error-messages [control]="myFormUserData.controls.durationLimit" class="text-danger"></error-messages>
+            </div>
+          </div>    
+      </div>       
+        </form>
+      </wizard-step>
+
+</form-wizard>

@@ -1,0 +1,59 @@
+<!--<email-server></email-server>
+<sms-gateway></sms-gateway>
+<radius-server></radius-server>
+<admin-details></admin-details>
+<web-details></web-details>
+<telnet-details></telnet-details>
+<snmp-details></snmp-details>
+<ssh-details></ssh-details>-->
+
+<tabs-panel (onTabChanged)="mainTabChanged($event)">  
+    <tab [title]="'E-Mail'" [tabID]="'emailServerTab'" [tabIcon]="'fa fa-envelope'" [maxStepWidth]="'200px'">
+    <div *ngIf="mainTab=='emailServerTab'" style="min-height: 500px;width: 100%">
+        <email-server></email-server>
+    </div>
+    </tab>
+    <tab [title]="'SMS Server'" [tabID]="'smsServerTab'" [tabIcon]="'fa fa-comment'" [maxStepWidth]="'200px'">
+    <div *ngIf="mainTab=='smsServerTab'" style="min-height: 500px;width: 100%">
+        <sms-gateway></sms-gateway>
+    </div>
+    </tab>
+    <tab [title]="'Radius Server'" [tabID]="'rediusServerTab'" [tabIcon]="'fa fa-server'" [maxStepWidth]="'200px'">
+    <div *ngIf="mainTab=='rediusServerTab'" style="min-height: 500px;width: 100%">
+        <radius-server></radius-server>
+    </div>
+    </tab>
+    <tab [title]="'Admin'" [tabID]="'adminTab'" [tabIcon]="'fa fa-user'" [maxStepWidth]="'200px'">
+    <div *ngIf="mainTab=='adminTab'" style="min-height: 500px;width: 100%">
+        <admin-details></admin-details>
+    </div>
+    </tab>
+    <tab [title]="'Credentials'" [tabID]="'orgCredentialsTab'" [tabIcon]="'fa fa-key'" [maxStepWidth]="'200px'">
+        <div class="col-md-12" *ngIf="mainTab=='orgCredentialsTab'" style="min-height: 500px;width: 100%">
+              <div style="width: 100%; overflow-y: -webkit-paged-y;">
+                <tabs-panel (onTabChanged)="innerTabChanged($event)" >  
+                    <tab [title]="'Web Details'" [tabID]="'webCredentialsTab'" [tabIcon]="'fa fa-info'" [maxStepWidth]="'200px'">
+                        <div *ngIf="innerTab=='webCredentialsTab'" style="min-height: 500px;width: 100%">
+                        <web-details></web-details>
+                        </div>
+                    </tab>
+                    <tab [title]="'Telnet Details'" [tabID]="'telnetCredentialsTab'" [tabIcon]="'fa fa-info'" [maxStepWidth]="'200px'">
+                        <div *ngIf="innerTab=='telnetCredentialsTab'" style="min-height: 500px;width: 100%">
+                        <telnet-details></telnet-details>
+                        </div>
+                    </tab>
+                    <tab [title]="'SNMP Details'" [tabID]="'snmpCredentialsTab'" [tabIcon]="'fa fa-info'" [maxStepWidth]="'200px'">
+                        <div *ngIf="innerTab=='snmpCredentialsTab'" style="min-height: 500px;width: 100%">
+                        <snmp-details></snmp-details>
+                        </div>
+                    </tab>
+                    <tab [title]="'SSH Details'" [tabID]="'sshCredentialsTab'" [tabIcon]="'fa fa-info'" [maxStepWidth]="'200px'">
+                        <div *ngIf="innerTab=='sshCredentialsTab'" style="min-height: 500px;width: 100%">
+                        <ssh-details></ssh-details>
+                        </div>
+                    </tab>
+                </tabs-panel>
+              </div>
+        </div>
+    </tab>
+</tabs-panel>

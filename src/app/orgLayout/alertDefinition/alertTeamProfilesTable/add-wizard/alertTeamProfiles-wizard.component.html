@@ -1,0 +1,81 @@
+    <form-wizard (finalSubmit)="gotoFinalSubmit($event)">  
+     <wizard-step [title]="'Add Team Definition'" [maxStepWidth]="'200px'" [isValid]="step1Validition">
+        <form [formGroup]="myFormAddTeamDefinition" style="border-left:#fff;"  novalidate (ngSubmit)="save(myFormAddTeamDefinition.value, myFormAddTeamDefinition.valid)" >
+            <div class="row">
+              <div class="col-sm-12">
+              <p align="center">
+              <b><i>Please enter the team details</i>
+              </b></p>       
+             </div>
+            </div>             
+        <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                      <label for=""><b>Team Name</b></label>
+                      <input type="text" class="form-control" formControlName="teamName" placeholder="Team Name">
+                      <error-messages [control]="myFormAddTeamDefinition.controls.teamName" class="text-danger"></error-messages>
+                </div>
+              </div>
+        </div>
+           <div class="row">
+               <div class="col-sm-12">
+                <div class="form-group">
+                    <label>
+                <input type="radio" id="selectUsers" value="alertUserGroup" style="margin-right: 0" formControlName="selectUsers"/>
+                 <b>Select Users from Alert User Group </b></label>     
+                </div>
+               </div>
+           </div> 
+           <div class="row">
+               <div class="col-sm-12">
+                 <div class="form-group">               
+                <label>
+                <input type="radio" id="selectUsers" value="LDAP" style="margin-right: 0" formControlName="selectUsers"/>
+                <b>Select Users from LDAP </b></label>  
+              </div>      
+              </div>      
+           </div>
+         <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label for=""><b>Select Users</b></label><br>
+                <ss-multiselect-dropdown  [options]="userOptions" [texts]="myTexts" [settings]="mySettings" formControlName="userOptions"></ss-multiselect-dropdown>
+                <error-messages [control]="myFormAddTeamDefinition.controls.userOptions" class="text-danger"></error-messages>
+                </div>
+              </div>
+          </div>
+
+        </form>
+  </wizard-step>
+  <wizard-step [title]="'Add Team Action'" [maxStepWidth]="'200px'" [isValid]="step2Validition">
+       <form [formGroup]="myFormAddTeamAction" style="border-left:#fff;"   novalidate (ngSubmit)="save(myFormAddTeamAction.value, myFormAddTeamAction.valid)">
+           <div class="row">
+            <div class="col-sm-12">
+              <p align="center">
+              <b><i>Please select team notification type</i>
+               <hr>
+              </b></p>       
+           </div>
+       </div>      
+     <div class="row">                 
+        <label for=""><b>Alert Event Action </b></label>
+     </div>
+            <div class="row">
+               <div class="col-sm-12">
+              <label> 
+                <input type="checkbox" id="eventActionSMS" value="SMS" style="margin-right: 0" formControlName="smsEvent" (click)="selectAlertActionEventType($event)" />
+                 <b>Send SMS </b>
+                 </label>
+               </div>
+            </div>      
+                <div class="row">
+               <div class="col-sm-12">
+                <label>
+                <input type="checkbox" id="eventActionEmail" value="EMail" style="margin-right: 0" formControlName="emailEvent" (click)="selectAlertActionEventType($event)" />
+                <b>Send E-Mail </b></label>  
+                </div>
+              </div>    
+
+   </form>
+  </wizard-step>
+  </form-wizard>

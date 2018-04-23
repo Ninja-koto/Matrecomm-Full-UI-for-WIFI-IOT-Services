@@ -1,0 +1,67 @@
+    <form-wizard (finalSubmit)="gotoFinalSubmit($event)">  
+     <wizard-step [title]="'Event Definition'" [maxStepWidth]="'200px'" [isValid]="step1Validition">
+        <form [formGroup]="myFormEventDefinition" style="border-left:#fff;"  novalidate (ngSubmit)="save(myFormEventDefinition.value, myFormEventDefinition.valid)" >
+     
+        <div class="row">
+  
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>Alert ID:</b></label>
+                      <input type="text" class="form-control" formControlName="alertUniqueID" >
+                      <error-messages [control]="myFormEventDefinition.controls.alertUniqueID" class="text-danger"></error-messages>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>Severity:</b></label>
+                      <input type="text" class="form-control" formControlName="severity">
+                      <error-messages [control]="myFormEventDefinition.controls.severity" class="text-danger"></error-messages>
+                </div>
+              </div>    
+            <div class="col-sm-4">
+                <div class="form-group">
+                      <label for=""><b>Description:</b></label>
+                      <input type="text" class="form-control" formControlName="description">
+                      <error-messages [control]="myFormEventDefinition.controls.description" class="text-danger"></error-messages>
+                </div>
+              </div>                       
+            </div>
+
+      <div class="row">                 
+        <label for=""><b>Alert Notification Mode </b></label>
+     </div>
+            <div class="row">
+               <div class="col-sm-12">
+              <label> 
+                <input type="checkbox" id="eventActionSMS" value="SMS" style="margin-right: 0" formControlName="smsEvent" (click)="selectAlertActionEventType($event)" />
+                 <b>Send SMS </b>
+                 </label>
+               </div>
+            </div>      
+                <div class="row">
+               <div class="col-sm-12">
+                <label>
+                <input type="checkbox" id="eventActionEmail" value="EMail" style="margin-right: 0" formControlName="emailEvent" (click)="selectAlertActionEventType($event)" />
+                <b>Send E-Mail </b></label>  
+                </div>
+              </div>                       
+               <div class="row">
+               <div class="col-sm-12">
+                <label>
+                <input type="checkbox" id="eventActionLog" value="Log" style="margin-right: 0" formControlName="logEvent" (click)="selectAlertActionEventType($event)" />
+                <b>Log Messages</b></label>  
+                </div>
+              </div>                       
+        <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label for=""><b>Team</b></label><br>
+                <ss-multiselect-dropdown  [options]="teamOptions" [texts]="myTexts" [settings]="mySettings" formControlName="teamOptions"></ss-multiselect-dropdown>
+                <error-messages [control]="myFormEventDefinition.controls.teamOptions" class="text-danger"></error-messages>
+                </div>
+              </div>
+          </div>
+
+        </form>
+  </wizard-step>
+  </form-wizard>

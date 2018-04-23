@@ -1,0 +1,8 @@
+<tabs-panel (onTabChanged)="mainTabChanged($event)">  
+    <tab [title]="'Asset Inventory'" [tabID]="'AssetInventory'" [tabIcon]="'fa fa-user'" [maxStepWidth]="'200px'">
+      <div *ngIf="mainTab=='AssetInventory'" style="min-height: 500px;width: 100%">
+          <br>
+           <CreateAssetMedia-Table></CreateAssetMedia-Table>
+      </div>
+    </tab>
+</tabs-panel>

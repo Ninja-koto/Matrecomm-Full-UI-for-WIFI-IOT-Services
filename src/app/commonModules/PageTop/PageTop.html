@@ -1,0 +1,64 @@
+<div >
+ <modal  [animation]="animation" [keyboard]="keyboard" [backdrop]="'static'" (onClose)="closed()" (onDismiss)="dismissed()"
+        (onOpen)="opened()" #validationModal>
+        <form #modalForm="ngForm">
+            <modal-header [show-close]="true">
+                <h4 class="modal-title">Profile Details</h4>
+            </modal-header>
+            <modal-body>
+                <div class="row">
+                <div class="col-md-12">
+                            <!--<h4 class="card-title">Ugg Boots</h4>-->
+                            <div >
+                              
+                                <div class="row col-md-12"><b>UserName : </b>{{getUserName()}}</div>
+                                <div class="row col-md-12"><b>Role : </b>{{getUserRole()}}</div>
+                              
+                              
+                                <div class="row col-md-12"><b>AccessPrivileges : </b>{{getAccessPrivileges()}}</div>
+                                <div class="row col-md-12"><b>Liceense Message : </b>{{getLicenseMessage()}}</div>
+                              
+                            </div>
+                        
+                </div>
+                </div>
+            </modal-body>
+            <modal-footer>
+           </modal-footer>
+        </form>
+    </modal>
+
+    </div>
+<div class="page-top clearfix" baScrollPosition maxHeight="50" (scrollChange)="scrolledChanged($event)"
+     [ngClass]="{scrolled: isScrolled}">
+  <!--<a routerLink="/pages/dashboard" class="al-logo clearfix"><span>ng2-</span>admin</a>-->
+  <a style="cursor: pointer;" class="al-logo clearfix"><span>CraftAir </span>2.0</a>
+  <a href (click)="toggleMenu()" class="collapse-menu-link ion-navicon"></a>
+
+  <!--<div class="search">
+    <i class="ion-ios-search-strong" ng-click="startSearch()"></i>
+    <input id="searchInput" type="text" placeholder="Search for...">
+  </div>-->
+  
+
+  <div class="user-profile clearfix">
+    <div class="dropdown al-user-profile">
+      <a class="profile-toggle-link dropdown-toggle" id="user-profile-dd" data-toggle="dropdown" aria-expanded="false">
+        <img src="{{ ( 'Nasta' | ProfilePicture ) }}">
+      </a>
+      <ul class="dropdown-menu top-dropdown-menu profile-dropdown" aria-labelledby="user-profile-dd">
+        <li class="dropdown-item">
+              <a style="cursor: pointer;" (click)="validationModal.open('lg')">
+              <i class="fa fa-user"></i>Profile</a>
+              </li>
+        <li class="dropdown-item"><a href><i class="fa fa-cog"></i>Settings</a></li>
+        <li class="dropdown-item"><a href="/#/login" class="signout"><i class="fa fa-power-off"></i>Sign out</a></li>
+      </ul>
+    </div>
+    <msg-center [notif]="notif" [failedNotif]="failedNotif" ></msg-center>
+    <div class="taskButton" *ngIf="showTasks">
+        &nbsp;&nbsp;<button class="btn btn-xs " data-toggle="tooltip" title="Tasks" (click)="toggleMenu1($event)" >
+          Tasks</button>&nbsp;&nbsp;
+        </div>
+  </div>
+</div>

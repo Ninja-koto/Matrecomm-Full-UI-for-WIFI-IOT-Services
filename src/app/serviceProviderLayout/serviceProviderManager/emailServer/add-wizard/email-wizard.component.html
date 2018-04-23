@@ -1,0 +1,77 @@
+    <form-wizard (finalSubmit)="gotoFinalSubmit($event)">  
+      <wizard-step [title]="'E-mail Server Settings'" [maxStepWidth]="'200px'" [isValid]="step2Validition">
+        <form [formGroup]="myForm1" style="border-left:#fff;"  novalidate (ngSubmit)="save(myForm1.value, myForm1.valid)">
+        <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                      <!--<label for="inputFirstName">First Name</label>
+                      <input type="text" class="form-control" id="inputFirstName" placeholder="First Name">-->
+                      <label for="">E-Mail Host (IP Address)</label>
+                      <input type="text" class="form-control" formControlName="mailHost">
+                      <error-messages [control]="myForm1.controls.mailHost" class="text-danger"></error-messages>
+                      <!--<small [hidden]="myForm1.controls.mailHost.valid || (myForm1.controls.mailHost.pristine && !submitted)" class="text-danger">
+                        Host is required.
+                      </small>-->
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="">E-Mail Server Port</label>
+                      <input type="number" class="form-control" formControlName="mailPort">
+                      <error-messages [control]="myForm1.controls.mailPort" class="text-danger"></error-messages>
+                      <!--<small [hidden]="myForm1.controls.mailPort.valid || (myForm1.controls.mailPort.pristine && !submitted)" class="text-danger">
+                        Port is required.
+                      </small>-->
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="">E-Mail Server Session Type</label>
+                      <select class="form-control" formControlName="mailSessionType">
+                        <option *ngFor="let sessionType of sessionTypes" [value]="sessionType.value">{{sessionType.display}}</option>
+                      </select>
+                      <error-messages [control]="myForm1.controls.mailSessionType" class="text-danger"></error-messages>
+                      <!--<small [hidden]="myForm1.controls.mailSessionType.valid || (myForm1.controls.mailSessionType.pristine && !submitted)" class="text-danger">
+                        Session Type is required.
+                      </small>-->
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="">E-Mail Server User Name</label>
+                      <input type="text" class="form-control" formControlName="mailUserName">
+                      <error-messages [control]="myForm1.controls.mailUserName" class="text-danger"></error-messages>
+                      <!--<small [hidden]="myForm1.controls.mailUserName.valid || (myForm1.controls.mailUserName.pristine && !submitted)" class="text-danger">
+                        User Name is required.
+                      </small>-->
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="">E-Mail Server Password</label>
+                      <input type="password" class="form-control" formControlName="mailPassword">
+                      <error-messages [control]="myForm1.controls.mailPassword" class="text-danger"></error-messages>
+                      <!--<small [hidden]="myForm1.controls.mailPassword.valid || (myForm1.controls.mailPassword.pristine && !submitted)" class="text-danger">
+                        Password is required.
+                      </small>-->
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="">E-Mail Sender Name</label>
+                      <input type="text" class="form-control" formControlName="mailSender">
+                      <error-messages [control]="myForm1.controls.mailSender" class="text-danger"></error-messages>
+                      <!--<small [hidden]="myForm1.controls.mailSender.valid || (myForm1.controls.mailSender.pristine && !submitted)" class="text-danger">
+                        Sender Name is required.
+                      </small>-->
+                </div>
+              </div>
+            </div>
+        </form>
+  </wizard-step>
+  
+  </form-wizard>

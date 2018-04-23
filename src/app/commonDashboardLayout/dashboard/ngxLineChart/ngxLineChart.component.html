@@ -1,0 +1,62 @@
+<!--<ngx-charts-line-chart
+      [view]="view"
+      [scheme]="colorScheme"
+      [results]="currentData"
+      [gradient]="gradient"
+      [xAxis]="showXAxis"
+      [yAxis]="showYAxis"
+      [legend]="showLegend"
+      [timeline]="timeLine"
+      [showXAxisLabel]="showXAxisLabel"
+      [showYAxisLabel]="showYAxisLabel"
+      [xAxisLabel]="xAxisLabel"
+      [yAxisLabel]="yAxisLabel"
+      [autoScale]="autoScale"
+      (select)="onSelect($event)">
+    </ngx-charts-line-chart>-->
+    <!--<ba-card baCardClass="with-scroll table-panel">-->
+      
+      <button hidden  class="btn btn-sm btn-success" data-toggle="tooltip" title="" (click)="refreshData($event)" >Refresh</button>
+      <div *ngIf="showChart" >
+        <div *ngIf="!removeChartTitle" class="col-md-12">
+          <div class="col-md-9 pull-left">
+          <h3>{{chartTitle}} </h3>
+          </div>
+          <div class="col-md-3 pull-right">
+              <div *ngIf="!timeLine">
+              <button class="btn btn-xs btn-default" data-toggle="tooltip" title="" (click)="showTimeLine($event)" >Show TimeLine</button>
+              </div>
+              <div *ngIf="timeLine">
+              <button class="btn btn-xs btn-warning" data-toggle="tooltip" title="" (click)="hideTimeLine($event)" >Hide TimeLine</button>
+              </div>
+          </div>
+        </div>
+        
+        <div [ngStyle]="{'height':chartHeight}" style="width: 100%">
+      <ngx-charts-line-chart
+        
+        [scheme]="colorScheme"
+        [results]="currentData"
+        [gradient]="gradient"
+        [xAxis]="showXAxis"
+        [yAxis]="showYAxis"
+        [legend]="showLegend"
+        [legendTitle]="lTitle"
+        [timeline]="timeLine"
+        [showXAxisLabel]="showXAxisLabel"
+        [showYAxisLabel]="showYAxisLabel"
+        [xAxisLabel]="xAxisLabel"
+        [yAxisLabel]="yAxisLabel"
+        [roundDomains]=true
+        [xAxisTickFormatting]="xAxisTickFormattingFun"
+        [autoScale]=true
+        [tooltipDisabled]=false
+        [showSeriesOnHover]=true
+        (select)="onSelect($event)"
+        (activate)="onActive($event)"
+        (deactivate)="onDeactivate($event)"
+        >
+      </ngx-charts-line-chart>
+         </div>
+      </div>
+    <!--</ba-card>-->

@@ -1,0 +1,140 @@
+    <form-wizard (finalSubmit)="gotoFinalSubmit($event)">  
+      <wizard-step [title]="'Mode'" [maxStepWidth]="'200px'" [isValid]="step1Validition">
+        <form [formGroup]="myForm" style="border-left:#fff;"  novalidate (ngSubmit)="save(myForm.value, myForm.valid)">
+            <div class="row">
+               <div class="col-sm-12">
+                <div class="form-group">
+                  <label for=""><b><i>Please select the Mode of Operation to enter the  User  details</i></b></label>                            
+            <div>
+              <label>   <!--(click)="modeType($event)"
+              (click)="fileModeType($event)"
+              -->
+                <input type="radio" id="manualMode" value="manualMode"  formControlName="modeType" (click)="modeType($event)">
+                <b>Enter the details Manually </b></label>     
+                 </div>
+                 <div>
+                <label>
+                 
+                <input type="radio" id="uploadFileMode" value="uploadFileMode" formControlName="modeType" (click)="modeType($event)" />
+               <b> Upload using CSV File</b></label>
+                 </div>
+                </div>
+               <p><i>Please select the CSV file which has the following format</i> </p>
+               <!--<p><i>HeaderName:UserName </i></p>      
+               <p><i>HeaderName:Mobile Number</i></p>-->
+              </div>
+                <div class="col-md-12 float-md-right">
+                    <button type="button" class="btn btn-success btn-xs" (click)="downloadCSV($event)">
+                        <i class="fa fa-download" aria-hidden="true"></i>Sample CSV</button>
+                </div>
+              </div>
+        </form>
+  </wizard-step>
+        <wizard-step [title]="'Users'" [maxStepWidth]="'200px'" [isValid]="step2Validition">
+      <div *ngIf ="showManualMode">
+        <form [formGroup]="myFormManual" style="border-left:#fff;"  novalidate (ngSubmit)="save(myFormManual.value, myFormManual.valid)">
+              
+        <div class="row">
+            <div class="col-md-2"> 
+            <button id="addUser" style="border-radius: 20px;" class="btn btn-xs btn-success" data-toggle="tooltip" title="" (click)="addAddress($event)" ><i class="fa fa-plus"></i></button>
+            </div>
+
+            <div class="col-md-5"> <b>UserName</b> </div>
+
+            <div class="col-md-5"><b> Mobile Number</b></div>
+        </div>
+
+ <div style="border-left:#fff;" formArrayName="authUsers">
+     <hr>
+<div  *ngFor="let address of myFormManual.controls.authUsers.controls; let i=index">
+    <div class="row" style="border-left:#fff;" [formGroupName]="i">
+
+        <div class="col-md-2"> 
+            <button id="deleteUser" style="border-radius: 20px;" class="btn btn-xs btn-danger" data-toggle="tooltip" title=""  (click)="removeAddress($event,i)"><i class="fa fa-minus"></i></button>
+        </div>
+        <div class="col-md-5">
+        <div class="form-group">
+            <input type="text" class="form-control" formControlName="userName" placeholder="UserName" maxlength="10">
+            <!--<error-messages [control]=" myFormManual.controls.authUsers.controls[i].controls.UserName" class="text-danger"></error-messages>-->
+        </div>
+        </div>
+        <div class="col-md-5">
+            <div class="form-group">
+                <input type="text" class="form-control" formControlName="mobileNumber" placeholder="Mobile Number" maxlength="10">
+                <!--<error-messages [control]="myFormManual.controls.authUsers.controls[i].controls.mobileNumber" class="text-danger"></error-messages>-->
+            </div>
+        </div>
+    </div>
+</div>
+        </div>
+
+
+              
+   
+        </form>
+      </div>   
+
+
+
+
+
+
+
+      <div *ngIf ="!showManualMode">
+        <form [formGroup]="myFormCSVMode" style="border-left:#fff;"  novalidate (ngSubmit)="save(myFormManual.value, myFormManual.valid)">
+            <div class="row">
+              <div class="col-sm-12">
+              Please select CSV file to upload
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <input type="file" id="fileSelect" name="file" accept=".csv" (change)="onFileChange($event)" class="form-control" formControlName="autherizedUsersCSVFile">
+                  <error-messages [control]="myFormCSVMode.controls.autherizedUsersCSVFile" class="text-danger"></error-messages>
+                </div>
+              </div>
+              <!--<div class="col-sm-6">
+              <div class="form-group">
+                   <button id="loadFile" [disabled]="disableLoadButton" class="btn btn-sm btn-success" title="" (click)="loadInitiated($event)" >Load File</button>
+              </div>
+              </div>-->
+            </div>
+              
+            <table class="table table-striped" >
+                <thead>
+                <tr>
+                    <th style="width: 5%"></th>
+                    <th style="width: 45%">UserName </th>
+                    <th style="width: 45%">Mobile Number</th>
+                </tr>    
+                </thead>
+                <tbody>
+                <tr *ngFor="let user of authorisedUsers">
+                    <th style="width: 5%"></th>
+                     <td style="width: 45%">{{user.userName}}</td>
+                    <td style="width: 45%">{{user.mobileNumber}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+      </div>   
+  </wizard-step>
+ 
+  </form-wizard>
+
+
+
+  <!--<div class="row">
+    <div class="col-sm-4">
+    <div class="form-group">
+            <input type="text" [(ngModel)]="" class="form-control" formControlName="getUserNameControlName('userName',i) " placeholder="UserName" maxlength="10">
+            <error-messages [control]=" getUserNameErrControlName('userName',i)" class="text-danger"></error-messages>
+    </div>
+    </div>
+    
+    <div class="col-sm-4">
+    <div class="form-group">
+            <input type="number" class="form-control" formControlName="getPasswordControlName('mobileNumber',i) " placeholder="Mobile Number" maxlength="10">
+            <error-messages [control]="getPasswordErrControlName('mobileNumber',i)" class="text-danger"></error-messages>
+    </div>
+    </div>
+</div>-->

@@ -1,0 +1,26 @@
+    <form-wizard (finalSubmit)="gotoFinalSubmit($event)">  
+      <wizard-step [title]="'SNMP Details'" [maxStepWidth]="'200px'" [isValid]="step1Validition">
+        <form [formGroup]="myForm" style="border-left:#fff;"  novalidate (ngSubmit)="save(myForm.value, myForm.valid)">
+        <div class="row">
+              <div class="col-sm-8">
+                <div class="form-group">
+                      <label for="">Read Community String</label>
+                      <input type="text" class="form-control" formControlName="readCommunityString" placeholder="Enter Read Credentials">      
+                      <error-messages [control]="myForm.controls.readCommunityString" class="text-danger"></error-messages>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-8">
+                <div class="form-group">
+                  <label for="">Write Community String</label>
+                      <input type="text" class="form-control" formControlName="writeCommunityString" placeholder="Enter Write Credentials">
+                      <error-messages [control]="myForm.controls.writeCommunityString" class="text-danger"></error-messages>
+                </div>
+              </div>
+            </div>   
+                  
+        </form>
+  </wizard-step>
+    
+  </form-wizard>

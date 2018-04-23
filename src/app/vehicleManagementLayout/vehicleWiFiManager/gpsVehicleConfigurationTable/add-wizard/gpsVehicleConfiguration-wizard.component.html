@@ -1,0 +1,265 @@
+    <form-wizard (finalSubmit)="gotoFinalSubmit($event)">  
+   <wizard-step [title]="'Address'" [maxStepWidth]="'200px'" [isValid]="step1Validition">
+       <form [formGroup]="myFormAddress" style="border-left:#fff;"  onload="loadingForm1($event)" novalidate (ngSubmit)="save(myFormAddress.value, myFormAddress.valid)">
+        <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                      <label for=""><b>Address</b></label>
+                      <textarea  rows="1" class="form-control" formControlName="address">
+                      </textarea>
+                      <error-messages [control]="myFormAddress.controls.address" class="text-danger"></error-messages>          
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for=""><b>Continent</b></label>
+                      <select class="form-control" id = "Continent" formControlName="Continent" (change)="getCountries($event)">
+                        <option *ngFor="let continentName of continentNames" [value]="continentName.value" >{{continentName.display}}</option>
+                      </select>
+                      <error-messages [control]="myFormAddress.controls.Continent" class="text-danger"></error-messages>
+                </div>
+              </div>
+             <div class="col-sm-6">
+                <div class="form-group">
+                  <label for=""><b>Country</b></label>
+                      <select class="form-control" formControlName="Country">
+                        <option value="">Select One</option>
+                        <option *ngFor="let countriesName of countries" [value]="countriesName">{{countriesName}}</option>
+                      </select>
+                      <error-messages [control]="myFormAddress.controls.Country" class="text-danger"></error-messages>
+                </div>
+              </div>              
+             </div>  
+
+             <div class="row">
+             <div class="col-sm-6">
+                <div class="form-group">
+                  <label for=""><b>City</b></label>
+                      <input type="text" class="form-control" formControlName="City" placeholder="City">
+                      <error-messages [control]="myFormAddress.controls.City" class="text-danger"></error-messages>
+                </div>
+              </div>
+           
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for=""><b>Zip Code</b></label>
+                      <input type="text" class="form-control" formControlName="zipCode" placeholder="Zip Code">
+                      <error-messages [control]="myFormAddress.controls.zipCode" class="text-danger"></error-messages>
+                </div>
+              </div>
+            </div>                                                             
+   </form>
+  </wizard-step>
+    <wizard-step [title]="'GPS Vehicle Details'" [maxStepWidth]="'200px'" [isValid]="step2Validition">
+       <form [formGroup]="myFormGPSVehicleDetails" style="border-left:#fff;"  onload="loadingForm1($event)" novalidate (ngSubmit)="save(myFormGPSVehicleDetails.value, myFormGPSVehicleDetails.valid)">
+        <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group">
+                      <label for=""><b>Enter Bus Registration Number</b></label>
+                      <input type="text" class="form-control" formControlName="busRegNumber" placeholder="Bus Registration Number">
+                      <error-messages [control]="myFormGPSVehicleDetails.controls.busRegNumber" class="text-danger"></error-messages>          
+                </div>
+              </div>   
+            <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>Select AccessPoint</b></label>
+                      <select class="form-control" formControlName="accessPointMac">
+                        <option value="">Select One</option>
+                        <option *ngFor="let accessPoint of unAssignedAssets" [value]="getMacName(accessPoint)">{{getMacName(accessPoint)}}</option>
+                      </select>
+                      <error-messages [control]="myFormGPSVehicleDetails.controls.accessPointMac" class="text-danger"></error-messages>
+                </div>
+              </div>                 
+         
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>Enter Driver Name</b></label>
+                      <input type="text" class="form-control" formControlName="driverName" placeholder="SSID">
+                      <error-messages [control]="myFormGPSVehicleDetails.controls.driverName" class="text-danger"></error-messages>
+                </div>
+              </div>
+           </div>
+           <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>Enter RFID Reader MAC Address (Optional)</b></label>
+                       <input type="text" class="form-control" formControlName="rfidMac" placeholder="Eg: XX:XX:XX:XX:XX:XX">
+                      <error-messages [control]="myFormGPSVehicleDetails.controls.rfidMac" class="text-danger"></error-messages>
+                </div>
+              </div>       
+
+             <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>Enter Speed Limit Km/h</b></label>
+                      <select class="form-control" formControlName="speedLimit">
+                        <option value="">Select One</option>
+                        <option *ngFor="let speedLimit of speedLimits" [value]="speedLimit">{{speedLimit}}</option>
+                      </select>
+                      <error-messages [control]="myFormGPSVehicleDetails.controls.speedLimit" class="text-danger"></error-messages>
+                </div>
+              </div>              
+
+            </div>     
+    
+
+   </form>
+  </wizard-step>
+ <wizard-step [title]="'Policies'" [maxStepWidth]="'200px'" [isValid]="step3Validition">
+       <form [formGroup]="myFormPolicies" style="border-left:#fff;"  onload="loadingForm1($event)" novalidate (ngSubmit)="save(myFormPolicies.value, myFormPolicies.valid)">
+   
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>Select Bus Policy Name</b></label>
+                      <select class="form-control" formControlName="busPolicyName">
+                        <option value="">Select One</option>
+                        <option *ngFor="let policy of busPolicy" [value]="policy.policyName">{{policy.policyName}}</option>
+                      </select>
+                      <error-messages [control]="myFormPolicies.controls.busPolicyName" class="text-danger"></error-messages>
+                </div>
+              </div>
+             <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>Select Portal Policy</b></label>
+                      <select class="form-control" formControlName="portalPolicyName">
+                        <option value="">Select One</option>
+                        <option *ngFor="let policy of portalPolicy" [value]="policy.portalName">{{policy.portalName}}</option>
+                      </select>
+                      <error-messages [control]="myFormPolicies.controls.portalPolicyName" class="text-danger"></error-messages>
+                </div>
+              </div>   
+               <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>Select Billing Policy</b></label>
+                      <select class="form-control" formControlName="billingPolicyName">
+                        <option value="">Select One</option>
+                        <option *ngFor="let billingPolicy of billingPolicyNames" [value]="billingPolicy">{{billingPolicy}}</option>
+                      </select>
+                      <error-messages [control]="myFormPolicies.controls.billingPolicyName" class="text-danger"></error-messages>
+                </div>
+              </div>              
+
+             </div>                                                   
+   </form>
+  </wizard-step>
+  <wizard-step [title]="'Layout Details'" [maxStepWidth]="'200px'" [isValid]="step4Validition">
+       <form [formGroup]="myFormLayoutDetails" style="border-left:#fff;"   novalidate (ngSubmit)="save(myFormLayoutDetails.value, myFormLayoutDetails.valid)">  
+            <div class ="row">
+                <div class="col-sm-6">
+                <div class="form-group">
+                  <label for=""><b>Enter SIM 1 Number</b></label>
+                      <input type="text" class="form-control" formControlName="sim_1_Number" (change)="mobileNumberValidation($event,'sim1')" placeholder="Number" maxlength="10">
+                      <error-messages [control]="myFormLayoutDetails.controls.sim_1_Number" class="text-danger"></error-messages>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for=""><b>Enter SIM 2 Number</b></label>
+                       <input type="text" class="form-control" formControlName="sim_2_Number" (change)="mobileNumberValidation($event,'sim2')" placeholder="Number" maxlength="10">
+                      <error-messages [control]="myFormLayoutDetails.controls.sim_2_Number" class="text-danger"></error-messages>
+                </div>
+              </div>             
+              </div> 
+            
+            
+             <div class ="row">
+               <div class="col-sm-12">
+               <div class="form-group">  
+            <label> <b>Layout Image</b></label>
+              </div>   
+               </div>         
+             <div class="col-sm-4" style="width: 150px;height: 100px;">
+                <div class="form-group">
+                  <input type="file" id="fileSelect" name="file" accept="image/gif,image/jpeg,image/png" (change)="onImageLayoutChange($event)" class="form-control" formControlName="layoutImage">
+                  <error-messages [control]="myFormLayoutDetails.controls.layoutImage" class="text-danger"></error-messages>
+                </div>
+              </div>
+             <div class="col-sm-4">
+              <div class="form-group">
+                   <button id="loadFile" [disabled]="disableImageLayoutLoadButton" class="btn btn-sm btn-success" title="" (click)="layoutLoadInitiated($event)" >Load Profile</button>
+              </div>
+              </div>
+         
+              <div *ngIf="showImageLayout">
+                <div class="col-sm-4" style="width: 150px;height: 100px;">
+                  <button type="button" class="close close-image" (click)="closeImage($event)">
+                    <span aria-hidden="true">✖</span><span class="sr-only">Close</span>
+                  </button>
+                <img id="imageUrl" style="width: 150px;height: 60px;" src="{{imageLayoutURL}}" alt="your image" />
+                </div>
+              </div>
+           </div>       
+         
+               
+
+         <div class="row">
+              <div class="col-sm-12">
+              <p align="center">
+              <b><i>Please click Add button to enter ipAddress details</i>
+               <hr>
+              </b></p>       
+             </div>
+            </div>   
+
+            <div *ngIf="addIPAddressStatus=='Enable'">  
+       <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                      <label for=""><b>Enter IP Address</b></label>
+                       <input type="text" class="form-control" formControlName="ipAddress">
+                      <error-messages [control]="myFormLayoutDetails.controls.ipAddress" class="text-danger"></error-messages>
+     
+                </div>
+              </div>
+            </div>   
+             <div>
+                   <div class="col-xs-4 pull-left box-tools"> 
+                    <button id="submitIPAddressProfile" class="btn  btn-primary" data-toggle="tooltip" title="" (click)="submitIPAddressProfiles($event)" >Submit</button>
+                </div>
+               </div>
+               <div>
+                  <div class="col-xs-4 pull-right box-tools"> 
+                   <button id="cancelIPAddressProfile" class="btn btn-warning" data-toggle="tooltip"  value ="Disable" title="" (click)="cancelIPAddressProfiles($event)" >Cancel</button>
+                </div>              
+               </div>
+          
+              <div class="row">
+                    <div class="col-sm-12">
+                     <small [ngStyle] = "{'display':showIPTableErrorMsg}"  class="text-danger">Please enter ipAddress:</small>
+                    </div>
+               </div>             
+               <br><br>
+        </div> 
+
+         <div>
+             <div class="col-xs-8 pull-left box-tools"> 
+                    <button id="ipAddButton" class="btn btn-sm btn-success" data-toggle="tooltip" title="" value ="Enable"  (click)="ipAddressAddProfiles($event)" ><i class="fa fa-plus"></i>Add</button>
+                </div>  
+                   <div class="col-xs-4 pull-right box-tools"> 
+                    <button id="deleteIPProfile" class="btn btn-sm btn-danger" data-toggle="tooltip" title="" [disabled]= "ipAddressSelectedRowsForDeletion.length==0" (click)="deleteIPAddressSelectedProfiles($event)"><i class="fa fa-minus"></i> Delete</button>
+                    <!--<button id="deleteProfile" class="btn btn-sm btn-danger" data-toggle="tooltip" title=""  (click)="deleteSelectedProfiles($event)"><i class="fa fa-minus"></i> Delete</button>-->
+                 </div>               
+          </div>
+
+              
+                     <table class="table table-striped" >
+                      <thead>
+                      <tr>
+                          <th style="width: 5%"></th>
+                          <th style="width: 90%"><b>IP Address</b></th>             
+                      </tr>    
+                      </thead>
+                      <tbody>
+                      <tr *ngFor="let profile of allIPAddressProfiles">
+                         <td style="width: 5%"><input type="checkbox"  (click)="maintainIPSelectedData($event,profile)" value="{{profile.id}}" /></td>
+                          <td style="width: 90%">{{profile.ipAddress}}</td>       
+                          </tr>
+                      </tbody>
+                  </table>
+
+
+   </form>
+  </wizard-step>
+  </form-wizard>

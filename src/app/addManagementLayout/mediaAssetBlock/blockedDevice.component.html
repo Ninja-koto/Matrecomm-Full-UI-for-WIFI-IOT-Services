@@ -1,0 +1,7 @@
+<tabs-panel (onTabChanged)="mainTabChanged($event)">  
+    <tab [title]="'Blocked Devices'" [tabID]="'blockedDevice'" [tabIcon]="'fa fa-user'" [maxStepWidth]="'200px'">
+      <div *ngIf="mainTab=='blockedDevice'" style="min-height: 500px;width: 100%">
+           <blockedDevice-Table></blockedDevice-Table>
+      </div>
+    </tab>
+</tabs-panel>

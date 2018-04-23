@@ -1,0 +1,63 @@
+<!--<div (mouseleave)="resetClock()" (mouseenter)="resetClock()">-->
+    <div>
+        
+        <div >
+     <modal  [animation]="animation" [keyboard]="keyboard" [backdrop]="'static'" (onClose)="closed()" (onDismiss)="dismissed()"
+            (onOpen)="opened()" #validationModal>
+            <form #modalForm="ngForm">
+                <modal-header [show-close]="true">
+                    <h4 class="modal-title">{{currWizardOp}} Media Profile</h4>
+                </modal-header>
+                <modal-body>
+                    <div *ngIf="addWizard||modifyWizard">        
+                         <profileCreation-add-wizard
+                         [data]="currWizardData" 
+                         [allSongsData]="allSongsFiles"
+                         [allMoviesData]="allMovieFiles"
+                         [allSerialsData]="allSerialFiles"
+                         [operation]="currWizardOp" 
+                         (closeModal)="close1($event)" 
+                         (closeModalWizard)="validationModal.dismiss()">
+                         </profileCreation-add-wizard>
+                    </div>
+                    <div *ngIf="(!addWizard)&&(!modifyWizard)">
+                       <default-delete-wizard
+                                 [rpcMethod]="'orgManagerMediaProfileCreationMethod'" 
+                                 [context]="'Media Profile'"
+                                 [deleteParams]="deleteParamForSelected" 
+                                 (closeModal)="close1($event)" 
+                                 (closeModalWizard)="validationModal.dismiss()">
+                            You are going to delete Media Profile...<br>
+                            Shall we Proceed...?
+                        </default-delete-wizard>
+                    </div>
+                </modal-body>
+                <modal-footer>
+               </modal-footer>
+            </form>
+        </modal>
+        </div>
+        <ba-card baCardClass="with-scroll table-panel">    
+       <collection-table
+            [collectionTableData]= tableData
+            [columns]= columns
+            [hideWizardButtons]=false
+            [hideSearchBox]=false
+            tableID = "mediaProfileTable"
+            tableTitle ="Media Profile"
+            addButtonID="addMediaProfile"
+             modifyButtonID="modifyMediaProfile"
+            deleteButtonID="deleteMediaProfile"
+            enableUnselectOnExit="yes"
+            [rowsOnPage] = 3
+            sortBy = "profileName"
+            sortOrder = "asc"
+            [rowsOnPageButtons] = [1,3,5,10,15]
+            (deleteButtonClicked)="validationModal.open('lg')"
+            (addModifyButtonClicked)="validationModal.open('lg')"
+            (selectedData) = "selectedRowData($event)"
+            (selectedWizardOperation) = "selectedWizardOperation($event)"
+            >
+        </collection-table>
+        </ba-card>
+    </div>

@@ -1,0 +1,1084 @@
+    <form-wizard (finalSubmit)="gotoFinalSubmit($event)">  
+    
+    <wizard-step [title]="'DHCP'" [maxStepWidth]="'100px'"  [isValid]="step1Validition">
+            <form [formGroup]="myFormDHCPPool" style="border-left:#fff;"  novalidate (ngSubmit)="save(myFormDHCPPool.value, myFormDHCPPool.valid)">
+            <div class="row">
+              <div class="col-sm-12">
+              <p align="center">
+              <b><i>Please click Add button to enter 'DHCP Pool' details</i>
+               <hr>
+              </b></p>       
+             </div>
+            </div>   
+        <div>
+             <div class="col-xs-8 pull-left box-tools"> 
+                    <button id="dhcpPoolAddButton" class="btn btn-sm btn-success" data-toggle="tooltip" title="" value ="Enable"  (click)="dhcpPoolAddProfiles($event)" ><i class="fa fa-plus"></i>Add</button>
+                </div>  
+                   <div class="col-xs-4 pull-right box-tools"> 
+                    <button id="deleteDhcpPoolProfile" class="btn btn-sm btn-danger" data-toggle="tooltip" title="" [disabled]= "dhcpPoolSelectedRowsForDeletion.length==0" (click)="deleteDhcpPoolSelectedProfiles($event)"><i class="fa fa-minus"></i> Delete</button>
+                    <!--<button id="deleteProfile" class="btn btn-sm btn-danger" data-toggle="tooltip" title=""  (click)="deleteSelectedProfiles($event)"><i class="fa fa-minus"></i> Delete</button>-->
+                 </div>               
+          </div>
+        <div *ngIf="addDhcpPoolStatus=='Enable'">  
+        <br><br>
+       <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>Pool Name</b></label>
+                      <input type="text" class="form-control" formControlName="poolName" placeholder="Pool Name">
+                        <error-messages [control]="myFormDHCPPool.controls.poolName" class="text-danger"></error-messages>
+                </div>
+              </div>
+             <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>Network Address</b></label>
+                      <input type="text" class="form-control" formControlName="network" placeholder="Network">
+                        <error-messages [control]="myFormDHCPPool.controls.network" class="text-danger"></error-messages>
+                </div>
+              </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>Subnet Mask</b></label>
+                   <input type="text" class="form-control" formControlName="subnet" placeholder="Subnet">
+                <error-messages [control]="myFormDHCPPool.controls.subnet" class="text-danger"></error-messages>
+                </div>
+              </div>
+            </div> 
+  
+      <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>Gateway</b></label>
+                      <input type="text" class="form-control" formControlName="gateway" placeholder="Gateway">
+                        <error-messages [control]="myFormDHCPPool.controls.gateway" class="text-danger"></error-messages>
+                </div>
+              </div>
+             <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>Pool Type</b></label>
+                   <select class="form-control" formControlName="poolType">
+                      <option value=""><b>Select One</b></option>
+                      <option *ngFor="let poolType of poolTypes" [value]="poolType">{{poolType}}</option>
+                    </select>
+                  <error-messages [control]="myFormDHCPPool.controls.poolType" class="text-danger"></error-messages>
+                </div>
+              </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>Domain Name</b></label>
+                      <input type="text" class="form-control" formControlName="domainName" placeholder="Domain Name">
+                        <error-messages [control]="myFormDHCPPool.controls.domainName" class="text-danger"></error-messages>
+                </div>
+              </div>
+            </div> 
+
+   <div class="row">
+          <div class="col-sm-4">
+                <div class="form-group">
+                       <label for=""><b>Lease Time</b></label>
+                      <input type="number" class="form-control" formControlName="leaseTime" placeholder="Lease Time">
+                      <error-messages [control]="myFormDHCPPool.controls.leaseTime" class="text-danger"></error-messages>
+                </div>
+              </div>
+
+             <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>Exclude Address</b></label>
+                      <input type="text" class="form-control" formControlName="excludeAddress" placeholder="Excluded Start Address">
+                        <error-messages [control]="myFormDHCPPool.controls.excludeAddress" class="text-danger"></error-messages>
+                </div>
+              </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>Dns Server</b></label>
+                      <input type="text" class="form-control" formControlName="dnsServer" placeholder="Dns Server">
+                        <error-messages [control]="myFormDHCPPool.controls.dnsServer" class="text-danger"></error-messages>
+                </div>
+              </div>
+      </div> 
+  <div class="row">
+          <div class="col-sm-4">
+                <div class="form-group">
+                       <label for=""><b>Vlan</b></label>
+                      <input type="number" class="form-control" formControlName="vlan" placeholder="Vlan">
+                      <error-messages [control]="myFormDHCPPool.controls.vlan" class="text-danger"></error-messages>
+                </div>
+              </div>
+      </div> 
+             <div>
+                   <div class="col-xs-4 pull-left box-tools"> 
+                    <button id="submitDhcpPoolProfile" class="btn  btn-primary" data-toggle="tooltip" title="" (click)="submitDhcpPoolProfiles($event)" >Submit</button>
+                </div>
+               </div>
+               <div>
+                  <div class="col-xs-4 pull-right box-tools"> 
+                   <button id="cancelDhcpPoolProfile" class="btn btn-warning" data-toggle="tooltip"  value ="Disable" title="" (click)="cancelDhcpPoolProfiles($event)" >Cancel</button>
+                </div>              
+               </div>
+          
+              <div class="row">
+                    <div class="col-sm-12">
+                     <small [ngStyle] = "{'display':showDhcpPoolTableErrorMsg}"  class="text-danger">Please select required fields above.</small>
+                    </div>
+               </div>             
+        </div>       
+                    <table class="table table-striped" >
+                      <thead>
+                      <tr>
+                          <th style="width: 5%"></th>
+                          <th style="width: 30%"><b>Pool Name</b></th>
+                           <th style="width: 30%"><b>Network Address</b></th>
+                          <th style="width: 30%"><b>Gateway</b></th>
+                      </tr>    
+                      </thead>
+                      <tbody>
+                      <tr *ngFor="let profile of allDhcpPoolProfiles">
+                         <td style="width: 5%"><input type="checkbox"  (click)="maintainDhcpPoolSelectedData($event,profile)" value="{{profile.id}}" /></td>
+                          <td style="width: 30%">{{profile.poolName}}</td>                  
+                          <td style="width: 30%">{{profile.network}}</td>                  
+                          <td style="width: 30%">{{profile.gateway}}</td>                  
+                          </tr>
+                      </tbody>
+                  </table>
+        </form>
+  </wizard-step>
+
+ <wizard-step [title]="'AAA'" [maxStepWidth]="'100px'"  [isValid]="step2Validition">
+            <form [formGroup]="myFormRadius" style="border-left:#fff;"  novalidate (ngSubmit)="save(myFormRadius.value, myFormRadius.valid)">
+            <div class="row">
+              <div class="col-sm-12">
+              <p align="center">
+              <b><i>Please click Add button to enter 'Radius Templates' details</i>
+               <hr>
+              </b></p>       
+             </div>
+            </div>   
+        <div>
+             <div class="col-xs-8 pull-left box-tools"> 
+                    <button id="radiusTemplateAddButton" class="btn btn-sm btn-success" data-toggle="tooltip" title="" value ="Enable"  (click)="radiusTemplateAddProfiles($event)" ><i class="fa fa-plus"></i>Add</button>
+                </div>  
+                   <div class="col-xs-4 pull-right box-tools"> 
+                    <button id="deleteRadiusTemplateProfile" class="btn btn-sm btn-danger" data-toggle="tooltip" title="" [disabled]= "radiusTemplateSelectedRowsForDeletion.length==0" (click)="deleteRadiusTemplateSelectedProfiles($event)"><i class="fa fa-minus"></i> Delete</button>
+                    <!--<button id="deleteProfile" class="btn btn-sm btn-danger" data-toggle="tooltip" title=""  (click)="deleteSelectedProfiles($event)"><i class="fa fa-minus"></i> Delete</button>-->
+                 </div>               
+          </div>
+        <div *ngIf="addRadiusTemplateStatus=='Enable'">  
+        <br><br>
+       <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>Radius Template Name</b></label>
+                      <input type="text" class="form-control" formControlName="radiusTemplate" placeholder="Radius Name">
+                        <error-messages [control]="myFormRadius.controls.radiusTemplate" class="text-danger"></error-messages>
+                </div>
+              </div>
+             <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>Server Address</b></label>
+                      <input type="text" class="form-control" formControlName="serverIP" placeholder="Server IP">
+                        <error-messages [control]="myFormRadius.controls.serverIP" class="text-danger"></error-messages>
+                </div>
+              </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>Shared Key</b></label>
+                   <input type="text" class="form-control" formControlName="sharedKey" placeholder="Shared Key">
+                <error-messages [control]="myFormRadius.controls.sharedKey" class="text-danger"></error-messages>
+                </div>
+              </div>
+            </div> 
+  
+      <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>Authentication Port</b></label>
+                      <input type="number" class="form-control" formControlName="authPort" placeholder="Auth Port">
+                        <error-messages [control]="myFormRadius.controls.authPort" class="text-danger"></error-messages>
+                </div>
+              </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>Accounting Port</b></label>
+                      <input type="number" class="form-control" formControlName="acctPort" placeholder="Acct Port">
+                        <error-messages [control]="myFormRadius.controls.acctPort" class="text-danger"></error-messages>
+                </div>
+              </div>
+        </div> 
+             <div>
+                   <div class="col-xs-4 pull-left box-tools"> 
+                    <button id="submitRadiusTemplateProfile" class="btn  btn-primary" data-toggle="tooltip" title="" (click)="submitRadiusTemplateProfiles($event)" >Submit</button>
+                </div>
+               </div>
+               <div>
+                  <div class="col-xs-4 pull-right box-tools"> 
+                   <button id="cancelRadiusTemplateProfile" class="btn btn-warning" data-toggle="tooltip"  value ="Disable" title="" (click)="cancelRadiusTemplateProfiles($event)" >Cancel</button>
+                </div>              
+               </div>
+          
+              <div class="row">
+                    <div class="col-sm-12">
+                     <small [ngStyle] = "{'display':showRadiusTemplateTableErrorMsg}"  class="text-danger">Please select required fields above.</small>
+                    </div>
+               </div>             
+        </div>       
+                    <table class="table table-striped" >
+                      <thead>
+                      <tr>
+                          <th style="width: 5%"></th>
+                          <th style="width: 30%"><b>Radius Name</b></th>
+                           <th style="width: 30%"><b>Server Address</b></th>
+                          <th style="width: 30%"><b>Authentication Port</b></th>
+                      </tr>    
+                      </thead>
+                      <tbody>
+                      <tr *ngFor="let profile of allRadiusTemplateProfiles">
+                         <td style="width: 5%"><input type="checkbox"  (click)="maintainRadiusTemplateSelectedData($event,profile)" value="{{profile.id}}" /></td>
+                          <td style="width: 30%">{{profile.radiusTemplate}}</td>                  
+                          <td style="width: 30%">{{profile.serverIP}}</td>                  
+                          <td style="width: 30%">{{profile.authPort}}</td>                  
+                          </tr>
+                      </tbody>
+                  </table>
+        </form>
+  </wizard-step>
+
+
+ <wizard-step [title]="'Captive Portal'" [maxStepWidth]="'100px'"  [isValid]="step3Validition">
+            <form [formGroup]="myFormCaptive" style="border-left:#fff;"  novalidate (ngSubmit)="save(myFormCaptive.value, myFormCaptive.valid)">
+            <div class="row">
+              <div class="col-sm-12">
+              <p align="center">
+              <b><i>Please click Add button to enter 'Captive Portal' details</i>
+               <hr>
+              </b></p>       
+             </div>
+            </div>   
+        <div>
+             <div class="col-xs-8 pull-left box-tools"> 
+                    <button id="captivePortalAddButton" class="btn btn-sm btn-success" data-toggle="tooltip" title="" value ="Enable"  (click)="captivePortalAddProfiles($event)" ><i class="fa fa-plus"></i>Add</button>
+                </div>  
+                   <div class="col-xs-4 pull-right box-tools"> 
+                    <button id="deleteCaptivePortalProfile" class="btn btn-sm btn-danger" data-toggle="tooltip" title="" [disabled]= "captivePortalSelectedRowsForDeletion.length==0" (click)="deleteCaptivePortalSelectedProfiles($event)"><i class="fa fa-minus"></i> Delete</button>
+                 </div>               
+          </div>
+        <div *ngIf="addCaptivePortalStatus=='Enable'">  
+        <br><br>
+       <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for=""><b>Captive Portal Name</b></label>
+                      <input type="text" class="form-control" formControlName="portalName" placeholder="Portal Name">
+                        <error-messages [control]="myFormCaptive.controls.portalName" class="text-danger"></error-messages>
+                </div>
+              </div>
+             <div class="col-sm-6">
+                <div class="form-group">
+                  <label for=""><b>Server Address</b></label>
+                      <input type="text" class="form-control" formControlName="serverAddress" placeholder="Server Address">
+                        <error-messages [control]="myFormCaptive.controls.serverAddress" class="text-danger"></error-messages>
+                </div>
+              </div>
+            </div> 
+  
+      <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for=""><b>Portal URL</b></label>
+                   <input type="text" class="form-control" formControlName="portalUrl" placeholder="Url">
+                <error-messages [control]="myFormCaptive.controls.portalUrl" class="text-danger"></error-messages>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for=""><b>Port</b></label>
+                      <input type="number" class="form-control" formControlName="port" placeholder="Port">
+                        <error-messages [control]="myFormCaptive.controls.port" class="text-danger"></error-messages>
+                </div>
+              </div>
+        </div> 
+
+    <div  class="row">
+            <div class="col-sm-6">               <!--style="text-align: center"-->
+                <div class="form-group">
+             <label for=""><b>Auto-whitelist-disable:&nbsp;</b></label>
+               <label>  
+                <input type="radio" id="autoWhitelistStatus" value="enable" style="margin-right: 0" formControlName="disableAutoWhitelist"/>
+                 <b>Enable </b></label>     
+                <label>
+                <input type="radio" id="autoWhitelistStatus" value="disable" style="margin-right: 0" formControlName="disableAutoWhitelist"/>
+                <b>Disable </b></label>  
+                 <error-messages [control]="myFormCaptive.controls.disableAutoWhitelist" class="text-danger"></error-messages>
+     
+                </div>
+              </div>
+          <div class="col-sm-6">               <!--style="text-align: center"-->
+                <div class="form-group">
+                      <label for=""><b>HTTPs:&nbsp;</b></label>
+               <label> 
+                <input type="radio" id="httpStatus" value="enable" style="margin-right: 0" formControlName="useHTTPs"/>
+                 <b>Enable </b></label>     
+                <label>
+                <input type="radio" id="httpStatus" value="disable" style="margin-right: 0" formControlName="useHTTPs"/>
+                <b>Disable </b></label>  
+                 <error-messages [control]="myFormCaptive.controls.useHTTPs" class="text-danger"></error-messages>
+                </div>
+              </div>
+            </div>  
+
+             <div>
+                   <div class="col-xs-4 pull-left box-tools"> 
+                    <button id="submitCaptivePortalProfile" class="btn  btn-primary" data-toggle="tooltip" title="" (click)="submitCaptivePortalProfiles($event)" >Submit</button>
+                </div>
+               </div>
+               <div>
+                  <div class="col-xs-4 pull-right box-tools"> 
+                   <button id="cancelCaptivePortalProfile" class="btn btn-warning" data-toggle="tooltip"  value ="Disable" title="" (click)="cancelCaptivePortalProfiles($event)" >Cancel</button>
+                </div>              
+               </div>
+          
+              <div class="row">
+                    <div class="col-sm-12">
+                     <small [ngStyle] = "{'display':showCaptivePortalTableErrorMsg}"  class="text-danger">Please select required fields above.</small>
+                    </div>
+               </div>             
+        </div>       
+                    <table class="table table-striped" >
+                      <thead>
+                      <tr>
+                          <th style="width: 5%"></th>
+                          <th style="width: 30%"><b>Radius Name</b></th>
+                           <th style="width: 30%"><b>Server Address</b></th>
+                          <th style="width: 30%"><b>Portal URL</b></th>
+                      </tr>    
+                      </thead>
+                      <tbody>
+                      <tr *ngFor="let profile of allCaptivePortalProfiles">
+                         <td style="width: 5%"><input type="checkbox"  (click)="maintainCaptivePortalSelectedData($event,profile)" value="{{profile.id}}" /></td>
+                          <td style="width: 30%">{{profile.portalName}}</td>                  
+                          <td style="width: 30%">{{profile.serverAddress}}</td>                  
+                          <td style="width: 30%">{{profile.portalUrl}}</td>                  
+                          </tr>
+                      </tbody>
+                  </table>
+        </form>
+  </wizard-step>
+
+      <wizard-step [title]="'VPN'" [maxStepWidth]="'100px'" [isValid]="step4Validition">
+        <form [formGroup]="myFormVPN" style="border-left:#fff;"  novalidate (ngSubmit)="save(myFormVPN.value, myFormVPN.valid)">
+            <div class="row">
+              <div class="col-sm-12">
+              <p align="center">
+              <b><i>Please enter VPN configuration details</i>
+              </b></p>       
+             </div>
+            </div>   
+                
+             <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>Primary Server</b></label>
+                      <input type="text" class="form-control" formControlName="vpnPrimaryServer" placeholder="Primary Server">
+                      <error-messages [control]="myFormVPN.controls.vpnPrimaryServer" class="text-danger"></error-messages>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>Backup Server</b></label>
+                      <input type="text" class="form-control" formControlName="vpnBackupServer" placeholder="Backup Server">
+                      <error-messages [control]="myFormVPN.controls.vpnBackupServer" class="text-danger"></error-messages>
+                </div>
+              </div>
+             <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>Ike psk</b></label>
+                      <input type="text" class="form-control" formControlName="vpnIkepsk" placeholder="Ike Psk">
+                      <error-messages [control]="myFormVPN.controls.vpnIkepsk" class="text-danger"></error-messages>
+                </div>
+              </div>              
+            </div>    
+            <div class="row">
+             <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>Username</b></label>
+                      <input type="text" class="form-control" formControlName="vpnUserName" placeholder="Username">
+                      <error-messages [control]="myFormVPN.controls.vpnUserName" class="text-danger"></error-messages>
+                </div>
+              </div>    
+            <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>Password</b></label>
+                      <input type="text" class="form-control" formControlName="vpnPassword" placeholder="Password">
+                      <error-messages [control]="myFormVPN.controls.vpnPassword" class="text-danger"></error-messages>
+                </div>
+              </div>    
+           <div class="col-sm-4">
+               <div class="form-group">
+                 <div class="form-group">
+                      <label for=""><b>Fast Failover:&nbsp;</b></label>                         
+              <label> 
+                <input type="radio" id="vpnFastFailoverStatus" value="enable"  formControlName="vpnFastFailover">
+                Enable</label> 
+                <label>
+                <input type="radio" id="vpnFastFailoverStatus" value="disable" formControlName="vpnFastFailover" />
+                Disable</label>
+                </div>
+            </div>
+          </div>    
+        </div> 
+            <div class="row">
+               <div class="col-sm-12">
+                <div class="form-group">
+                      <label for=""><b>Preemption:&nbsp;</b></label>                  
+              <label> 
+                <input type="radio" id="preemptionStatus" value="enable"  formControlName="vpnPreemption" (click)="selectPreemptionType($event)">
+                Enable</label> 
+                <label>
+                <input type="radio" id="preemptionStatus" value="disable" formControlName="vpnPreemption" (click)="selectPreemptionType($event)" />
+                Disable</label>
+                </div>
+              </div>
+              </div>
+
+       <div *ngIf="preemptionType=='enable'">      
+        <div class="row">
+           <div class="col-sm-12">
+                <div class="form-group">
+                      <label for=""><b>Hold Time</b></label>
+                      <input type="number" class="form-control" formControlName="vpnHoldTime" placeholder=" Hold Time ">
+                      <error-messages [control]="myFormVPN.controls.vpnHoldTime" class="text-danger"></error-messages>
+                </div>
+           </div>
+        </div>
+      </div>
+
+            <div class="row">
+               <div class="col-sm-12">
+                <div class="form-group">
+                      <label for=""><b>Reconnect User On Failover:&nbsp;</b></label>                         
+              <label> 
+                <input type="radio" id="userFailoverStatus" value="enable"  formControlName="reconnectUserOnFailover" (click)="selectUserFailoverType($event)">
+                Enable</label> 
+                <label>
+                <input type="radio" id="userFailoverStatus" value="disable" formControlName="reconnectUserOnFailover" (click)="selectUserFailoverType($event)" />
+                Disable</label>
+                </div>
+              </div>
+              </div>
+
+       <div *ngIf="userFailoverType=='enable'">      
+        <div class="row">
+           <div class="col-sm-12">
+                <div class="form-group">
+                      <label for=""><b>Reconnect Time On Failover</b></label>
+                      <input type="number" class="form-control" formControlName="reconnectTimeOnFailover" placeholder="Reconnect Time ">
+                      <error-messages [control]="myFormVPN.controls.reconnectTimeOnFailover" class="text-danger"></error-messages>
+                </div>
+           </div>
+        </div>
+      </div>
+
+            <div class="row">
+             <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>Max allowed packet Loss</b></label>
+                      <input type="number" class="form-control" formControlName="vpnMonitorPktLostCnt">
+                      <error-messages [control]="myFormVPN.controls.vpnMonitorPktLostCnt" class="text-danger"></error-messages>
+                </div>
+              </div>    
+            <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>Packets send frequency</b></label>
+                      <input type="number" class="form-control" formControlName="vpnMonitorPktSendFreq">
+                      <error-messages [control]="myFormVPN.controls.vpnMonitorPktSendFreq" class="text-danger"></error-messages>
+                </div>
+              </div>    
+            </div> 
+        </form>
+  </wizard-step>
+
+ <wizard-step [title]="'Routes'" [maxStepWidth]="'100px'"  [isValid]="step5Validition">
+            <form [formGroup]="myFormRoutes" style="border-left:#fff;"  novalidate (ngSubmit)="save(myFormRoutes.value, myFormRoutes.valid)">
+            <div class="row">
+              <div class="col-sm-12">
+              <p align="center">
+              <b><i>Please click Add button to enter 'Routing Profiles' details</i>
+               <hr>
+              </b></p>       
+             </div>
+            </div>   
+        <div>
+             <div class="col-xs-8 pull-left box-tools"> 
+                    <button id="routingProfileAddButton" class="btn btn-sm btn-success" data-toggle="tooltip" title="" value ="Enable"  (click)="routingAddProfiles($event)" ><i class="fa fa-plus"></i>Add</button>
+                </div>  
+                   <div class="col-xs-4 pull-right box-tools"> 
+                    <button id="deleteRoutingProfile" class="btn btn-sm btn-danger" data-toggle="tooltip" title="" [disabled]= "routingProfileSelectedRowsForDeletion.length==0" (click)="deleteRoutingProfileSelectedProfiles($event)"><i class="fa fa-minus"></i> Delete</button>
+                    <!--<button id="deleteProfile" class="btn btn-sm btn-danger" data-toggle="tooltip" title=""  (click)="deleteSelectedProfiles($event)"><i class="fa fa-minus"></i> Delete</button>-->
+                 </div>               
+          </div>
+        <div *ngIf="addRoutingProfileStatus=='Enable'">  
+        <br><br>
+       <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>Destination Address</b></label>
+                      <input type="text" class="form-control" formControlName="destinationIP" placeholder="Destination IP">
+                        <error-messages [control]="myFormRoutes.controls.destinationIP" class="text-danger"></error-messages>
+                </div>
+              </div>
+             <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>Subnet Mask</b></label>
+                      <input type="text" class="form-control" formControlName="subnet" placeholder="Subnet IP">
+                        <error-messages [control]="myFormRoutes.controls.subnet" class="text-danger"></error-messages>
+                </div>
+              </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>Gateway</b></label>
+                   <input type="text" class="form-control" formControlName="gateway" placeholder="Gateway">
+                <error-messages [control]="myFormRoutes.controls.gateway" class="text-danger"></error-messages>
+                </div>
+              </div>
+            </div> 
+             <div>
+                   <div class="col-xs-4 pull-left box-tools"> 
+                    <button id="submitRoutingProfile" class="btn  btn-primary" data-toggle="tooltip" title="" (click)="submitRoutingProfiles($event)" >Submit</button>
+                </div>
+               </div>
+               <div>
+                  <div class="col-xs-4 pull-right box-tools"> 
+                   <button id="cancelRoutingProfile" class="btn btn-warning" data-toggle="tooltip"  value ="Disable" title="" (click)="cancelRoutingProfiles($event)" >Cancel</button>
+                </div>              
+               </div>
+          
+              <div class="row">
+                    <div class="col-sm-12">
+                     <small [ngStyle] = "{'display':showRoutingTableErrorMsg}"  class="text-danger">Please select required fields above.</small>
+                    </div>
+               </div>             
+        </div>       
+                    <table class="table table-striped" >
+                      <thead>
+                      <tr>
+                          <th style="width: 5%"></th>
+                          <th style="width: 30%"><b>Destination IP</b></th>
+                           <th style="width: 30%"><b>Subnet</b></th>
+                          <th style="width: 30%"><b>Gateway</b></th>
+                      </tr>    
+                      </thead>
+                      <tbody>
+                      <tr *ngFor="let profile of allRoutingProfiles">
+                         <td style="width: 5%"><input type="checkbox"  (click)="maintainRoutingSelectedData($event,profile)" value="{{profile.id}}" /></td>
+                          <td style="width: 30%">{{profile.destinationIP}}</td>                  
+                          <td style="width: 30%">{{profile.subnet}}</td>                  
+                          <td style="width: 30%">{{profile.gateway}}</td>                  
+                          </tr>
+                      </tbody>
+                  </table>
+        </form>
+  </wizard-step>
+
+
+ <wizard-step [title]="'Radio'" [maxStepWidth]="'100px'"  [isValid]="step6Validition">
+            <form [formGroup]="myFormRadio" style="border-left:#fff;"  novalidate (ngSubmit)="save(myFormRadio.value, myFormRadio.valid)">
+            <div class="row">
+              <div class="col-sm-12">
+              <p align="center">
+              <b><i>Please click Add button to enter 'Radio Profiles' details</i>
+               <hr>
+              </b></p>       
+             </div>
+            </div>   
+        <div>
+             <div class="col-xs-8 pull-left box-tools"> 
+                    <button id="radioProfileAddButton" class="btn btn-sm btn-success" data-toggle="tooltip" title="" value ="Enable"  (click)="radioAddProfiles($event)" ><i class="fa fa-plus"></i>Add</button>
+                </div>  
+                   <div class="col-xs-4 pull-right box-tools"> 
+                    <button id="deleteRadioProfile" class="btn btn-sm btn-danger" data-toggle="tooltip" title="" [disabled]= "radioProfileSelectedRowsForDeletion.length==0" (click)="deleteRadioProfileSelectedProfiles($event)"><i class="fa fa-minus"></i> Delete</button>
+                    <!--<button id="deleteProfile" class="btn btn-sm btn-danger" data-toggle="tooltip" title=""  (click)="deleteSelectedProfiles($event)"><i class="fa fa-minus"></i> Delete</button>-->
+                 </div>               
+          </div>
+        <div *ngIf="addRadioProfileStatus=='Enable'">  
+        <br><br>
+            <div class="row">
+               <div class="col-sm-6">
+                <div class="form-group">
+                      <label for=""><b>Legacy Mode:&nbsp;</b></label>                         
+              <label> 
+                <input type="radio" id="legacyModeStatus" value="enable"  formControlName="legacyMode">
+                  Enable</label> 
+                <label>
+                <input type="radio" id="legacyModeStatus" value="disable" formControlName="legacyMode" />
+                  Disable</label>
+                </div>
+              </div>
+               </div>
+       <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>Beacon Interval</b></label>
+                      <input type="number" class="form-control" formControlName="beaconPeriod" placeholder="Beacon interval">
+                        <error-messages [control]="myFormRadio.controls.beaconPeriod" class="text-danger"></error-messages>
+                </div>
+              </div>
+             <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>Interference Immunity Level</b></label>
+                   <select class="form-control" formControlName="interferenceImmunityLevel">
+                      <option value=""><b>Select One</b></option>
+                      <option *ngFor="let interferenceImmunityLevel of interferenceImmunityLevels" [value]="interferenceImmunityLevel">{{interferenceImmunityLevel}}</option>
+                    </select>
+             <error-messages [control]="myFormRadio.controls.interferenceImmunityLevel" class="text-danger"></error-messages>
+                </div>
+              </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>Frequency Type</b></label>
+                   <select class="form-control" formControlName="frequencyType">
+                      <option value=""><b>Select One</b></option>
+                      <option *ngFor="let frequencyType of frequencyTypes" [value]="frequencyType">{{frequencyType}}</option>
+                    </select>
+                <error-messages [control]="myFormRadio.controls.frequencyType" class="text-danger"></error-messages>
+                </div>
+              </div>
+            </div> 
+            <div class="row">
+               <div class="col-sm-6">
+                <div class="form-group">
+                      <label for=""><b>Spectrum Monitor:&nbsp;</b></label>                         
+              <label> 
+                <input type="radio" id="spectrumMonitorStatus" value="enable"  formControlName="spectrumMonitor" >
+                  Enable</label> 
+                <label>
+                <input type="radio" id="spectrumMonitorStatus" value="disable" formControlName="spectrumMonitor" />
+                  Disable</label>
+                </div>
+              </div>
+               <div class="col-sm-6"> 
+                 <div class="form-group">
+                    <label for=""><b>RF:&nbsp;</b></label>                         
+                      <label> 
+                <input type="radio" id="RFStatus" value="enable"  formControlName="RF" >
+                    Enable</label> 
+                <label>
+                 <input type="radio" id="RFStatus" value="disable" formControlName="RF"/>
+                   Disable</label>
+                </div>
+              </div>
+              </div>
+
+             <div>
+                   <div class="col-xs-4 pull-left box-tools"> 
+                    <button id="submitRadioProfile" class="btn  btn-primary" data-toggle="tooltip" title="" (click)="submitRadioProfiles($event)" >Submit</button>
+                </div>
+               </div>
+               <div>
+                  <div class="col-xs-4 pull-right box-tools"> 
+                   <button id="cancelRadioProfile" class="btn btn-warning" data-toggle="tooltip"  value ="Disable" title="" (click)="cancelRadioProfiles($event)" >Cancel</button>
+                </div>              
+               </div>
+          
+              <div class="row">
+                    <div class="col-sm-12">
+                     <small [ngStyle] = "{'display':showRadioTableErrorMsg}"  class="text-danger">Please select required fields above.</small>
+                    </div>
+               </div>             
+        </div>       
+                    <table class="table table-striped" >
+                      <thead>
+                      <tr>
+                          <th style="width: 5%"></th>
+                          <th style="width: 30%"><b>Legacy Mode</b></th>
+                           <th style="width: 30%"><b>Frequency Type</b></th>
+                          <th style="width: 30%"><b>Beacon Period</b></th>
+                      </tr>    
+                      </thead>
+                      <tbody>
+                      <tr *ngFor="let profile of allRadioProfiles">
+                         <td style="width: 5%"><input type="checkbox"  (click)="maintainRadioSelectedData($event,profile)" value="{{profile.id}}" /></td>
+                          <td style="width: 30%">{{profile.legacyMode}}</td>                  
+                          <td style="width: 30%">{{profile.frequencyType}}</td>                  
+                          <td style="width: 30%">{{profile.beaconPeriod}}</td>                  
+                          </tr>
+                      </tbody>
+                  </table>
+        </form>
+  </wizard-step>
+
+ <wizard-step [title]="'WLAN'" [maxStepWidth]="'100px'" (onLoad)="wlanPageLoaded($event)" [isValid]="step7Validition">
+            <form [formGroup]="myFormWlan" style="border-left:#fff;"  novalidate (ngSubmit)="save(myFormWlan.value, myFormWlan.valid)">
+            <div class="row">
+              <div class="col-sm-12">
+              <p align="center">
+              <b><i>Please click Add button to enter 'WLAN Profiles' details</i>
+               <hr>
+              </b></p>       
+             </div>
+            </div>   
+        <div>
+             <div class="col-xs-8 pull-left box-tools"> 
+                    <button id="wlanProfileAddButton" class="btn btn-sm btn-success" data-toggle="tooltip" title="" value ="Enable"  (click)="wlanAddProfiles($event)" ><i class="fa fa-plus"></i>Add</button>
+                </div>  
+                   <div class="col-xs-4 pull-right box-tools"> 
+                    <button id="deleteWlanProfile" class="btn btn-sm btn-danger" data-toggle="tooltip" title="" [disabled]= "wlanProfileSelectedRowsForDeletion.length==0" (click)="deleteWlanProfileSelectedProfiles($event)"><i class="fa fa-minus"></i> Delete</button>
+                    <!--<button id="deleteProfile" class="btn btn-sm btn-danger" data-toggle="tooltip" title=""  (click)="deleteSelectedProfiles($event)"><i class="fa fa-minus"></i> Delete</button>-->
+                 </div>               
+          </div>
+        <div *ngIf="addWlanProfileStatus=='Enable'">  
+        <br><br>
+            <div class="row">
+               <div class="col-sm-6">
+                <div class="form-group">
+                      <label for=""><b>Wlan Status:&nbsp;</b></label>                         
+              <label> 
+                <input type="radio" id="wlanStatus" value="Enabled"  formControlName="wlanStatus">
+                  Enable</label> 
+                <label>
+                <input type="radio" id="wlanStatus" value="Disabled" formControlName="wlanStatus" />
+                  Disable</label>
+                </div>
+              </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                      <label for=""><b>Broadcast SSID:&nbsp;</b></label>                         
+              <label> 
+                <input type="radio" id="broadcastSSID" value="Enabled"  formControlName="broadcastSSID">
+                  Enable</label> 
+                <label>
+                <input type="radio" id="broadcastSSID" value="Disabled" formControlName="broadcastSSID" />
+                  Disable</label>
+                </div>
+              </div>
+               </div>
+       <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>Asset SSID</b></label>
+                      <input type="text" class="form-control" formControlName="assetSSID" placeholder="SSID">
+                        <error-messages [control]="myFormWlan.controls.assetSSID" class="text-danger"></error-messages>
+                </div>
+              </div>
+             <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>Access Type</b></label>
+                   <select class="form-control" formControlName="accessType">
+                      <option value=""><b>Select One</b></option>
+                      <option *ngFor="let accessType of accessTypes" [value]="accessType">{{accessType}}</option>
+                    </select>
+             <error-messages [control]="myFormWlan.controls.accessType" class="text-danger"></error-messages>
+                </div>
+              </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>Band Type</b></label>
+                   <select class="form-control" formControlName="bandType">
+                      <option value=""><b>Select One</b></option>
+                      <option *ngFor="let bandType of bandTypes" [value]="bandType">{{bandType}}</option>
+                    </select>
+                <error-messages [control]="myFormWlan.controls.bandType" class="text-danger"></error-messages>
+                </div>
+              </div>
+            </div> 
+           
+      <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>Inactivity Timeout</b></label>
+                      <input type="number" class="form-control" formControlName="inactivityTimeout" placeholder="Inactivity">
+                        <error-messages [control]="myFormWlan.controls.inactivityTimeout" class="text-danger"></error-messages>
+                </div>
+              </div>
+             <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>Dtim Interval</b></label>
+                   <select class="form-control" formControlName="dtimInterval">
+                      <option value=""><b>Select One</b></option>
+                      <option *ngFor="let dtimInterval of dtimIntervals" [value]="dtimInterval">{{dtimInterval}}</option>
+                    </select>
+             <error-messages [control]="myFormWlan.controls.dtimInterval" class="text-danger"></error-messages>
+                </div>
+              </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>Max Clients Threshold</b></label>
+                   <input type="number" class="form-control" formControlName="maxClientsThreshold" placeholder="Max clients">           
+                <error-messages [control]="myFormWlan.controls.maxClientsThreshold" class="text-danger"></error-messages>
+                </div>
+              </div>
+            </div> 
+
+      <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>Vlan</b></label>
+                      <input type="number" class="form-control" formControlName="vlan" placeholder="Vlan">
+                        <error-messages [control]="myFormWlan.controls.vlan" class="text-danger"></error-messages>
+                </div>
+              </div>
+             <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>Captive Portal Type</b></label>
+                   <select class="form-control" formControlName="captivePortalType">
+                      <option value=""><b>Select One</b></option>
+                      <option *ngFor="let captivePortalType of captivePortalTypes" [value]="captivePortalType">{{captivePortalType}}</option>
+                    </select>
+                <error-messages [control]="myFormWlan.controls.captivePortalType" class="text-danger"></error-messages>
+                </div>
+              </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>Portal Name</b></label>
+                  <select class="form-control" formControlName="portalName">
+                      <option value=""><b>Select One</b></option>
+                      <option *ngFor="let captivePortalName of captivePortalNames" [value]="captivePortalName.portalName">{{captivePortalName.portalName}}</option>
+                    </select>
+                <error-messages [control]="myFormWlan.controls.portalName" class="text-danger"></error-messages>
+                </div>
+              </div>
+            </div> 
+
+           <div class="row">
+               <div class="col-sm-4">
+                 <div class="form-group">
+                      <label for=""><b>Accounting:&nbsp;</b></label>                         
+               <label> 
+                  <input type="radio" id="radiusAccountingStatus" value="Enabled"  formControlName="radiusAccounting">
+                     Enable</label> 
+                <label>
+                  <input type="radio" id="radiusAccountingStatus" value="Disabled" formControlName="radiusAccounting"/>
+                     Disable</label>
+                  </div>
+               </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>Accounting Mode</b></label>
+                  <select class="form-control" formControlName="accountingMode">
+                      <option value=""><b>Select One</b></option>
+                      <option *ngFor="let accountingModeType of accountingModeTypes" [value]="accountingModeType">{{accountingModeType}}</option>
+                    </select>
+                <error-messages [control]="myFormWlan.controls.accountingMode" class="text-danger"></error-messages>
+                </div>
+              </div>
+             <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>Accounting Interval</b></label>
+                      <input type="number" class="form-control" formControlName="accountingInterval" placeholder="Interval">
+                        <error-messages [control]="myFormWlan.controls.accountingInterval" class="text-danger"></error-messages>
+                </div>
+              </div>
+
+            </div>
+    <div class="row">
+
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for=""><b>Auth Servers</b></label>
+                 <ss-multiselect-dropdown [options]="authOptions" [texts]="myTexts" [settings]="mySettings" formControlName="radiusTemplate"></ss-multiselect-dropdown>
+                 <error-messages [control]="myFormWlan.controls.radiusTemplate" class="text-danger"></error-messages>
+                 </div>
+              </div>             
+    </div>
+             <div>
+                   <div class="col-xs-4 pull-left box-tools"> 
+                    <button id="submitWlanProfile" class="btn  btn-primary" data-toggle="tooltip" title="" (click)="submitWlanProfiles($event)" >Submit</button>
+                </div>
+               </div>
+               <div>
+                  <div class="col-xs-4 pull-right box-tools"> 
+                   <button id="cancelWlanProfile" class="btn btn-warning" data-toggle="tooltip"  value ="Disable" title="" (click)="cancelWlanProfiles($event)" >Cancel</button>
+                </div>              
+               </div>
+          
+              <div class="row">
+                    <div class="col-sm-12">
+                     <small [ngStyle] = "{'display':showWlanTableErrorMsg}"  class="text-danger">Please select required fields above.</small>
+                    </div>
+               </div>             
+        </div>       
+                    <table class="table table-striped" >
+                      <thead>
+                      <tr>
+                          <th style="width: 5%"></th>
+                          <th style="width: 30%"><b>Wlan Status</b></th>
+                           <th style="width: 30%"><b>Asset SSID</b></th>
+                          <th style="width: 30%"><b>Portal Name</b></th>
+                      </tr>    
+                      </thead>
+                      <tbody>
+                      <tr *ngFor="let profile of allWlanProfiles">
+                         <td style="width: 5%"><input type="checkbox"  (click)="maintainWlanSelectedData($event,profile)" value="{{profile.id}}" /></td>
+                          <td style="width: 30%">{{profile.wlanStatus}}</td>                  
+                          <td style="width: 30%">{{profile.assetSSID}}</td>                  
+                          <td style="width: 30%">{{profile.portalName}}</td>                  
+                          </tr>
+                      </tbody>
+                  </table>
+        </form>
+  </wizard-step>
+
+
+ <wizard-step [title]="'SNMP'" [maxStepWidth]="'100px'"  [isValid]="step8Validition">
+            <form [formGroup]="myFormSNMPCommunity" style="border-left:#fff;"  novalidate (ngSubmit)="save(myFormSNMPCommunity.value, myFormSNMPCommunity.valid)">
+            <div class="row">
+              <div class="col-sm-12">
+              <p align="center">
+              <b><i>Please click Add button to enter 'SNMP Community' details</i>
+               <hr>
+              </b></p>       
+             </div>
+            </div>   
+        <div>
+             <div class="col-xs-8 pull-left box-tools"> 
+                    <button id="snmpCommunityAddButton" class="btn btn-sm btn-success" data-toggle="tooltip" title="" value ="Enable"  (click)="snmpCommunityAddProfiles($event)" ><i class="fa fa-plus"></i>Add</button>
+                </div>  
+                   <div class="col-xs-4 pull-right box-tools"> 
+                    <button id="deleteSnmpCommunity" class="btn btn-sm btn-danger" data-toggle="tooltip" title="" [disabled]= "snmpCommunitySelectedRowsForDeletion.length==0" (click)="deleteSnmpCommunitySelectedProfiles($event)"><i class="fa fa-minus"></i> Delete</button>
+                    <!--<button id="deleteProfile" class="btn btn-sm btn-danger" data-toggle="tooltip" title=""  (click)="deleteSelectedProfiles($event)"><i class="fa fa-minus"></i> Delete</button>-->
+                 </div>               
+          </div>
+        <div *ngIf="addSnmpCommunityStatus=='Enable'">  
+        <br><br>
+       <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>Read Community</b></label>
+                      <input type="text" class="form-control" formControlName="readCommunity" placeholder="Community">
+                        <error-messages [control]="myFormSNMPCommunity.controls.readCommunity" class="text-danger"></error-messages>
+                </div>
+              </div>
+       </div> 
+           
+     
+             <div>
+                   <div class="col-xs-4 pull-left box-tools"> 
+                    <button id="submitSnmpCommunity" class="btn  btn-primary" data-toggle="tooltip" title="" (click)="submitSnmpCommunity($event)" >Submit</button>
+                </div>
+               </div>
+               <div>
+                  <div class="col-xs-4 pull-right box-tools"> 
+                   <button id="cancelSnmpCommunity" class="btn btn-warning" data-toggle="tooltip"  value ="Disable" title="" (click)="cancelSnmpCommunity($event)" >Cancel</button>
+                </div>              
+               </div>
+          
+              <div class="row">
+                    <div class="col-sm-12">
+                     <small [ngStyle] = "{'display':showSnmpCommunityTableErrorMsg}"  class="text-danger">Please select required fields above.</small>
+                    </div>
+               </div>             
+        </div>       
+                    <table class="table table-striped" >
+                      <thead>
+                      <tr>
+                          <th style="width: 5%"></th>
+                          <th style="width: 90%"><b>Read Community</b></th>
+                      </tr>    
+                      </thead>
+                      <tbody>
+                      <tr *ngFor="let profile of allSnmpCommunityProfiles">
+                         <td style="width: 5%"><input type="checkbox"  (click)="maintainSnmpCommunitySelectedData($event,profile)" value="{{profile.id}}" /></td>
+                          <td style="width: 90%">{{profile.readCommunity}}</td>                             
+                          </tr>
+                      </tbody>
+                  </table>
+        </form>
+
+<br><br><br>
+<hr>
+       <form [formGroup]="myFormSNMPHost" style="border-left:#fff;"  novalidate (ngSubmit)="save(myFormSNMPHost.value, myFormSNMPHost.valid)">
+            <div class="row">
+              <div class="col-sm-12">
+              <p align="center">
+              <b><i>Please click Add button to enter 'SNMP Host' details</i>
+               <hr>
+              </b></p>       
+             </div>
+            </div>           
+           <div>
+             <div class="col-xs-8 pull-left box-tools"> 
+                    <button id="snmpHostAddButton" class="btn btn-sm btn-success" data-toggle="tooltip" title="" value ="Enable"  (click)="snmpHostAddProfiles($event)" ><i class="fa fa-plus"></i>Add</button>
+                </div>   
+                  <div class="col-xs-4 pull-right box-tools"> 
+                    <button id="deleteSNMPHostProfile" class="btn btn-sm btn-danger" data-toggle="tooltip" title="" [disabled]= "snmpHostSelectedRowsForDeletion.length==0" (click)="deleteSNMPHostSelectedProfiles($event)"><i class="fa fa-minus"></i> Delete</button>
+                    <!--<button id="deleteProfile" class="btn btn-sm btn-danger" data-toggle="tooltip" title=""  (click)="deleteSelectedProfiles($event)"><i class="fa fa-minus"></i> Delete</button>-->
+                 </div>         
+          </div>
+
+        <div *ngIf="addSNMPHostStatus=='Enable'"> 
+          <br><br>
+
+        <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>Host Address</b></label>
+                      <input type="text" class="form-control" formControlName="snmpHostAddress">
+                        <error-messages [control]="myFormSNMPHost.controls.snmpHostAddress" class="text-danger"></error-messages>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                      <label for=""><b>Version</b></label>
+                      <select class="form-control" formControlName="snmpVersion">
+                        <option value=""><b>Select One</b></option>
+                        <option *ngFor="let version of snmpVersions" [value]="version">{{version}}</option>
+                      </select>
+                      <error-messages [control]="myFormSNMPHost.controls.snmpVersion" class="text-danger"></error-messages>
+                </div>
+              </div>
+
+             <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>Snmp Name</b></label>
+                      <input type="text" class="form-control" formControlName="snmpName">
+                        <error-messages [control]="myFormSNMPHost.controls.snmpName" class="text-danger"></error-messages>
+                </div>
+              </div>
+            </div>     
+                <div>
+                   <div class="col-xs-4 pull-left box-tools"> 
+                    <button id="submitSNMPHostProfile" class="btn  btn-primary" data-toggle="tooltip" title="" (click)="submitSNMPHostProfiles($event)" >Submit</button>
+                </div>
+             </div>
+
+               <div>
+                  <div class="col-xs-4 pull-right box-tools"> 
+                   <button id="cancelSNMPHostProfile" class="btn btn-warning" data-toggle="tooltip"  value ="Disable" title="" (click)="cancelSNMPHostProfiles($event)" >Cancel</button>
+                </div>              
+               </div>
+
+              <div class="row">
+                    <div class="col-sm-12">
+                     <small [ngStyle] = "{'display':showSNMPHostTableErrorMsg}"  class="text-danger">Please enter required fields</small>
+                    </div>
+               </div>             
+          </div>
+                    <table class="table table-striped" >
+                      <thead>
+                      <tr>
+                          <th style="width: 5%"></th>
+                          <th style="width: 30%"><b>Host Address</b></th>
+                          <th style="width: 30%"><b>Snmp Version</b></th>
+                          <th style="width: 30%"><b>Snmp Name</b></th>
+                          
+                      </tr>    
+                      </thead>
+                      <tbody>
+                      <tr *ngFor="let profile of allSNMPHostProfiles">
+                         <td style="width: 5%"><input type="checkbox"  (click)="maintainSNMPHostSelectedData($event,profile)" value="{{profile.id}}" /></td>
+                          <td style="width: 30%">{{profile.snmpHostAddress}}</td>
+                          <td style="width: 30%">{{profile.snmpVersion}}</td>
+                           <td style="width: 30%">{{profile.snmpName}}</td>
+                          </tr>
+                      </tbody>
+                  </table>
+        </form>        
+  </wizard-step>
+
+
+
+
+
+
+
+
+
+</form-wizard>

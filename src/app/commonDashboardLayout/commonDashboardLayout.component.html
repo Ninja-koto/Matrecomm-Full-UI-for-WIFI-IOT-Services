@@ -1,0 +1,507 @@
+<tree-sidebar
+ (sidebar)='Click($event)'
+></tree-sidebar>
+
+    <!--<ba-page-top></ba-page-top>-->
+    <page-top></page-top>
+    <div class="al-main">
+      <div class="al-content">
+        <ba-content-top></ba-content-top>
+        <!--<div class="row">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+              <pie-chart></pie-chart>
+            </div>
+          </div>-->
+
+          
+            <!--<div style="height: 300px">
+            <app-bar-chart [barChart]="data1" [chartWidth]="'30%'" [chartHeight]="'300px'">  </app-bar-chart>
+            
+            <app-bar-chart [barChart]="data2" [chartWidth]="'30%'" [chartHeight]="'300px'">  </app-bar-chart>
+            </div>-->
+        
+            <div class="row">
+              <div class="col-md-4">
+                            <div class="card card-inverse" style="max-width: 20rem;border-color: #fff;">
+                              <div class="card-header" style="background-color: #9edff8; border-color: #fff;color: #000;">
+                              <!--<div class="card-header" style="background-color: #0c9bef; 
+                                                background: -webkit-linear-gradient(/*left,*/#0c9bef, white);
+                                                background: -o-linear-gradient(/*right,*/#0c9bef, white);
+                                                background: -moz-linear-gradient(/*right,*/#0c9bef, white);
+                                                background: linear-gradient(/*right,*/#0c9bef, white); border-color: #fff;color: #000;">-->
+
+                                <div style="width: 20%; float: left;">     
+                                <i class="fa fa-user fa-2x" aria-hidden="true"></i>
+                                </div>
+                                <div style="float: right;width: 80%;"> 
+                                      <div style="float: left;width: 70%;"> 
+                                      
+                                      </div>
+                                      <div style="float: right;width: 30%;"> 
+                                        {{currentUserCount}}
+                                      </div>
+                                </div>
+                            </div>
+                            <div class="card-block">
+                                <!--<div style="width: 300px;height: 50px;"> -->
+                                  <div>
+                                       Used Data  : <b>{{currentUsersUsedData}}</b>
+                                </div>
+                            </div>
+                            <!--<div class="card-footer" style="border-color: #fff;">
+                                    50 % increased in 2 days
+                            </div>-->
+                    </div>
+                    </div>
+
+                    <div class="col-md-4">
+                    <div class="card card-inverse" style="max-width: 20rem;border-color: #fff;">
+                              <div class="card-header" style="background-color: #48ad35; border-color: #fff;color: #000;">      
+                                <!--<div class="card-header" style="background-color: #f0ad4e; 
+                                                background: -webkit-linear-gradient(/*left,*/#f0ad4e, white);
+                                                background: -o-linear-gradient(/*right,*/#f0ad4e, white);
+                                                background: -moz-linear-gradient(/*right,*/#f0ad4e, white);
+                                                background: linear-gradient(/*right,*/#f0ad4e, white); border-color: #fff;color: #000;">-->
+
+                                <div style="width: 20%; float: left;">     
+                                <i class="fa fa-wifi fa-2x" aria-hidden="true"></i>
+                                </div>
+                                <div style="float: right;width: 80%;">     
+                                      <div style="float: left;width: 70%;"> 
+                                      
+                                      </div>
+                                      <div style="float: right;width: 30%;"> 
+                                        {{totalAssetCount}}
+                                      </div>
+                                </div>
+                            </div>
+                            <div class="card-block">
+                                <!--<div style="width: 300px;height: 50px;"> -->
+                                <div class="float-md-left"> Online : <b>{{onlineAssetCount}}</b> </div>
+                                <div class="float-md-right"> Offline :<b>{{offlineAssetCount}}</b></div>
+                            </div>
+                            <!--<div class="card-footer">50 % increased in 2 days</div>-->
+                    </div>
+                    </div>
+
+                    <div class="col-md-4">
+                    <div class="card card-inverse" style="max-width: 20rem;border-color: #fff;">
+                                <div class="card-header" style="background-color: #f34c4b; border-color: #fff;color: #000;">      
+                                  <!--<div class="card-header" style="background-color: #7e8604; 
+                                                background: -webkit-linear-gradient(/*left,*/#7e8604, white);
+                                                background: -o-linear-gradient(/*right,*/#7e8604, white);
+                                                background: -moz-linear-gradient(/*right,*/#7e8604, white);
+                                                background: linear-gradient(/*right,*/#7e8604, white); border-color: #fff;color: #000;">-->
+                                <div style="width: 20%; float: left;">     
+                                <i class="fa fa-wifi fa-2x" aria-hidden="true"></i>
+                                </div>
+                                <div style="float: left;width: 80%;">     
+                                      <div style="float: left;width: 70%;"> 
+                                      
+                                      </div>
+                                      <div style="float: right;width: 30%;"> 
+                                        0
+                                      </div>
+                                </div>
+                            </div>
+                            <div class="card-block">
+                                <!--<div style="width: 300px;height: 50px;"> -->
+                                  <div> 
+                                        &nbsp;&nbsp;
+                                </div>
+                            </div>
+                            <!--<div class="card-footer">50 % increased in 2 days</div>-->
+                    </div>
+                    </div>                      
+        </div>
+
+
+        <tabs-panel (onTabChanged)="mainTabChanged($event)">  
+          <tab [title]="'Client Statistics'" [tabID]="'clientStatsTab'" [tabIcon]="'fa fa-user'" [maxStepWidth]="'200px'">
+            <div *ngIf="mainTab=='clientStatsTab'" style="min-height: 500px;width: 100%">
+                <div *ngIf="assetDataGathered"> 
+                <ba-card>
+                  <app-ngxline-chart1
+                      [viewName]="radiusAcctCollNS"
+                      [pipeLine]="clientRadiusStatsPipeLine"
+                      [getFrom]="'aggregate'"
+                      [lTitle]="'UserNames'"
+                      [showTimeLineOption]=true
+                      chartTitle = "Client Statistics"
+                      yAxisLabel = 'Data Usage(MB)'
+                      xAxisLabel = 'Date'
+                      [locationType]="currentLocationType"
+                      [locationName]="currentLocation">
+                  </app-ngxline-chart1>
+                  </ba-card>
+                
+                  <ba-card>
+                  <app-ngxline-chart1
+                    [viewName]="assetStatsFromRadiusDataCollNS"
+                    [pipeLine]="assetRadiusStatsPipeLine"
+                    [getFrom]="'aggregate'"
+                    [lTitle]="'Assets'"
+                    [showTimeLineOption]=true
+                    chartTitle = "Asset Statistics"
+                    yAxisLabel = 'Data Usage(MB)'
+                    xAxisLabel = 'Date'
+                    [locationType]="currentLocationType"
+                    [locationName]="currentLocation">
+                  </app-ngxline-chart1>
+                  </ba-card>
+                  
+                  <div class="row">
+                    <div class="col-md-12">
+                      <ba-card>
+                    <db-asset-table 
+                    [assetsData]="assetsData"
+                    [locationType]="currentLocationType"
+                    [locationName]="currentLocation"
+                    [tableTitle]= "'Asset Details'"
+                    [assignedTo]="'Location'"
+                    [collName]="'radiusAcctActiveSessions'"
+                    [pipeline]="assetRadiusStatsPipelineForTable"
+                    [dateRange] = "getDateRangeForRadiusData('radius')"
+                    [columns]="assetTableColumns">
+                    </db-asset-table>
+                      </ba-card>
+                    </div>
+                  </div>
+                  
+                  <div class="row">
+                    <div class="col-md-12">
+                      <ba-card>
+                    <db-users-table 
+                    [assetsData]="assetsData"
+                    [locationType]="currentLocationType"
+                    [locationName]="currentLocation"
+                    [tableTitle]= "'User Details'"
+                    [assignedTo]="'Location'"
+                    [collName]="'radiusAcctActiveSessions'"
+                    [pipeline]="userRadiusStatsPipeLineForTable"
+                    [dateRange] = "getDateRangeForRadiusData('radius')"
+                    [columns]="columns">
+                    </db-users-table>
+                      </ba-card>
+                    </div>
+                  </div>
+
+                </div>
+            </div>
+          </tab>
+          <tab [title]="'Accesspoint'" [tabID]="'AccesspointTab'" [tabIcon]="'fa fa-wifi'" [maxStepWidth]="'200px'">
+            <div class="row" *ngIf="mainTab=='AccesspointTab'" style="min-height: 500px;width: 100%">
+              <div style="width: 100%; overflow-y: -webkit-paged-y;" *ngIf="assetDataGathered">
+                <tabs-panel (onTabChanged)="innerTabChanged($event)" >  
+                  <tab [title]="'Inventory'" [tabID]="'ApInventoryTab'" [tabIcon]="'fa fa-circle'" [maxStepWidth]="'200px'">
+                    <div *ngIf="innerTab=='ApInventoryTab'">
+                        <div class="row">
+                            <div class="col-md-4">
+                              <ba-card>
+                                <app-bar-chart1 
+                                  [viewName]="getNameSpace('FloorAssignedAssets')"
+                                  [pipeLine]="getInventoryWiredBackHaulQuery()"
+                                  [getFrom]="'aggregate'"
+                                  chartTitle = "Wired BackHaul Assets"
+                                  yAxisLabel = 'Asset Count'
+                                  xAxisLabel = 'Model'
+                                  [locationType]="currentLocationType"
+                                  [locationName]="currentLocation"
+                                  [chartWidth]="'100%'" 
+                                  [chartHeight]="'300px'">  
+                                </app-bar-chart1>
+                              </ba-card>
+                            </div>
+                            <div class="col-md-4">
+                              <ba-card>
+                                <app-bar-chart1 
+                                  [viewName]="getNameSpace('FloorAssignedAssets')"
+                                  [pipeLine]="getInventoryWirelessBackHaulQuery()"
+                                  [getFrom]="'aggregate'"
+                                  chartTitle = "Wireless BackHaul"
+                                  yAxisLabel = 'Asset Count'
+                                  xAxisLabel = 'Model'
+                                  [locationType]="currentLocationType"
+                                  [locationName]="currentLocation"
+                                  [chartWidth]="'100%'" 
+                                  [chartHeight]="'300px'">  
+                                </app-bar-chart1>
+                              </ba-card>
+                            </div>
+                            <div class="col-md-4">
+                              <ba-card>
+                                <app-bar-chart1 
+                                  [viewName]="getNameSpace('dashboardOnlineOfflineView')"
+                                  [getFrom]="'data'"
+                                  [data] = "onlineOfflineData"
+                                  chartTitle = "Asset Online/Offline"
+                                  yAxisLabel = 'Asset Count'
+                                  xAxisLabel = 'Online/ Offline'
+                                  [locationType]="currentLocationType"
+                                  [locationName]="currentLocation"
+                                  [chartWidth]="'100%'" 
+                                  [chartHeight]="'300px'">  
+                                </app-bar-chart1>
+                              </ba-card>
+                            </div>
+                        </div>              
+                        <div class="row">
+                            <div class="col-md-4">
+                              <ba-card>
+                                <app-pie-chart1
+                                  [viewName]="getNameSpace('FloorAssignedAssets')"
+                                  [pipeLine]="getInventoryAssetTypesQuery()"
+                                  chartTitle = "Asset Types"
+                                  [locationType]="currentLocationType"
+                                  [locationName]="currentLocation"
+                                  [chartWidth]="'100%'" 
+                                  [chartHeight]="'300px'">
+                                  </app-pie-chart1>
+                              </ba-card>
+                            </div>
+                            <div class="col-md-4">
+                              <ba-card>
+                                <app-bar-chart1 
+                                  [viewName]="getNameSpace('FloorAssignedAssets')"
+                                  [pipeLine]="getInventoryByVendorQuery()"
+                                  [getFrom]="'aggregate'"
+                                  chartTitle = "Inventory by Vendor"
+                                  yAxisLabel = 'Asset Count'
+                                  xAxisLabel = 'Vendor'
+                                  [locationType]="currentLocationType"
+                                  [locationName]="currentLocation"
+                                  [chartWidth]="'100%'" 
+                                  [chartHeight]="'300px'">  
+                                </app-bar-chart1>
+                              </ba-card>
+                            </div>
+                            <div class="col-md-4">
+                              <ba-card>
+                                <app-bar-chart1 
+                                  [viewName]="getNameSpace('FloorAssignedAssets')"
+                                  [pipeLine]="getInventoryByModelQuery()"
+                                  [getFrom]="'aggregate'"
+                                  chartTitle = "Inventory by Model"
+                                  yAxisLabel = 'Asset Count'
+                                  xAxisLabel = 'Model'
+                                  [locationType]="currentLocationType"
+                                  [locationName]="currentLocation"
+                                  [chartWidth]="'100%'" 
+                                  [chartHeight]="'300px'">  
+                                </app-bar-chart1>
+                              </ba-card>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col-md-6">
+                            <ba-card>
+                              <app-hBar-chart1 
+                                [viewName]="getNameSpace('rogueAsset')"
+                                [pipeLine]="rogueAssetByVendorAndModelPipeLineQuery"
+                                [getFrom]="'aggregate'"
+                                chartTitle = "Rogue Assets"
+                                yAxisLabel = 'Vendor, Model'
+                                xAxisLabel = 'Count'
+                                [showYAxisLabel]="false"
+                                [locationType]="currentLocationType"
+                                [locationName]="currentLocation"
+                                [chartWidth]="'100%'" 
+                                [chartHeight]="'300px'">  
+                              </app-hBar-chart1>
+                            </ba-card>
+                          </div>
+                          <div class="col-md-6">
+                            <ba-card>
+                              <app-hBar-chart1 
+                                [viewName]="getNameSpace('rogueClient')"
+                                [pipeLine]="rogueAssetByVendorAndModelPipeLineQuery"
+                                [getFrom]="'aggregate'"
+                                chartTitle = "Rogue Clients"
+                                yAxisLabel = 'Vendor, Model'
+                                xAxisLabel = 'Count'
+                                [showYAxisLabel]="false"
+                                [locationType]="currentLocationType"
+                                [locationName]="currentLocation"
+                                [chartWidth]="'100%'" 
+                                [chartHeight]="'300px'">  
+                              </app-hBar-chart1>
+                            </ba-card>
+                          </div>
+                        </div>
+
+
+                        <div class="row">
+                          <div class="col-md-12">
+                            <ba-card>
+                          <db-ba-asset-table
+                          [assetsData]="assetsData"
+                          [locationType]="currentLocationType"
+                          [locationName]="currentLocation"
+                          [tableTitle]= "'Asset Details'"
+                          [assignedTo]="'Location'"
+                          >
+                          </db-ba-asset-table>
+                          *****<dashboard-table 
+                          [assetsData]="assetsData"
+                          [locationType]="currentLocationType"
+                          [locationName]="currentLocation"
+                          [tableTitle]= "'Asset Details'"
+                          [assignedTo]="'Location'"
+                          [collName]="'FloorAssignedAssets'"
+                          [dateRange] = "getDateRangeForRadiusData('normal')"
+                          [dataType]="'normal'"
+                          [columns]="assetTableColumns">
+                          </dashboard-table>*****
+                          </ba-card>
+                        </div>
+                        </div>
+
+                        
+
+
+
+
+
+
+
+                    </div>
+                  </tab>
+                  <tab [title]="'Fault'" [tabID]="'ApFaultTab'" [tabIcon]="'fa fa-circle'" [maxStepWidth]="'200px'">
+                    <div *ngIf="innerTab=='ApFaultTab'">
+                     <ba-card>
+                     <app-ngxline-chart1
+                        [viewName]="getNameSpace('DashboardAssetData')"
+                        [pipeLine]="getFaultRadioTrFailFramesQuery()"
+                        [getFrom]="'aggregate'"
+                        [showTimeLineOption]=true
+                        chartTitle = "Radio Transmit Failure Frames"
+                        yAxisLabel = 'Tr Failure Frames'
+                        xAxisLabel = 'Date'
+                        [locationType]="currentLocationType"
+                        [locationName]="currentLocation">
+                     </app-ngxline-chart1>
+                     </ba-card>
+                     <ba-card>
+                     <app-ngxline-chart1
+                        [viewName]="getNameSpace('DashboardAssetData')"
+                        [pipeLine]="getFaultRadioAuthFailQuery()"
+                        [getFrom]="'aggregate'"
+                        [showTimeLineOption]=true
+                        chartTitle = "Radio Authentication Failures"
+                        yAxisLabel = 'Auth Failure Count'
+                        xAxisLabel = 'Date'
+                        [locationType]="currentLocationType"
+                        [locationName]="currentLocation">
+                     </app-ngxline-chart1>
+                     </ba-card>
+                     <ba-card>
+                     <app-ngxline-chart1
+                        [viewName]="getNameSpace('DashboardAssetData')"
+                        [pipeLine]="getFaultRadioTrBytesQuery()"
+                        [getFrom]="'aggregate'"
+                        [showTimeLineOption]=true
+                        chartTitle = "Radio Transmitted Statistics"
+                        yAxisLabel = 'Received Bytes'
+                        xAxisLabel = 'Date'
+                        [locationType]="currentLocationType"
+                        [locationName]="currentLocation">
+                     </app-ngxline-chart1>
+                     </ba-card>
+                     <ba-card>
+                     <app-ngxline-chart1
+                        [viewName]="getNameSpace('DashboardAssetData')"
+                        [pipeLine]="getFaultRadioReceiveBytesQuery()"
+                        [getFrom]="'aggregate'"
+                        [showTimeLineOption]=true
+                        chartTitle = "Radio Received Statistics"
+                        yAxisLabel = 'Transmitted Bytes'
+                        xAxisLabel = 'Date'
+                        [locationType]="currentLocationType"
+                        [locationName]="currentLocation">
+                     </app-ngxline-chart1>
+                     </ba-card>
+                    </div>
+                  </tab>
+                  <tab [title]="'Performance'" [tabID]="'ApPerformanceTab'" [tabIcon]="'fa fa-circle'" [maxStepWidth]="'200px'">
+                    
+                    <div *ngIf="innerTab=='ApPerformanceTab'">
+                      <ba-card>
+                      <app-ngxline-chart1
+                          [viewName]="getNameSpace('DashboardAssetData')"
+                          [pipeLine]="getPerformanceSNRQuery()"
+                          [getFrom]="'aggregate'"
+                          [showTimeLineOption]=true
+                          chartTitle = "SNR Chart"
+                          yAxisLabel = 'SNR'
+                          xAxisLabel = 'Date'
+                          [locationType]="currentLocationType"
+                          [locationName]="currentLocation">
+                      </app-ngxline-chart1>
+                      </ba-card>
+                      <ba-card>
+                      <app-ngxline-chart1
+                        [viewName]="getNameSpace('DashboardAssetData')"
+                        [pipeLine]="getPerformanceConnectedClientsQuery()"
+                        [getFrom]="'aggregate'"
+                        [showTimeLineOption]=true
+                        chartTitle = "Connected Clients Chart"
+                        yAxisLabel = 'Clients'
+                        xAxisLabel = 'Date'
+                        [locationType]="currentLocationType"
+                        [locationName]="currentLocation">
+                     </app-ngxline-chart1>
+                      </ba-card>
+                    </div>
+                  </tab>
+                </tabs-panel>
+              </div>
+            </div>
+          </tab>
+          <!--<tab [title]="'Switch'" [tabID]="'SwitchTab'" [tabIcon]="'fa fa-circle'" [maxStepWidth]="'200px'">
+            <div class="row" *ngIf="mainTab=='SwitchTab'" style="min-height: 500px;width: 100%">
+              <div style="width: 100%">
+                <tabs-panel (onTabChanged)="innerTabChanged($event)" >  
+                  <tab [title]="'Inventory'" [tabID]="'SwitchInventoryTab'" [tabIcon]="'fa fa-circle'" [maxStepWidth]="'200px'">
+                    <div *ngIf="innerTab=='SwitchInventoryTab'">
+                      <h1>Switch Inventory...</h1>
+                    </div>
+                  </tab>
+                  <tab [title]="'Fault'" [tabID]="'SwitchFaultTab'" [tabIcon]="'fa fa-circle'" [maxStepWidth]="'200px'">
+                    <div *ngIf="innerTab=='SwitchFaultTab'">
+                      <h1>Switch Fault...</h1>
+                    </div>
+                  </tab>
+                  <tab [title]="'Performance'" [tabID]="'SwitchPerformanceTab'" [tabIcon]="'fa fa-circle'" [maxStepWidth]="'200px'">
+                    <div *ngIf="innerTab=='SwitchPerformanceTab'">
+                      <h1>Switch Performance...</h1>
+                    </div>
+                  </tab>
+                </tabs-panel>
+              </div>
+            </div>
+          </tab>-->
+          <tab [title]="'Alert'" [tabID]="'AlertTab'" [tabIcon]="'fa fa-exclamation-triangle'" [maxStepWidth]="'200px'" >
+            
+            <div *ngIf="mainTab=='AlertTab'" style="min-height: 500px;">
+              <alert-tab></alert-tab>
+              
+            </div>
+          </tab>
+        </tabs-panel>
+    
+      </div>      
+    </div>
+    <footer class="al-footer clearfix">
+      <!--<div class="al-footer-right">Created with <i class="ion-heart"></i></div>-->
+      <div class="al-footer-main clearfix">
+        <div class="al-copy">&copy; <a href="http://matrecomm.com/">MatreComm Technologies Pvt Ltd </a> 2017</div>
+        <!--<ul class="al-share clearfix">
+          <li><i class="socicon socicon-facebook"></i></li>
+          <li><i class="socicon socicon-twitter"></i></li>
+          <li><i class="socicon socicon-google"></i></li>
+          <li><i class="socicon socicon-github"></i></li>
+        </ul>-->
+      </div>
+    </footer>
+    <ba-back-top position="200"></ba-back-top>

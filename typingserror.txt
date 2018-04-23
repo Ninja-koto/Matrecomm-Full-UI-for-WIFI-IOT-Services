@@ -1,0 +1,4 @@
+npm install -g typings
+
+"ng2-daterangepicker": "^2.0.10",
+@types/handlebars@4.0.31

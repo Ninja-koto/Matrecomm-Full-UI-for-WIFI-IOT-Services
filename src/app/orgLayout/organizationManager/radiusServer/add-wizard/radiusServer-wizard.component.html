@@ -1,0 +1,64 @@
+    <form-wizard (finalSubmit)="gotoFinalSubmit($event)">  
+      <wizard-step [title]="'Radius Server Settings'" [maxStepWidth]="'200px'" [isValid]="step1Validition">
+        <form [formGroup]="myForm" style="border-left:#fff;"  novalidate (ngSubmit)="save(myForm.value, myForm.valid)">
+   
+      <div class="row">
+        <div class="col-md-12" >                                       
+        <label><b>Select Radius Type</b></label><br>
+
+                <label>
+                <input type="radio" id="craftAirRadius" value="CraftAir"  formControlName="radiusType" (click)="radiusType($event)">
+                CraftAir</label>
+                <label>
+                <input type="radio" id="externalRadius" value="External"   formControlName="radiusType" (click)="radiusType($event)"/>
+                External</label>
+                
+          </div>
+      </div>
+
+   <div *ngIf ="showCraftAir">
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for=""><b>Shared Secret key</b></label>
+                      <input type="text" class="form-control" formControlName="radiusSharedSecret" placeholder="Please enter radius server shared secret key">              
+                      <error-messages [control]="myForm.controls.radiusSharedSecret" class="text-danger"></error-messages>
+                </div>
+              </div>
+            </div>   
+   </div>
+        
+      <div *ngIf ="!showCraftAir">
+           <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for=""><b>IP Address</b></label>
+                      <input type="text" class="form-control" formControlName="radiusIPAddress" placeholder="Please enter radius server IP Address">
+                      <error-messages [control]="myForm.controls.radiusIPAddress" class="text-danger"></error-messages>
+                </div>
+              </div>
+            </div>   
+           <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for=""><b>Port Number</b></label>
+                      <input type="number" class="form-control" formControlName="radiusPortNumber" placeholder="Please enter radius server port number">
+                      
+                      <error-messages [control]="myForm.controls.radiusPortNumber" class="text-danger"></error-messages>
+                </div>
+              </div>
+            </div>   
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for=""><b>Shared Secret key</b></label>
+                      <input type="text" class="form-control" formControlName="radiusSharedSecret" placeholder="Please enter radius server shared secret key">               
+                      <error-messages [control]="myForm.controls.radiusSharedSecret" class="text-danger"></error-messages>
+                </div>
+              </div>
+            </div>              
+      </div>
+        </form>
+  </wizard-step>
+    
+  </form-wizard>

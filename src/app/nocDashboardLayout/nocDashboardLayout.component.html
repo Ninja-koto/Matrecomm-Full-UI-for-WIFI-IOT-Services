@@ -1,0 +1,890 @@
+<tree-sidebar
+(sidebar)='onApnUserSelect($event)'
+></tree-sidebar>
+
+   <!--<ba-page-top></ba-page-top>-->
+   <page-top></page-top>
+   <div class="al-main">
+     <div class="al-content">
+       <ba-content-top></ba-content-top>
+       <div *ngIf="assetDataGathered">
+          <marquee behavior="scroll" direction="left" onmouseover="this.stop();" onmouseout="this.start();">
+              <div > 
+                <b>Please select an asset in the table to see Asset info and Charts</b>
+            </div>
+          </marquee>
+          <div >
+              <modal  [animation]="animation" [keyboard]="keyboard"  (onClose)="closed()" (onDismiss)="dismissed()"
+                     (onOpen)="opened()" #validationModal1>
+                     <form #modalForm="ngForm">
+                         <modal-header [show-close]="true">
+                             <h4 class="modal-title">{{getTitleOfAlert()}}</h4>
+                         </modal-header>
+                         <modal-body>
+                           <div *ngIf="!currentSelectedApnUserDataCollected" style="height:100px;">
+                            <h3 style="color:red;">Please choose shorter range... Max Range 2 Days..</h3>
+                              <div class="card-block">
+                                  
+                              </div>
+        
+                            </div>
+                            <div *ngIf="currentSelectedApnUserDataCollected" style="height:25em;overflow:scroll;">
+                              <h3 style="color:green;">User Info...</h3>
+                              <table class="rwd-table" style="margin-left: auto;margin-right: auto;">
+                                  <tr *ngFor="let user of currentSelectedApnUserInfo">
+                                    <td><b>{{user.key}}</b></td>
+                                    <td>&nbsp;<b>:</b>&nbsp;&nbsp;</td>
+                                    <td>{{user.value}}</td>
+                                  </tr>
+                              </table>
+          
+                            </div>
+                            <div class="row col-md-12">                    
+                              <button class="btn btn-xs btn-default" data-toggle="tooltip" title="" (click)="validationModal1.dismiss()" >Close</button>
+                            </div>
+                           
+                         </modal-body>
+                         <modal-footer>
+                        </modal-footer>
+                     </form>
+              </modal>
+              <button class="btn btn-xs btn-primary" id="alertModalButton" hidden data-toggle="tooltip" title="" (click)="validationModal1.open('lg')" ></button>
+            </div>
+          
+              <!--<ba-card baCardClass="with-scroll table-panel">
+                <div class="col-md-12">
+                    <div class="col-md-9 pull-left">
+                    <h3>User Count By Hours </h3>
+                    </div>
+                  </div>
+                <div style="height:300px; width: 100%">
+                <ngx-charts-bar-vertical-stacked
+                [view]="view"
+                [scheme]="colorScheme"
+                [results]="multi1"
+                [gradient]="true"
+                [xAxis]="true"
+                [yAxis]="true"
+                [legend]="true"
+                [legendTitle]="'Hour'"
+                [showXAxisLabel]="true"
+                [showYAxisLabel]="true"
+                [xAxisLabel]="'Date'"
+                [yAxisLabel]="'Users count by hour'"
+                (select)="onSelect($event)">
+              </ngx-charts-bar-vertical-stacked>
+                </div>
+              </ba-card>
+
+              <ba-card baCardClass="with-scroll table-panel">
+                  <div class="col-md-12">
+                      <div class="col-md-9 pull-left">
+                      <h3>User Count By Week Days </h3>
+                      </div>
+                    </div>
+                  <div style="height:300px; width: 100%">
+                      <ngx-charts-bar-vertical        
+                      [scheme]="colorScheme"
+                      [results]="weekData"
+                      [gradient]= "true"
+                      [xAxis]="true"
+                      [yAxis]="true"
+                      [legend]="true"
+                      [showXAxisLabel]="true"
+                      [showYAxisLabel]="true"
+                      [xAxisLabel]="'Week Day'"
+                      [yAxisLabel]="'User Count'"
+                      (select)="onSelect($event)">
+                </ngx-charts-bar-vertical>
+                  </div>
+                </ba-card>
+          
+          
+          <ba-card>
+              <div style="height:300px; width: 100%">
+            <ngx-charts-gauge
+            [view]="view"
+            [scheme]="colorScheme"
+            [results]="guageData"
+            [min]="0"
+            [max]="100"
+            [angleSpan]="240"
+            [startAngle]="-120"
+            [units]="'alerts'"
+            [bigSegments]="10"
+            [smallSegments]="5"
+            (select)="onSelect($event)">
+          </ngx-charts-gauge>
+              </div>
+          </ba-card>-->
+
+
+
+          <ba-card baCardClass="with-scroll table-panel">    
+              <collection-table1
+                   [collectionTableData]= assetsData
+                   [columns]= columns
+                   [hideWizardButtons]=true
+                   [hideSearchBox]=false
+                   tableID = "alertEscalation"
+                   tableTitle ="Asset Details"
+                   enableUnselectOnExit="yes"
+                   [rowsOnPage] = 3
+                   sortBy = "macAddress"
+                   sortOrder = "asc"
+                   [rowsOnPageButtons] = [1,3,5,10,15]
+                   (selectedData) = "selectedRowData($event)"
+                   >
+              </collection-table1>
+          </ba-card>
+          <dash-tabs-panel *ngIf="lteInfoCollected" [dataToDisplay1]="'Asset Information'" [dataToDisplay2]="'Last Updated On : '+selectedAssetLastUpdatedTime" (onTabChanged)="dataDisplayTabChanged($event)" >  
+              <dash-tab [title]="'Device'" [tabID]="'deviceInfo'" [tabIcon]="'fa fa-info-circle'" [maxStepWidth]="'200px'">
+              <div *ngIf="dataDisplayTab=='deviceInfo'" >
+                  <!--<div class="card" style="border-color: #fff;">
+                      <div class="card-header" style="background-color: #9edff8;color: #000;">
+          
+                          <div style="width: 50%;float:left;">
+                            Device Info
+                          </div>
+                          <div style="width: 50%;float:right;">
+                            Last Updated On: {{selectedAssetLastUpdatedTime}}
+                          </div>
+    
+                      </div>
+                      <div class="card-block">-->
+                          <table class="rwd-table">
+                              <tr>
+                                <td><b>BootVer:</b></td>
+                                <td>{{deviceInfoOfSelectedAsset.BootVer}}</td>
+                                <td>&nbsp;&nbsp;&nbsp;</td>
+                                <td><b>DTBHardwareType:</b></td>
+                                <td>{{deviceInfoOfSelectedAsset.DTBHardwareType}}</td>
+                                <td>&nbsp;&nbsp;&nbsp;</td>
+                                <td><b>DTBVersion:</b></td>
+                                <td>{{deviceInfoOfSelectedAsset.DTBVersion}}</td>
+                              </tr>
+                              <tr>
+                                <td><b>HardwareModel:</b></td>
+                                <td>{{deviceInfoOfSelectedAsset.HardwareModel}}</td>
+                                <td>&nbsp;&nbsp;&nbsp;</td>
+                                <td><b>LTEMAC:</b></td>
+                                <td>{{deviceInfoOfSelectedAsset.LTEMAC}}</td>
+                                <td>&nbsp;&nbsp;&nbsp;</td>
+                                <td><b>SerialNumber:</b></td>
+                                <td>{{deviceInfoOfSelectedAsset.SerialNumber}}</td>
+                              </tr>
+                              <tr>
+                                <td><b>SoftwareVer:</b></td>
+                                <td>{{deviceInfoOfSelectedAsset.SoftwareVer}}</td>
+                                <td>&nbsp;&nbsp;&nbsp;</td>
+                                <td><b>USB0HostMAC:</b></td>
+                                <td>{{deviceInfoOfSelectedAsset.USB0HostMAC}}</td>
+                                <td>&nbsp;&nbsp;&nbsp;</td>
+                                <td><b>USB0LocalMAC:</b></td>
+                                <td>{{deviceInfoOfSelectedAsset.USB0LocalMAC}}</td>
+                              </tr>
+                              <tr>
+                                <td><b>UpTime:</b></td>
+                                <td>{{getSecsToTime(deviceInfoOfSelectedAsset.Uptime)}}</td>
+                                <td>&nbsp;</td>
+                                <td><b>WiFiMAC:</b></td>
+                                <td>{{deviceInfoOfSelectedAsset.WiFiMAC}}</td>
+                              </tr>
+                              <tr>
+                                <td><b>Tx Data:</b></td>
+                                <td>{{convertBytesToMegaBytes(trBytes)}}</td>
+                                <td>&nbsp;</td>
+                                <td><b>Rx Data:</b></td>
+                                <td>{{convertBytesToMegaBytes(rvBytes)}}</td>
+                              </tr>
+                            </table>
+                           
+                      <!--</div>
+                  </div>  -->
+              </div>
+              </dash-tab>
+
+              <dash-tab [title]="'LTE'" [tabID]="'lteInfo'" [tabIcon]="'fa fa-info-circle'" [maxStepWidth]="'200px'">
+                  <div *ngIf="dataDisplayTab=='lteInfo'" style="max-height:350px;">
+                      <!--<div class="col-md-12" *ngIf="lteInfoCollected">
+                          
+                            <div class="card" style="border-color: #fff;">
+                                <div class="card-header" style="background-color: #9edff8;color: #000;">
+                    
+                                    <div style="width: 50%;float:left;">
+                                      LTE Info
+                                    </div>
+                                    <div style="width: 50%;float:right;">
+                                      Last Updated On: {{selectedAssetLastUpdatedTime}}
+                                    </div>
+              
+                                </div>
+                                <div class="card-block">-->
+                                      <table class="rwd-table">
+                                          <tr>
+                                            <td><b>BandWidth:</b></td>
+                                            <td>{{lteInfoOfSelectedAsset.BandWidth}}</td>
+            
+                                            <td><b>TransMode:</b></td>
+                                            <td>{{lteInfoOfSelectedAsset.TransMode}}</td>
+            
+                                            <td><b>WorkMode:</b></td>
+                                            <td>{{lteInfoOfSelectedAsset.WorkMode}}</td>
+                                          </tr>
+                                          <tr>
+                                            <td><b>PLMN:</b></td>
+                                            <td>{{lteInfoOfSelectedAsset.PLMN}}</td>
+            
+                                            <td><b>GCI:</b></td>
+                                            <td>{{lteInfoOfSelectedAsset.GCI}}</td>
+                                            
+                                            <td><b>PCI:</b></td>
+                                            <td>{{lteInfoOfSelectedAsset.PCI}}</td>
+                                          </tr>
+                                          <tr>
+                                            <td><b>ICCID:</b></td>
+                                            <td>{{lteInfoOfSelectedAsset.ICCID}}</td>
+                                            
+                                            <td><b>IMEI:</b></td>
+                                            <td>{{lteInfoOfSelectedAsset.IMEI}}</td>
+                                            
+                                            <td><b>IMSI:</b></td>
+                                            <td>{{lteInfoOfSelectedAsset.IMSI}}</td>
+                                          </tr>
+                                          <tr>
+                                            <td><b>RSRP:</b></td>
+                                            <td>{{lteInfoOfSelectedAsset.RSRP}} dBm</td>
+                                            
+                                            <td><b>RSRQ:</b></td>
+                                            <td>{{lteInfoOfSelectedAsset.RSRQ}} dB</td>
+                                          
+                                            <td><b>RSSI:</b></td>
+                                            <td>{{lteInfoOfSelectedAsset.RSSI}} dBm</td>
+                                          </tr>
+                                          <tr>
+                                            
+                                            <td><b>SINR:</b></td>
+                                            <td>{{lteInfoOfSelectedAsset.SINR}} dB</td>
+                                            
+                                            <td><b>RXTHR:</b></td>
+                                            <td>{{convertBytesToMegaBytes(lteInfoOfSelectedAsset.RXTHR)}}</td>
+                                            
+                                            <td><b>TXTHR:</b></td>
+                                            <td>{{convertBytesToMegaBytes(lteInfoOfSelectedAsset.TXTHR)}}</td>  
+                                          </tr>
+                                          <tr>
+                                            <td><b>USIMExtST:</b></td>
+                                            <td>{{lteInfoOfSelectedAsset.USIMExtST}}</td>
+                                            
+                                            <td><b>USIMStatus:</b></td>
+                                            <td>{{lteInfoOfSelectedAsset.USIMStatus}}</td>
+                                          </tr>
+                                        </table>
+                                <!--</div>
+                            </div>
+                                
+                        </div>-->
+                  </div>
+                  </dash-tab>
+                <dash-tab [title]="'APN'" [tabID]="'apnInfo'" [tabIcon]="'fa fa-info-circle'" [maxStepWidth]="'200px'">
+                  <div *ngIf="dataDisplayTab=='apnInfo'" style="max-height:350px;">
+                      <!--<div class="col-md-12" *ngIf="lteInfoCollected">
+                          
+                            <div class="card" style="border-color: #fff;">
+                                <div class="card-header" style="background-color: #9edff8;color: #000;">
+                    
+                                    <div style="width: 50%;float:left;">
+                                      APN Info
+                                    </div>
+                                    <div style="width: 50%;float:right;">
+                                      Last Updated On: {{selectedAssetLastUpdatedTime}}
+                                    </div>
+              
+                                </div>
+                                <div class="card-block">-->
+                                      <table class="rwd-table">
+                                          <tr>
+                                            <td><b>APNName:</b></td>
+                                            <td>{{apnInfoOfSelectedAsset.APNName}}</td>
+                                            <td><b>AuthHost:</b></td>
+                                            <td>{{apnInfoOfSelectedAsset.AuthHost}}</td>
+                                            
+                                            <td><b>AuthName:</b></td>
+                                            <td>{{apnInfoOfSelectedAsset.AuthName}}</td>
+                                            
+                                            <td><b>AuthType:</b></td>
+                                            <td>{{apnInfoOfSelectedAsset.AuthType}}</td>
+                                          </tr>
+                                          <tr>
+                                              <td><b>AuthPasswd:</b></td>
+                                              <td>{{apnInfoOfSelectedAsset.AuthPasswd}}</td>
+                                              
+                                              <td><b>Admin APNName:</b></td>
+                                              <td>{{adminApnInfoOfSelectedAsset.APNName}}</td>
+                                              
+                                              <td><b>Admin AuthHost:</b></td>
+                                              <td>{{adminApnInfoOfSelectedAsset.AuthHost}}</td>
+                                            </tr>
+                                            <tr>
+                                              <td><b>Admin AuthName:</b></td>
+                                              <td>{{adminApnInfoOfSelectedAsset.AuthName}}</td>
+                                          
+                                              <td><b>Admin AuthType:</b></td>
+                                              <td>{{adminApnInfoOfSelectedAsset.AuthType}}</td>
+            
+                                              <td><b>Admin AuthPasswd:</b></td>
+                                              <td>{{adminApnInfoOfSelectedAsset.AuthPasswd}}</td>
+                                            </tr>
+                                        </table>
+                                <!--</div>
+                            </div>
+                                
+                        </div>-->
+                  </div>
+                </dash-tab>
+                <dash-tab [title]="'APN WAN'" [tabID]="'apnWanInfo'" [tabIcon]="'fa fa-info-circle'" [maxStepWidth]="'200px'">
+                    <div *ngIf="dataDisplayTab=='apnWanInfo'" style="max-height:350px;">
+                        <!--<div class="col-md-12" *ngIf="lteInfoCollected">
+                            <div class="card" style="border-color: #fff;">
+                                <div class="card-header" style="background-color: #9edff8;color: #000;">
+                                    <div style="width: 50%;float:left;">
+                                      APN WAN Info
+                                    </div>
+                                    <div style="width: 50%;float:right;">
+                                      Last Updated On: {{selectedAssetLastUpdatedTime}}
+                                    </div>
+                                </div>
+                                <div class="card-block">-->
+                                      <table class="rwd-table">
+                                          <tr>
+                                            <td><b>WANIPV43:</b></td>
+                                            <td>{{apnWanInfoOfSelectedAsset.WANIPV43}}</td>
+                                            <td><b>NetMask3:</b></td>
+                                            <td>{{apnWanInfoOfSelectedAsset.NetMask3}}</td>
+                                            <td><b>Gateway3:</b></td>
+                                            <td>{{apnWanInfoOfSelectedAsset.Gateway3}}</td>
+                                          </tr>
+                                          <tr>
+                                              <td><b>PriDNSV43:</b></td>
+                                              <td>{{apnWanInfoOfSelectedAsset.PriDNSV43}}</td>
+                                              <td><b>SecDNSV43:</b></td>
+                                              <td>{{apnWanInfoOfSelectedAsset.SecDNSV43}}</td>
+                                          </tr>
+                                        </table>
+                                <!--</div>
+                            </div>
+                        </div>-->
+                    </div>
+                </dash-tab>
+
+                <dash-tab [title]="'WAN'" [tabID]="'wanInfo'" [tabIcon]="'fa fa-info-circle'" [maxStepWidth]="'200px'">
+                    <div *ngIf="dataDisplayTab=='wanInfo'" style="max-height:350px;">
+                        <!--<div class="col-md-12" *ngIf="lteInfoCollected">
+                            <div class="card" style="border-color: #fff;">
+                                <div class="card-header" style="background-color: #9edff8;color: #000;">
+                                    <div style="width: 50%;float:left;">
+                                      WAN Info
+                                    </div>
+                                    <div style="width: 50%;float:right;">
+                                      Last Updated On: {{selectedAssetLastUpdatedTime}}
+                                    </div>
+                                </div>
+                                <div class="card-block">-->
+                                      <table class="rwd-table">
+                                          <tr>
+                                            <td><b>WANIPV41:</b></td>
+                                            <td>{{wanInfoOfSelectedAsset.WANIPV41}}</td>
+                                            <td><b>NetMask1:</b></td>
+                                            <td>{{wanInfoOfSelectedAsset.NetMask1}}</td>
+                                            <td><b>Gateway1:</b></td>
+                                            <td>{{wanInfoOfSelectedAsset.Gateway1}}</td>
+                                          </tr>
+                                          <tr>
+                                              <td><b>PriDNSV41:</b></td>
+                                              <td>{{wanInfoOfSelectedAsset.PriDNSV41}}</td>
+                                              <td><b>SecDNSV41:</b></td>
+                                              <td>{{wanInfoOfSelectedAsset.SecDNSV41}}</td>
+                                          </tr>
+                                        </table>
+                                <!--</div>
+                            </div>
+                        </div>-->
+                    </div>
+                </dash-tab>
+
+                <dash-tab [title]="'LAN'" [tabID]="'lanInfo'" [tabIcon]="'fa fa-info-circle'" [maxStepWidth]="'200px'">
+                    <div *ngIf="dataDisplayTab=='lanInfo'" style="max-height:350px;">
+                        <!--<div class="col-md-12" *ngIf="lteInfoCollected">
+                            <div class="card" style="border-color: #fff;">
+                                <div class="card-header" style="background-color: #9edff8;color: #000;">
+                                    <div style="width: 50%;float:left;">
+                                      LAN Info
+                                    </div>
+                                    <div style="width: 50%;float:right;">
+                                      Last Updated On: {{selectedAssetLastUpdatedTime}}
+                                    </div>
+                                </div>
+                                <div class="card-block">-->
+                                      <table class="rwd-table">
+                                          <tr>
+                                            <td><b>IP:</b></td>
+                                            <td>{{lanInfoOfSelectedAsset.IP}}</td>
+                                            <td><b>SubMask:</b></td>
+                                            <td>{{lanInfoOfSelectedAsset.SubMask}}</td>
+                                            <td><b>DHCPType:</b></td>
+                                            <td>{{lanInfoOfSelectedAsset.DHCPType}}</td>
+                                          </tr>
+                                          <tr>
+                                              <td><b>DHCPStart:</b></td>
+                                              <td>{{lanInfoOfSelectedAsset.DHCPStart}}</td>
+                                              <td><b>DHCPEnd:</b></td>
+                                              <td>{{lanInfoOfSelectedAsset.DHCPEnd}}</td>
+                                              <td><b>LANMAC:</b></td>
+                                              <td>{{lanInfoOfSelectedAsset.LANMAC}}</td>
+                                          </tr>
+                                        </table>
+                                <!--</div>
+                            </div>
+                        </div>-->
+                    </div>
+                </dash-tab>
+
+          </dash-tabs-panel>
+
+
+
+
+          <div class="row">
+          <!--<div class="col-md-12" *ngIf="deviceInfoCollected">
+              <div class="card" style="border-color: #fff;">
+                  <div class="card-header" style="background-color: #9edff8;color: #000;">
+      
+                      <div style="width: 50%;float:left;">
+                        Device Info
+                      </div>
+                      <div style="width: 50%;float:right;">
+                        Last Updated On: {{selectedAssetLastUpdatedTime}}
+                      </div>
+
+                  </div>
+                  <div class="card-block">
+                      <table class="rwd-table">
+                          <tr>
+                            <td><b>BootVer:</b></td>
+                            <td>{{deviceInfoOfSelectedAsset.BootVer}}</td>
+                            <td>&nbsp;&nbsp;&nbsp;</td>
+                            <td><b>DTBHardwareType:</b></td>
+                            <td>{{deviceInfoOfSelectedAsset.DTBHardwareType}}</td>
+                            <td>&nbsp;&nbsp;&nbsp;</td>
+                            <td><b>DTBVersion:</b></td>
+                            <td>{{deviceInfoOfSelectedAsset.DTBVersion}}</td>
+                          </tr>
+                          <tr>
+                            <td><b>HardwareModel:</b></td>
+                            <td>{{deviceInfoOfSelectedAsset.HardwareModel}}</td>
+                            <td>&nbsp;&nbsp;&nbsp;</td>
+                            <td><b>LTEMAC:</b></td>
+                            <td>{{deviceInfoOfSelectedAsset.LTEMAC}}</td>
+                            <td>&nbsp;&nbsp;&nbsp;</td>
+                            <td><b>SerialNumber:</b></td>
+                            <td>{{deviceInfoOfSelectedAsset.SerialNumber}}</td>
+                          </tr>
+                          <tr>
+                            <td><b>SoftwareVer:</b></td>
+                            <td>{{deviceInfoOfSelectedAsset.SoftwareVer}}</td>
+                            <td>&nbsp;&nbsp;&nbsp;</td>
+                            <td><b>USB0HostMAC:</b></td>
+                            <td>{{deviceInfoOfSelectedAsset.USB0HostMAC}}</td>
+                            <td>&nbsp;&nbsp;&nbsp;</td>
+                            <td><b>USB0LocalMAC:</b></td>
+                            <td>{{deviceInfoOfSelectedAsset.USB0LocalMAC}}</td>
+                          </tr>
+                          <tr>
+                            <td><b>UpTime:</b></td>
+                            <td>{{getSecsToTime(deviceInfoOfSelectedAsset.Uptime)}}</td>
+                            <td>&nbsp;</td>
+                            <td><b>WiFiMAC:</b></td>
+                            <td>{{deviceInfoOfSelectedAsset.WiFiMAC}}</td>
+                          </tr>
+                        </table>
+                       
+                  </div>
+              </div>
+          </div>
+          <div class="col-md-12" *ngIf="lteInfoCollected">
+              
+                <div class="card" style="border-color: #fff;">
+                    <div class="card-header" style="background-color: #9edff8;color: #000;">
+        
+                        <div style="width: 50%;float:left;">
+                          LTE Info
+                        </div>
+                        <div style="width: 50%;float:right;">
+                          Last Updated On: {{selectedAssetLastUpdatedTime}}
+                        </div>
+  
+                    </div>
+                    <div class="card-block">
+                          <table class="rwd-table">
+                              <tr>
+                                <td><b>BandWidth:</b></td>
+                                <td>{{lteInfoOfSelectedAsset.BandWidth}}</td>
+
+                                <td><b>TransMode:</b></td>
+                                <td>{{lteInfoOfSelectedAsset.TransMode}}</td>
+
+                                <td><b>WorkMode:</b></td>
+                                <td>{{lteInfoOfSelectedAsset.WorkMode}}</td>
+                              </tr>
+                              <tr>
+                                <td><b>PLMN:</b></td>
+                                <td>{{lteInfoOfSelectedAsset.PLMN}}</td>
+
+                                <td><b>GCI:</b></td>
+                                <td>{{lteInfoOfSelectedAsset.GCI}}</td>
+                                
+                                <td><b>PCI:</b></td>
+                                <td>{{lteInfoOfSelectedAsset.PCI}}</td>
+                              </tr>
+                              <tr>
+                                <td><b>ICCID:</b></td>
+                                <td>{{lteInfoOfSelectedAsset.ICCID}}</td>
+                                
+                                <td><b>IMEI:</b></td>
+                                <td>{{lteInfoOfSelectedAsset.IMEI}}</td>
+                                
+                                <td><b>IMSI:</b></td>
+                                <td>{{lteInfoOfSelectedAsset.IMSI}}</td>
+                              </tr>
+                              <tr>
+                                <td><b>RSRP:</b></td>
+                                <td>{{lteInfoOfSelectedAsset.RSRP}} dBm</td>
+                                
+                                <td><b>RSRQ:</b></td>
+                                <td>{{lteInfoOfSelectedAsset.RSRQ}} dB</td>
+                              
+                                <td><b>RSSI:</b></td>
+                                <td>{{lteInfoOfSelectedAsset.RSSI}} dBm</td>
+                              </tr>
+                              <tr>
+                                
+                                <td><b>SINR:</b></td>
+                                <td>{{lteInfoOfSelectedAsset.SINR}} dB</td>
+                                
+                                <td><b>RXTHR:</b></td>
+                                <td>{{convertBytesToMegaBytes(lteInfoOfSelectedAsset.RXTHR)}}</td>
+                                
+                                <td><b>TXTHR:</b></td>
+                                <td>{{convertBytesToMegaBytes(lteInfoOfSelectedAsset.TXTHR)}}</td>  
+                              </tr>
+                              <tr>
+                                <td><b>USIMExtST:</b></td>
+                                <td>{{lteInfoOfSelectedAsset.USIMExtST}}</td>
+                                
+                                <td><b>USIMStatus:</b></td>
+                                <td>{{lteInfoOfSelectedAsset.USIMStatus}}</td>
+                              </tr>
+                            </table>
+                    </div>
+                </div>
+                    
+            </div>
+            <div class="col-md-12" *ngIf="lteInfoCollected">
+              
+                <div class="card" style="border-color: #fff;">
+                    <div class="card-header" style="background-color: #9edff8;color: #000;">
+        
+                        <div style="width: 50%;float:left;">
+                          APN Info
+                        </div>
+                        <div style="width: 50%;float:right;">
+                          Last Updated On: {{selectedAssetLastUpdatedTime}}
+                        </div>
+  
+                    </div>
+                    <div class="card-block">
+                          <table class="rwd-table">
+                              <tr>
+                                <td><b>APNName:</b></td>
+                                <td>{{apnInfoOfSelectedAsset.APNName}}</td>
+                                <td><b>AuthHost:</b></td>
+                                <td>{{apnInfoOfSelectedAsset.AuthHost}}</td>
+                                
+                                <td><b>AuthName:</b></td>
+                                <td>{{apnInfoOfSelectedAsset.AuthName}}</td>
+                                
+                                <td><b>AuthType:</b></td>
+                                <td>{{apnInfoOfSelectedAsset.AuthType}}</td>
+                              </tr>
+                              <tr>
+                                  <td><b>AuthPasswd:</b></td>
+                                  <td>{{apnInfoOfSelectedAsset.AuthPasswd}}</td>
+                                  
+                                  <td><b>Admin APNName:</b></td>
+                                  <td>{{adminApnInfoOfSelectedAsset.APNName}}</td>
+                                  
+                                  <td><b>Admin AuthHost:</b></td>
+                                  <td>{{adminApnInfoOfSelectedAsset.AuthHost}}</td>
+                                </tr>
+                                <tr>
+                                  <td><b>Admin AuthName:</b></td>
+                                  <td>{{adminApnInfoOfSelectedAsset.AuthName}}</td>
+                              
+                                  <td><b>Admin AuthType:</b></td>
+                                  <td>{{adminApnInfoOfSelectedAsset.AuthType}}</td>
+
+                                  <td><b>Admin AuthPasswd:</b></td>
+                                  <td>{{adminApnInfoOfSelectedAsset.AuthPasswd}}</td>
+                                </tr>
+                            </table>
+                    </div>
+                </div>
+                    
+            </div>
+            <div class="col-md-12" *ngIf="lteInfoCollected">
+                  <div class="card" style="border-color: #fff;">
+                      <div class="card-header" style="background-color: #9edff8;color: #000;">
+                          <div style="width: 50%;float:left;">
+                            APN WAN Info
+                          </div>
+                          <div style="width: 50%;float:right;">
+                            Last Updated On: {{selectedAssetLastUpdatedTime}}
+                          </div>
+                      </div>
+                      <div class="card-block">
+                            <table class="rwd-table">
+                                <tr>
+                                  <td><b>WANIPV43:</b></td>
+                                  <td>{{apnWanInfoOfSelectedAsset.WANIPV43}}</td>
+                                  <td><b>NetMask3:</b></td>
+                                  <td>{{apnWanInfoOfSelectedAsset.NetMask3}}</td>
+                                  <td><b>Gateway3:</b></td>
+                                  <td>{{apnWanInfoOfSelectedAsset.Gateway3}}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>PriDNSV43:</b></td>
+                                    <td>{{apnWanInfoOfSelectedAsset.PriDNSV43}}</td>
+                                    <td><b>SecDNSV43:</b></td>
+                                    <td>{{apnWanInfoOfSelectedAsset.SecDNSV43}}</td>
+                                </tr>
+                              </table>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-md-12" *ngIf="lteInfoCollected">
+                  <div class="card" style="border-color: #fff;">
+                      <div class="card-header" style="background-color: #9edff8;color: #000;">
+                          <div style="width: 50%;float:left;">
+                            WAN Info
+                          </div>
+                          <div style="width: 50%;float:right;">
+                            Last Updated On: {{selectedAssetLastUpdatedTime}}
+                          </div>
+                      </div>
+                      <div class="card-block">
+                            <table class="rwd-table">
+                                <tr>
+                                  <td><b>WANIPV41:</b></td>
+                                  <td>{{wanInfoOfSelectedAsset.WANIPV41}}</td>
+                                  <td><b>NetMask1:</b></td>
+                                  <td>{{wanInfoOfSelectedAsset.NetMask1}}</td>
+                                  <td><b>Gateway1:</b></td>
+                                  <td>{{wanInfoOfSelectedAsset.Gateway1}}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>PriDNSV41:</b></td>
+                                    <td>{{wanInfoOfSelectedAsset.PriDNSV41}}</td>
+                                    <td><b>SecDNSV41:</b></td>
+                                    <td>{{wanInfoOfSelectedAsset.SecDNSV41}}</td>
+                                </tr>
+                              </table>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-md-12" *ngIf="lteInfoCollected">
+                  <div class="card" style="border-color: #fff;">
+                      <div class="card-header" style="background-color: #9edff8;color: #000;">
+                          <div style="width: 50%;float:left;">
+                            LAN Info
+                          </div>
+                          <div style="width: 50%;float:right;">
+                            Last Updated On: {{selectedAssetLastUpdatedTime}}
+                          </div>
+                      </div>
+                      <div class="card-block">
+                            <table class="rwd-table">
+                                <tr>
+                                  <td><b>IP:</b></td>
+                                  <td>{{lanInfoOfSelectedAsset.IP}}</td>
+                                  <td><b>SubMask:</b></td>
+                                  <td>{{lanInfoOfSelectedAsset.SubMask}}</td>
+                                  <td><b>DHCPType:</b></td>
+                                  <td>{{lanInfoOfSelectedAsset.DHCPType}}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>DHCPStart:</b></td>
+                                    <td>{{lanInfoOfSelectedAsset.DHCPStart}}</td>
+                                    <td><b>DHCPEnd:</b></td>
+                                    <td>{{lanInfoOfSelectedAsset.DHCPEnd}}</td>
+                                    <td><b>LANMAC:</b></td>
+                                    <td>{{lanInfoOfSelectedAsset.LANMAC}}</td>
+                                </tr>
+                              </table>
+                      </div>
+                  </div>
+              </div>-->
+
+
+
+          </div>
+          <br>
+        <ba-card *ngIf="showCharts">
+          <div class="row">
+          <div class="col-sm-6">
+              <b>Select Date range to view older data </b>(Longer range may cause more load time) 
+          </div>
+            <div class="col-sm-6 float-sm-right">
+                <div class="form-group">
+            <input type="text" class="pull-right form-control" name="daterangeInput" daterangepicker [options]="options" (applyDaterangepicker)="calendarApplied($event)" (selected)="selectedDate($event, daterange)" />
+                </div>
+            </div>
+          </div>
+        </ba-card>  
+
+        <!--<dash-tabs-panel *ngIf="showCharts" (onTabChanged)="tabChanged($event)" >  
+          <dash-tab [title]="'SNIR'" [tabID]="'snir'" [tabIcon]="'fa fa-circle'" [maxStepWidth]="'200px'">
+          <div *ngIf="mainTab=='snir'" style="height:300px;">           
+            <app-ngxline-chart1
+            [viewName]="dashboardNS"
+            [pipeLine]="sinrPipeLineQuery"
+            [roundChartsDate]="roundChartsDate"
+            [getFrom]="'aggregate'"
+            chartTitle = "SINR Chart"
+            yAxisLabel = 'dB'
+            xAxisLabel = 'Date'>
+         </app-ngxline-chart1>
+          </div>
+          </dash-tab>
+          <dash-tab [title]="'RSSI'" [tabID]="'rssi'" [tabIcon]="'fa fa-circle'" [maxStepWidth]="'200px'">
+            <div *ngIf="mainTab=='rssi'" style="height:300px;">
+              <app-ngxline-chart1
+              [viewName]="dashboardNS"
+              [pipeLine]="rssiPipeLineQuery"
+              [getFrom]="'aggregate'"
+              [roundChartsDate]="roundChartsDate"
+              chartTitle = "RSSI Chart"
+              yAxisLabel = 'dBm'
+              xAxisLabel = 'Date'>
+           </app-ngxline-chart1>
+            </div>
+            </dash-tab>
+            <dash-tab [title]="'RSRP'" [tabID]="'rsrp'" [tabIcon]="'fa fa-circle'" [maxStepWidth]="'200px'">
+            
+            <div *ngIf="mainTab=='rsrp'" style="height:300px;">
+              <app-ngxline-chart1
+              [viewName]="dashboardNS"
+              [pipeLine]="rsrpPipeLineQuery"
+              [getFrom]="'aggregate'"
+              [roundChartsDate]="roundChartsDate"
+              chartTitle = "RSRP Chart"
+              yAxisLabel = 'dBm'
+              xAxisLabel = 'Date'>
+           </app-ngxline-chart1>
+            </div>
+            </dash-tab>
+
+        </dash-tabs-panel>-->
+        <div class="row">
+            <div class="col-md-12">
+              <ba-card *ngIf="showCharts">
+                <upTime-chart
+                  [viewName]="dashboardNS"
+                  [pipeLine]="upTimePipeLineQuery"
+                  [roundChartsDate]="roundChartsDate"
+                  [startDate]="startDate"
+                  [endDate]="endDate"
+                  [timeLine]="false"
+                  chartTitle = "UP Time Chart"
+                  yAxisLabel = ''
+                  xAxisLabel = 'Date'>
+                </upTime-chart>
+              </ba-card>
+            </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <ba-card *ngIf="showCharts">
+              <app-ngxline-chart1
+                [viewName]="dashboardNS"
+                [pipeLine]="sinrPipeLineQuery"
+                [roundChartsDate]="roundChartsDate"
+                [getFrom]="'aggregate'"
+                [showLegend]="false"
+                [timeLine]="false"
+                chartTitle = "SINR Chart"
+                yAxisLabel = 'dB'
+                xAxisLabel = 'Date'>
+              </app-ngxline-chart1>
+            </ba-card>
+          </div>
+          <div class="col-md-12">
+            <ba-card *ngIf="showCharts">
+              <app-ngxline-chart1
+                [viewName]="dashboardNS"
+                [pipeLine]="rssiPipeLineQuery"
+                [getFrom]="'aggregate'"
+                [roundChartsDate]="roundChartsDate"
+                [showLegend]="false"
+                [timeLine]="false"
+                chartTitle = "RSSI Chart"
+                yAxisLabel = 'dBm'
+                xAxisLabel = 'Date'>
+              </app-ngxline-chart1>
+            </ba-card>
+          </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+              <ba-card *ngIf="showCharts">
+                <app-ngxline-chart1
+                  [viewName]="dashboardNS"
+                  [pipeLine]="rsrpPipeLineQuery"
+                  [getFrom]="'aggregate'"
+                  [timeLine]="false"
+                  [roundChartsDate]="roundChartsDate"
+                  [showLegend]="false"
+                  chartTitle = "RSRP Chart"
+                  yAxisLabel = 'dBm'
+                  xAxisLabel = 'Date'>
+                </app-ngxline-chart1>
+              </ba-card>
+            </div>
+        </div>
+        <ba-card *ngIf="showCharts">
+          <txrx-chart
+             [viewName]="dashboardNS"
+             [pipeLine1]="txthrPipeLineQuery"
+             [pipeLine2]="rxthrPipeLineQuery"
+             [roundChartsDate]="roundChartsDate"
+             [rawData]="rxData"
+             chartTitle = "Tx/Rx Data Utilization"
+             yAxisLabel = 'MB'
+             xAxisLabel = 'Date'>
+          </txrx-chart>
+        </ba-card>
+        <!--<ba-card *ngIf="showCharts">
+          <app-ngxline-chart1
+             [viewName]="dashboardNS"
+             [pipeLine]="rsrpPipeLineQuery"
+             [getFrom]="'rawData'"
+             [roundChartsDate]="roundChartsDate"
+             [rawData]="totalData"
+             chartTitle = "Tx/Rx Used Data"
+             yAxisLabel = 'MB'
+             xAxisLabel = 'Date'>
+          </app-ngxline-chart1>
+        </ba-card>-->
+       </div>
+     </div>
+   </div>

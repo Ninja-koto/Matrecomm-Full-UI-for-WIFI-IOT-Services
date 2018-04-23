@@ -1,0 +1,105 @@
+<section class="chartist">
+  <div class="row">
+      <div class="col-md-4">
+        <ba-card>
+            <app-bar-chart 
+            [viewName]="getNameSpace('MediaDashboardData')"
+            [pipeLine]="getMediaDashboardBySongsQuery()"
+            [getFrom]="'aggregate'"
+            chartTitle = "Media Songs"
+            yAxisLabel = 'Songs Count'
+            xAxisLabel = 'Song Names'
+            [locationType]="currentLocationType"
+            [locationName]="currentLocation"
+            [chartWidth]="'100%'" 
+            [chartHeight]="'300px'">  
+          </app-bar-chart>
+        </ba-card>
+      </div>
+      <div class="col-md-4">
+          <ba-card>
+              <app-bar-chart 
+              [viewName]="getNameSpace('MediaDashboardData')"
+              [pipeLine]="getMediaDashboardByMoviesQuery()"
+              [getFrom]="'aggregate'"
+              chartTitle = "Media Movies"
+              yAxisLabel = 'Movies Count'
+              xAxisLabel = 'Movie Names'
+              [locationType]="currentLocationType"
+              [locationName]="currentLocation"
+              [chartWidth]="'100%'" 
+              [chartHeight]="'300px'">  
+            </app-bar-chart>
+          </ba-card>
+        </div>
+          <div class="col-md-4">
+              <ba-card>
+                  <app-bar-chart 
+                  [viewName]="getNameSpace('MediaDashboardData')"
+                  [pipeLine]="getMediaDashboardBySerialsQuery()"
+                  [getFrom]="'aggregate'"
+                  chartTitle = "Media Serials"
+                  yAxisLabel = 'Serials Count'
+                  xAxisLabel = 'Serial Names'
+                  [locationType]="currentLocationType"
+                  [locationName]="currentLocation"
+                  [chartWidth]="'100%'" 
+                  [chartHeight]="'300px'">  
+                </app-bar-chart>
+              </ba-card>
+            </div>
+           </div> 
+            <div class="row">
+            <div class="col-md-4">
+              <ba-card>
+                  <app-bar-chart 
+                  [viewName]="getNameSpace('MediaDashboardData')"
+                  [pipeLine]="getMediaDashboardBySongsLanguageQuery()"
+                  [getFrom]="'aggregate'"
+                  chartTitle = "Media Language Songs"
+                  yAxisLabel = 'Songs Count'
+                  xAxisLabel = 'Language Names'
+                  [locationType]="currentLocationType"
+                  [locationName]="currentLocation"
+                  [chartWidth]="'100%'" 
+                  [chartHeight]="'300px'">  
+                </app-bar-chart>
+              </ba-card>
+            </div>            
+
+            <div class="col-md-4">
+              <ba-card>
+                  <app-bar-chart 
+                  [viewName]="getNameSpace('MediaDashboardData')"
+                  [pipeLine]="getMediaDashboardByMoviesLanguageQuery()"
+                  [getFrom]="'aggregate'"
+                  chartTitle = "Media Language Movies"
+                  yAxisLabel = 'Movies Count'
+                  xAxisLabel = 'Language Names'
+                  [locationType]="currentLocationType"
+                  [locationName]="currentLocation"
+                  [chartWidth]="'100%'" 
+                  [chartHeight]="'300px'">  
+                </app-bar-chart>
+              </ba-card>
+            </div>                        
+
+            <div class="col-md-4">
+              <ba-card>
+                  <app-bar-chart 
+                  [viewName]="getNameSpace('MediaDashboardData')"
+                  [pipeLine]="getMediaDashboardBySerialsLanguageQuery()"
+                  [getFrom]="'aggregate'"
+                  chartTitle = "Media Language Serials"
+                  yAxisLabel = 'Serials Count'
+                  xAxisLabel = 'Language Names'
+                  [locationType]="currentLocationType"
+                  [locationName]="currentLocation"
+                  [chartWidth]="'100%'" 
+                  [chartHeight]="'300px'">  
+                </app-bar-chart>
+              </ba-card>
+            </div>                            
+             
+  </div>     
+</section>

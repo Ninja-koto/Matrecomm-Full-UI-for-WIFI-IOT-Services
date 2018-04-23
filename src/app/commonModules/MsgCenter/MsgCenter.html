@@ -1,0 +1,72 @@
+<ul class="al-msg-center clearfix">
+  <li class="dropdown">
+    <a href class="dropdown-toggle" style="color: #47ad34" id="msg-dd1" data-toggle="dropdown" aria-expanded="false">
+      <i class="fa fa-bell-o"></i><span style="background-color: #47ad34;">{{ tempNotif.length }}</span>
+
+      <div class="notification-ring"></div>
+    </a>
+
+    <div class="top-dropdown-menu dropdown-menu" aria-labelledby="msg-dd1">
+      <i class="dropdown-arr"></i>
+
+      <div class="header clearfix">
+        <div><strong>Success Notifications</strong>
+              <button *ngIf="tempNotif.length>0" type="button" class="btn btn-xs btn-danger" style="float: right"  (click)="clearAllNotifications($event)">
+                    Clear All
+                  </button>
+        </div>
+        <!--<a href>Mark All as Read</a>
+        <a href>Settings</a>-->
+      </div>
+      <div class="msg-list">
+        <a *ngFor="let msg of tempNotif"  class="clearfix" style="cursor: pointer;">
+          <!--<div class="img-area"><img [ngClass]="{'photo-msg-item': !msg.image}"
+                                     src="{{ ( msg.image ||  (msg.name | ProfilePicture)) }}"></div>-->
+          <div class="msg-area" style="float: left;width: 100%;">
+            <div><b>{{ msg.msg}}</b>
+            <button type="button" class="btn btn-xs btn-default" style="float: right" (click)="removeNotification($event,msg.id)">
+                    <span aria-hidden="true">✖</span><span class="sr-only">Close</span>
+                  </button>
+            </div>
+            <span>{{msg.time}}</span>
+            
+          </div>
+        </a>
+      </div>
+      <!--<a href>See all notifications</a>-->
+    </div>
+  </li>
+  <li class="dropdown">
+    <a href class="msg dropdown-toggle" style="color: #f34b4b" id="msg-dd2" data-toggle="dropdown" aria-expanded="false">
+      <i class="fa fa-bell-o"></i><span style="background-color: #f34b4b;">{{ tempErrorNotif.length }}</span>
+      <div class="notification-ring"></div>
+    </a>
+    <div class="top-dropdown-menu dropdown-menu" aria-labelledby="msg-dd2">
+      <i class="dropdown-arr"></i>
+      <div class="header clearfix">
+        <div><strong>Error Notifications</strong>
+              <button *ngIf="tempErrorNotif.length>0" type="button" class="btn btn-xs btn-danger" style="float: right" (click)="clearAllErrorNotifications($event)" >
+                    Clear All
+                  </button>
+        </div>
+        <!--<a href>Mark All as Read</a>
+        <a href>Settings</a>-->
+      </div>
+      <div class="msg-list">
+        <a *ngFor="let msg of tempErrorNotif" class="clearfix">
+          <!--<div class="img-area"><img [ngClass]="{'photo-msg-item': !msg.image}"
+                                     src="{{ ( msg.image ||  (msg.name | ProfilePicture)) }}"></div>-->
+          <div class="msg-area" style="float: left;width: 100%;">
+            <div><b>{{ msg.msg }}</b>
+            <button type="button" class="btn btn-xs btn-default" style="float: right" (click)="removeErrorNotification($event,msg.id)">
+                    <span aria-hidden="true">✖</span><span class="sr-only">Close</span>
+                  </button>
+                  </div>
+            <span>{{ msg.time }}</span>
+          </div>
+        </a>
+      </div>
+      <!--<a href>See all messages</a>-->
+    </div>
+  </li>
+</ul>

@@ -1,0 +1,277 @@
+  <form-wizard (finalSubmit)="gotoFinalSubmit($event)">  
+    <wizard-step [title]="'Select Locations'" [maxStepWidth]="'200px'" [isValid]="step1Validition">
+  
+        <form [formGroup]="myForm1" style="border-left:#fff;"  novalidate (ngSubmit)="save(myForm1.value, myForm1.valid)">
+          <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                      <label for=""><b>Inventory Profile Name</b></label>
+                      <input type="text" class="form-control" formControlName="inventoryProfileName">
+                      <error-messages [control]="myForm1.controls.inventoryProfileName" class="text-danger"></error-messages>
+                </div>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label for=""><b>Select Locations</b></label><br>
+                <ss-multiselect-dropdown [options]="locOptions" [texts]="myTexts" [settings]="mySettings" (ngModelChange)="onLocationSelect($event)" formControlName="locations"></ss-multiselect-dropdown>
+                <error-messages [control]="myForm1.controls.locations" class="text-danger"></error-messages>
+                </div>
+              </div>
+          </div>
+          <div class="row" *ngIf="selectedLocations.length>0">
+            <div class="col-sm-12">
+              <div class="form-group">
+                  <p style="text-align:center;"><b>Selected Locations</b></p>
+                  <table style="width:100%;" >
+                      <thead style="width:100%" >
+                      <tr>
+                          <th style="width: 50%;border-bottom: 1px solid black;border-top: 1px solid black;">
+                            <b>Location Name (City->Building->Floor)</b></th>
+                          <th style="width: 50%;border-bottom: 1px solid black;border-top: 1px solid black;">
+                            <b>IPs</b></th>
+                      </tr>    
+                      </thead>
+                      <tbody>
+                      <tr *ngFor="let loc of selectedLocations">
+                          <td style="width: 50%;border-bottom: 1px solid black;">{{loc.City}}->{{loc.Building}}->{{loc.Floor}}</td>
+                          <td style="width: 50%;border-bottom: 1px solid black;">{{loc.ips}}</td>
+                      </tr>
+                      </tbody>
+                  </table>
+              </div>
+            </div>
+          </div>
+         
+
+        </form>
+    </wizard-step>
+    <wizard-step [title]="'Profile Details'" [maxStepWidth]="'200px'" [isValid]="step2Validition">
+        <form [formGroup]="myForm2" style="border-left:#fff;" novalidate (ngSubmit)="save(myForm2.value, myForm2.valid)">
+          <div class="row">
+            <div class="col-md-12" >                                       
+                <label><b>Please select upgrade type</b></label><br>
+                <label>
+                <input type="radio" value="manualUpgrade"  formControlName="upgradeType" (click)="selectUpgradeType($event)">
+                <b>Manaual Configuration</b></label>
+                <label>
+                <input type="radio" value="automaticUpgrade"   formControlName="upgradeType" (click)="selectUpgradeType($event)"/>
+                <b>Zero touch Configuration</b></label>
+                <error-messages [control]="myForm2.controls.upgradeType" class="text-danger"></error-messages>
+            </div>
+            <div class="col-md-12" >
+                <div *ngIf="upgradeType=='manualUpgrade'">
+                   <!--<p>Upgrade firmware and apply Configuration Profile</p>-->
+                    <div class="form-group">
+                      <label><b>Please select vendors</b></label><br>
+                    <ss-multiselect-dropdown [options]="manualUpgradeOptions" [texts]="myTexts" [settings]="mySettings" formControlName="vendors"></ss-multiselect-dropdown>
+                    <error-messages [control]="myForm2.controls.vendors" class="text-danger"></error-messages>
+                    </div>
+                </div>
+                <div *ngIf="upgradeType=='automaticUpgrade'">
+                   <!--<p>Upgrade Firmware and apply Profile at Discovery</p>-->
+                  <!--<div class="form-group">
+                    <label><b>Please select asset Configuration templates</b></label><br>
+                    <ss-multiselect-dropdown [options]="automaticUpgradeOptions" [texts]="myTexts" [settings]="mySettings" formControlName="profiles"></ss-multiselect-dropdown>
+                    <error-messages [control]="myForm2.controls.profiles" class="text-danger"></error-messages>
+                    </div>-->
+                    <div class="row">
+                        <div class="col-sm-4">
+                          <div class="form-group">
+                            <label for=""><b>Vendor</b></label>
+                                <select class="form-control" id = "vendor" formControlName="autoUpgradeVendor" (click)="getModelsAndProfiles($event)">
+                                  <option value="">Select One</option>
+                                  <option *ngFor="let autoVendor of autoUpgradeVendors" [value]="autoVendor" >{{autoVendor}}</option>
+                                </select>
+                                <error-messages [control]="myForm2.controls.autoUpgradeVendor" class="text-danger"></error-messages>
+                          </div>
+                        </div>
+                      <div class="col-sm-4">
+                          <div class="form-group">
+                            <label for=""><b>Model</b></label>
+                                <select class="form-control" formControlName="autoUpgradeModel"  (click)="getProfiles($event)">
+                                  <option value="">Select One</option>
+                                  <option *ngFor="let autoModel of autoUpgradeModels" [value]="autoModel">{{autoModel}}</option>
+                                </select>
+                                <error-messages [control]="myForm2.controls.autoUpgradeModel" class="text-danger"></error-messages>
+                          </div>
+                        </div> 
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                          <label><b>Profile</b></label><br>
+                          <select class="form-control" formControlName="autoUpgradeProfile">
+                                  <option value="">Select One</option>
+                                  <option *ngFor="let autoProfileName of autoUpgradeProfiles" [value]="autoProfileName">{{autoProfileName}}</option>
+                                </select>
+                                <error-messages [control]="myForm2.controls.autoUpgradeProfile" class="text-danger"></error-messages>
+                        </div>
+                    </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                        <small [ngStyle] = "{'display':showTableErrorMsg}"  class="text-danger">Please select vendor -> model -> profile.</small>
+                        </div>
+                    </div>
+                <div class="col-xs-4 pull-left box-tools"> 
+                    <button id="addProfile" class="btn btn-sm btn-success" data-toggle="tooltip" title="" (click)="addProfiles($event)" ><i class="fa fa-plus"></i>Add</button>
+                </div>
+                <div class="col-xs-4 pull-right box-tools"> 
+                    <button id="deleteProfile" class="btn btn-sm btn-danger" data-toggle="tooltip" title="" [disabled]= "autoUpgradeSelectedRowsForDeletion.length==0"  (click)="deleteSelectedProfiles($event)"><i class="fa fa-minus"></i> Delete</button>
+                    <!--<button id="deleteProfile" class="btn btn-sm btn-danger" data-toggle="tooltip" title=""  (click)="deleteSelectedProfiles($event)"><i class="fa fa-minus"></i> Delete</button>-->
+                </div>
+                    <table class="table table-striped" >
+                      <thead>
+                      <tr>
+                          <th style="width: 5%"></th>
+                          <th style="width: 30%">Vendor</th>
+                          <th style="width: 30%">Model</th>
+                          <th style="width: 30%">Profiel Name</th>
+                      </tr>    
+                      </thead>
+                      <tbody>
+                      <tr *ngFor="let profile of allProfiles">
+                          <td style="width: 5%"><input type="checkbox"  (click)="maintainSelectedData($event,profile)" value="{{profile.uuid}}" /></td>
+                          <td style="width: 30%">{{profile.vendor}}</td>
+                          <td style="width: 30%">{{profile.model}}</td>
+                          <td style="width: 30%">{{profile.selectProfile}}</td>
+                          </tr>
+                      </tbody>
+                  </table>
+                    
+
+                </div>
+            </div>
+          </div>
+
+        </form>
+    </wizard-step>
+
+
+     <wizard-step [title]="'Select Schedule'" [maxStepWidth]="'200px'" [isValid]="step3Validition">
+        <form [formGroup]="myForm3" style="border-left:#fff;" novalidate (ngSubmit)="save(myForm3.value, myForm3.valid)">
+          <div class="row">
+            <div class="col-md-12">
+            <label><b>Please select schedule type</b></label>
+            </div>
+            <div class="col-md-12">
+              <table>
+                <tbody>
+                  <tr>
+                    <td>
+                      
+                      <label>
+                      <input type="radio" value="immediately"  formControlName="selectSchedule" (click)="selectScheduleType($event)">
+                      <b>Immediately</b></label>
+                      
+                    </td>
+                  </tr>
+                <tr>
+                  <td>
+                    
+                    <label>
+                    <input type="radio" value="addTaskForDailyExecution"   formControlName="selectSchedule" (click)="selectScheduleType($event)"/>
+                    <b>Daily At</b></label>
+                    
+                  </td>
+                  <td>
+                    <div class="col-md-12 float-md-right">
+                      <div class="form-group">
+                      <input  class="picker-input form-control" style="color: #000000;" [ngModel]="dailyAtValue | date: 'shortTime'" 
+                              [(dateTimePicker)]="dailyAtValue" 
+                              [pickerType]="'time'" 
+                              readonly formControlName="dailyAt"
+                              (dateTimePickerChange) = "scheduleChanged($event)"  />
+                      <error-messages [control]="myForm3.controls.dailyAt" class="text-danger"></error-messages>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    
+                    <label>
+                    <input type="radio" value="addTaskForDailyUntilExecution"   formControlName="selectSchedule" (click)="selectScheduleType($event)"/>
+                    <b> From To</b></label>
+                    
+                  </td>
+                  <td>
+                    <div class="col-md-12 float-md-right">
+                      <div class="form-group">
+                      <input class="picker-input form-control" style="color: #000000;" [ngModel]="startTimeValue | date: 'short'" 
+                      [(dateTimePicker)]="startTimeValue" 
+                      readonly formControlName="startTime"
+                      (dateTimePickerChange) = "startAndEndTimeChanged($event,'fromStart')" />
+                      <error-messages [control]="myForm3.controls.startTime" class="text-danger"></error-messages>
+                      </div>
+                      <div class="form-group">
+                      <input class="picker-input form-control" style="color: #000000;" [ngModel]="endTimeValue | date: 'short'" 
+                      [(dateTimePicker)]="endTimeValue" 
+                      readonly formControlName="endTime"
+                      (dateTimePickerChange) = "startAndEndTimeChanged($event,'fromEnd')" />
+                      <error-messages [control]="myForm3.controls.endTime" class="text-danger"></error-messages>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    
+                    <label>
+                    <input type="radio" value="addTaskForSelectedWeekDaysUntilExecution"   formControlName="selectSchedule" (click)="selectScheduleType($event)"/>
+                    <b>On selected WeekDays at</b></label>
+                    
+                  </td>
+                  <td>
+                    <div class="col-md-12 float-md-right">
+                      <div class="form-group" formGroupName="selectedWeekDays">
+                        <label><input type="checkbox" formControlName ="sunday" value="0"  (click)="selectWeekDays($event)">Sunday</label><br>
+                        <label><input type="checkbox" formControlName ="monday" value="1" (click)="selectWeekDays($event)">Monday</label><br>
+                        <label><input type="checkbox" formControlName ="tuesday" value="2" (click)="selectWeekDays($event)">Tuesday</label><br>
+                        <label><input type="checkbox" formControlName ="wednesday" value="3" (click)="selectWeekDays($event)">Wednesday</label><br>
+                        <label><input type="checkbox" formControlName ="thursday" value="4" (click)="selectWeekDays($event)">Thursday</label><br>
+                        <label><input type="checkbox" formControlName ="friday" value="5" (click)="selectWeekDays($event)">Friday</label><br>
+                        <label><input type="checkbox" formControlName ="saturday" value="6" (click)="selectWeekDays($event)">Saturday</label><br>
+                      </div>
+                      <!--<small [hidden]="false" class="text-danger">Please select WeekDays</small>-->
+                      <div class="form-group">
+                      <input class="picker-input form-control" style="color: #000000;" [ngModel]="atValue | date: 'shortTime'" 
+                      [(dateTimePicker)]="atValue" 
+                      [pickerType]="'time'" 
+                      readonly formControlName="at"
+                      (dateTimePickerChange) = "weekDaysAndTimeChanged($event)" />
+                      <error-messages [control]="myForm3.controls.at" class="text-danger"></error-messages>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+            <!--<div class="col-md-6 pull-right">
+              <table>
+                <tbody>
+                  <tr >
+                    <td>
+                      <div >
+                      <br>
+                      </div>
+                    </td>
+                  </tr>
+                <tr>
+                  
+                </tr>
+                <tr>
+                  
+                </tr>
+                <tr>
+                  
+                </tr>
+                </tbody>
+              </table>
+            </div>-->
+          </div>
+        </form>
+     </wizard-step>
+  </form-wizard>

@@ -1,0 +1,56 @@
+<!--<div (mouseleave)="resetClock()" (mouseenter)="resetClock()">-->
+    <div>
+    
+    <div >
+ <modal  [animation]="animation" [keyboard]="keyboard" [backdrop]="'static'" (onClose)="closed()" (onDismiss)="dismissed()"
+        (onOpen)="opened()" #validationModal>
+        <form #modalForm="ngForm">
+            <modal-header [show-close]="true">
+                <h4 class="modal-title">{{currWizardOp}} Location Details</h4>
+            </modal-header>
+            <modal-body>
+                <div *ngIf="addWizard||modifyWizard">        
+                     <locationManagement-add-wizard [data]="currWizardData" [operation]="currWizardOp" (closeModal)="close1($event)" (closeModalWizard)="validationModal.dismiss()"></locationManagement-add-wizard>
+                </div>
+                <div *ngIf="(!addWizard)&&(!modifyWizard)">
+                      <!--Selected Operation {{currWizardOp}}-->
+                   <default-delete-wizard
+                             [rpcMethod]="'orgManagerLocationMethod'" 
+                             [deleteParams]="deleteParamForSelected" 
+                             [context]="'Location Management'"
+                             (closeModal)="close1($event)" 
+                             (closeModalWizard)="validationModal.dismiss()">
+                        You are going to delete Location Management Details...<br>
+                        Shall we Proceed...?
+                    </default-delete-wizard>                      
+                </div>
+            </modal-body>
+            <modal-footer>
+           </modal-footer>
+        </form>
+    </modal>
+    </div>
+    <ba-card baCardClass="with-scroll table-panel">    
+   <collection-table
+        [collectionTableData]= tableData
+        [columns]= columns
+        [hideWizardButtons]=false
+        [hideSearchBox]=false
+        tableID = "locationManagement"
+        tableTitle ="Locations"
+        addButtonID="addLocationManagementDetails"
+         modifyButtonID="modifyLocationManagementDetails"
+        deleteButtonID="deleteLocationManagementDetails"
+        enableUnselectOnExit="yes"
+        [rowsOnPage] = 3
+        sortBy = "location"
+        sortOrder = "asc"
+        [rowsOnPageButtons] = [1,3,5,10,15]
+        (deleteButtonClicked)="validationModal.open('lg')"
+        (addModifyButtonClicked)="validationModal.open('lg')"
+        (selectedData) = "selectedRowData($event)"
+        (selectedWizardOperation) = "selectedWizardOperation($event)"
+        >
+    </collection-table>
+    </ba-card>
+</div>

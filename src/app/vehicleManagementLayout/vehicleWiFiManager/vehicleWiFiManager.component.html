@@ -1,0 +1,33 @@
+ <tabs-panel (onTabChanged)="mainTabChanged($event)">  
+          <tab [title]="'Vehicle Policy'" [tabID]="'vehiclePolicyTab'" [tabIcon]="'fa fa-calendar'" [maxStepWidth]="'200px'">
+            <div *ngIf="mainTab=='vehiclePolicyTab'" style="min-height: 500px;width: 100%">
+                  <vehiclePolicy-details></vehiclePolicy-details>
+            </div>
+          </tab>
+
+          <tab [title]="'Vehicle Configuration'" [tabID]="'vehicleConfigurationTab'" [tabIcon]="'fa fa-bus'" [maxStepWidth]="'200px'" >
+            <div *ngIf="mainTab=='vehicleConfigurationTab'" style="min-height: 500px;">
+              <vehicleConfiguration-details></vehicleConfiguration-details>
+            </div>
+          </tab>
+
+          <tab [title]="'GPS Vehicle Configuration'" [tabID]="'gpsVehicleConfigurationTab'" [tabIcon]="'fa fa-map-marker'" [maxStepWidth]="'200px'">
+            <div class="row" *ngIf="mainTab=='gpsVehicleConfigurationTab'" style="min-height: 500px;width: 100%">
+              <div style="width: 100%">
+                <tabs-panel (onTabChanged)="innerTabChanged($event)" >  
+                  <tab [title]="'GPS Vehicle Config'" [tabID]="'innerGpsVehicleConfigurationTab'" [tabIcon]="'fa fa-circle'" [maxStepWidth]="'200px'">
+                    <div *ngIf="innerTab=='innerGpsVehicleConfigurationTab'">
+                        <gpsVehicleConfiguration-details></gpsVehicleConfiguration-details>
+                    </div>
+                  </tab>
+                  <tab [title]="'GPS Route Config'" [tabID]="'innerGpsVehicleRouteConfigurationTab'" [tabIcon]="'fa fa-circle'" [maxStepWidth]="'200px'">
+                    <div *ngIf="innerTab=='innerGpsVehicleRouteConfigurationTab'">
+                        <gpsVehicleRouteConfiguration-details></gpsVehicleRouteConfiguration-details>
+                    </div>
+                  </tab>
+                </tabs-panel>
+              </div>
+            </div>
+          </tab>
+          
+        </tabs-panel>

@@ -1,0 +1,8 @@
+<aside class="al-sidebar" sidebarResize>
+  <ba-menu [menuHeight]="menuHeight"
+           [sidebarCollapsed]="isMenuCollapsed"
+           [showTree]="showTree"
+           (itemClicked) = "menuItemClicked($event)"
+           (treeItemClicked)='Clicked($event)'
+           (expandMenu)="menuExpand()"></ba-menu>
+</aside>

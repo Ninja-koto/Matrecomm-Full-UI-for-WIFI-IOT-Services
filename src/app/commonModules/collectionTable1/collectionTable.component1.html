@@ -1,0 +1,139 @@
+<!--USAGE WITH FULL OPTIONS
+    <collection-table
+        [collectionTableData]= tableData
+        [columns]= columns
+        [hideWizardButtons]=false
+        [hideSearchBox]=false
+        tableID = "userTable1"
+        tableTitle ="UserTAble"
+        addButtonID="addWizard1"
+        modifyButtonID="modifyWizard1"
+        deleteButtonID="deleteWizard1"
+        enableUnselectOnExit="yes"
+        rowsOnPage = 3
+        sortBy = "authcode"
+        sortOrder = "asc"
+        [rowsOnPageButtons] = [1,5,10,15]
+        (deleteButtonClicked)="validationModal.open('lg')"
+        (addModifyButtonClicked)="validationModal.open('lg')"
+        (selectedData) = "selectedRowData($event)"
+        (selectedWizardOperation) = "selectedWizardOperation($event)"
+        >
+    </collection-table>-->
+
+<div id="{{tableID}}" (mouseleave)="unselectRowAndDisableButtons()">
+
+    <!--<div class="tab-content">
+        <div class="tab-pane fade in active">
+            <div class="box">
+
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-12">
+                        <div class="box-header">
+                            <h2 class="box-title">{{tableTitle}}</h2>
+                        </div>           
+                        </div>
+                    </div>    
+                </div>   
+
+                <div *ngIf="!hideSearchBox" class="col-xs-4"> 
+                    <div class="collection-table">   
+                    <table class="table table-striped" [mfData]="collectionTableData | collectionTableDataFilter : filterQuery" #mf="mfDataTable"
+                        [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+                        <tbody>
+                            <tr>
+                            <th colspan="5">
+                                <input class="form-control" [(ngModel)]="filterQuery"/>
+                            </th>
+                        </tr>
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+
+                <div *ngIf="hideSearchBox" class="col-xs-12"> 
+                    <br>
+                </div>
+
+                <div *ngIf="!hideWizardButtons" class="col-xs-4 pull-right box-tools" style="margin-top: 5px;"> 
+                    <button id="{{addButtonID}}" class="btn btn-sm btn-success" data-toggle="tooltip" title="" (click)="buttonClicked($event)" ><i class="fa fa-plus"></i>Add</button>
+                    <button id="{{modifyButtonID}}" class="btn btn-sm btn-warning" data-toggle="tooltip" title="" disabled="true" (click)="buttonClicked($event)"><i class="fa fa-star"></i>Modify</button>
+                    <button id="{{deleteButtonID}}" class="btn btn-sm btn-danger" data-toggle="tooltip" title="" disabled="true"  (click)="buttonClicked($event)"><i class="fa fa-minus"></i> Delete</button>
+                </div>
+            </div>
+        </div>        
+    </div>-->
+    <!--<div class="panel panel-default">-->
+    
+
+  <div class="row">
+    <div class="col-lg-12 col-md-12">
+      <!--<ba-card baCardClass="with-scroll table-panel">-->
+          <div class="col-md-12">
+              <div class="col-md-4 float-md-left">
+              <h3>{{tableTitle}} </h3>
+              </div>
+              <div *ngIf="!hideWizardButtons" class="col-md-4 float-md-right box-tools" style="margin-top: 5px;"> 
+
+                    <button id="{{addButtonID}}" *ngIf="!hideAddButton" class="btn btn-sm btn-success" data-toggle="tooltip" title="" (click)="buttonClicked($event)" ><i class="fa fa-plus"></i>Add</button>
+                    <button id="{{modifyButtonID}}" *ngIf="!hideModifyButton" class="btn btn-sm btn-warning" data-toggle="tooltip" title="" disabled="true" (click)="buttonClicked($event)"><i class="fa fa-star"></i>Modify</button>
+                    <button id="{{deleteButtonID}}" *ngIf="!hideDeleteButton" class="btn btn-sm btn-danger" data-toggle="tooltip" title="" disabled="true"  (click)="buttonClicked($event)"><i class="fa fa-minus"></i>Delete</button>
+                </div>
+          
+            <div *ngIf="!hideSearchBox" class="col-md-4 float-md-right box-tools" style="margin-top: -20px;"> 
+                    <div class="collection-table">   
+                    <table class="table " [mfData]="collectionTableData | collectionTableDataFilter : filterQuery" #mf="mfDataTable"
+                        [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+                        <tbody>
+                            <tr>
+                            <th colspan="5">
+                                <input class="form-control" [(ngModel)]="filterQuery"/>
+                            </th>
+                        </tr>
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+                <div *ngIf="hideSearchBox" class="col-lg-4"> 
+                    <br>
+                </div>
+            </div>      
+        <table class="table table-striped collTable" [mfData]="collectionTableData | collectionTableDataFilter : filterQuery" #mf="mfDataTable"
+                [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+            <thead>
+            <tr>
+                <th style="width: 5%"></th>
+                <th [ngStyle]="{'width':widthStyle}" *ngFor="let column of columns">
+                    <mfDefaultSorter by="{{column.key}}">
+                        <collection-table-column>
+                            <div style="float: left" [innerHTML]="getDataForColumnHeader(column.label)"></div>
+                        </collection-table-column>
+                    </mfDefaultSorter>
+                </th>                                       
+            </tr>    
+            </thead>
+            <tbody>
+            <tr  [ngClass]="{'selected': clickedRow === item._id}" *ngFor="let item of mf.data" (click)="pullSelectedRowData(item)">
+                <td style="width: 5%"></td>
+                <td [ngStyle]= "{'width':widthStyle}" *ngFor="let column of columns">
+                    <collection-table-column>
+                        <div [innerHTML]="getDataForColumn(item,column)"></div>
+                    </collection-table-column>
+                </td>
+                </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="5">
+                    <mfBootstrapPaginator [rowsOnPageSet]=rowsOnPageButtons></mfBootstrapPaginator>
+                </td>
+            </tr>
+            </tfoot>
+        </table>
+    <!--</div>-->
+    <!--</ba-card>-->
+  </div>
+  </div>
+  
+</div>

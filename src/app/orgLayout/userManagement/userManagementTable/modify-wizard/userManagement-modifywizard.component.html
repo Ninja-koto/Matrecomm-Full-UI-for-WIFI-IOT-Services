@@ -1,0 +1,27 @@
+    <form-wizard (finalSubmit)="gotoFinalSubmit($event)">  
+        <wizard-step [title]="'Users'" [maxStepWidth]="'200px'" [isValid]="step1Validition">
+        <form [formGroup]="myFormManual" style="border-left:#fff;"  novalidate (ngSubmit)="save(myFormManual.value, myFormManual.valid)">
+            <div class="row">
+               <div class="col-sm-12">
+                <div class="form-group">
+                    <label for=""><b>UserName</b></label>
+                      <input type="text" class="form-control" formControlName="userName" placeholder="UserName">
+                      <error-messages [control]="myFormManual.controls.userName" class="text-danger"></error-messages>
+                </div>
+               </div>
+            </div>
+             <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                    <label for=""><b>Mobile Number</b></label>
+                      <input type="number" class="form-control" formControlName="mobileNumber" placeholder="Mobile Number" maxlength=10>
+                      <error-messages [control]="myFormManual.controls.mobileNumber" class="text-danger"></error-messages>
+                </div>
+               </div>                              
+            </div>
+   
+        </form>
+      
+  </wizard-step>
+ 
+  </form-wizard>

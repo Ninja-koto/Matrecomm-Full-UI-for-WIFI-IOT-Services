@@ -1,0 +1,24 @@
+{
+    "serverIP":"35.185.189.65",
+    "craftAirServerPort":8383,
+    "expressPort":4000,
+    "showDataType":"any",
+    "roundChartsDate":true,
+    "dataCheckInterval":60000,
+    "assetDownStatusConfirmTime":120000,
+    "showInventoryStatus":false,
+    "showDataTypeAllowedValues":["day","range","any"],
+    "showDataStartTime":"new Date(new Date().getFullYear(),new Date().getMonth(),new Date().getDate()).toISOString()",
+    "showDataEndTime": "new Date().toISOString()",
+    "disableConsoleLogs":false,
+    "colorsList":["#808000","#FF0000","#FFA500","#808080","#A52A2A","#0000FF","#C0C0C0","#00FF00","#008000","#FF00FF","#0000A0","#800000","#FFFF00","#800080","#ADD8E6","#00FFFF"],
+    "notificationConfig":{
+                "timeOut": 2000,
+                "position":["bottom", "right"],
+                "showProgressBar": true,
+                "pauseOnHover": true,
+                "clickToClose": true,
+                "maxLength": 50
+              }
+  }
+  

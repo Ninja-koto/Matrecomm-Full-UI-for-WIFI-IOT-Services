@@ -1,0 +1,954 @@
+    <form-wizard (finalSubmit)="gotoFinalSubmit($event)">  
+      <wizard-step [title]="'Dhcp Details'" [maxStepWidth]="'60px'" [isValid]="step1Validition">
+        <form [formGroup]="myFormDhcp" style="border-left:#fff;"  novalidate (ngSubmit)="save(myFormDhcp.value, myFormDhcp.valid)">
+            <div class="row">
+              <div class="col-sm-12">
+              <p align="center">
+              <b><i>Please enter 'DHCP' details</i>
+               <hr>
+              </b></p>       
+             </div>
+            </div>   
+
+            <div class="row">
+             <div class="col-sm-6">
+                <div class="form-group">
+                  <label for=""><b>Interface Type</b></label>
+                   <select class="form-control" formControlName="interfaceName">
+                      <option value=""><b>Select One</b></option>
+                      <option *ngFor="let interfaceName of interfaceTypes" [value]="interfaceName">{{interfaceName}}</option>
+                    </select>
+                  <error-messages [control]="myFormDhcp.controls.interfaceName" class="text-danger"></error-messages>
+                </div>
+              </div>  
+            <div class="col-sm-6">
+                <div class="form-group">
+                     <label for="">
+                       <b>Start Leasing Address</b>
+                     </label>
+                      <input type="text" class="form-control" formControlName="startAddress" maxlength="3">
+                      <error-messages [control]="myFormDhcp.controls.startAddress" class="text-danger"></error-messages>
+                </div>
+              </div> 
+            </div>
+       
+            <div class="row">
+              <div class="col-sm-6">
+               <div class="form-group">
+                     <label for="">
+                       <b>Limit Addresses</b>
+                     </label>
+                      <input type="number" class="form-control" formControlName="limitAddresses" maxlength="3">
+                      <error-messages [control]="myFormDhcp.controls.limitAddresses" class="text-danger"></error-messages>
+                </div>                
+              </div> 
+            <div class="col-sm-6">
+                <div class="form-group">
+                     <label for="">
+                       <b>Lease Time(hours)</b>
+                     </label>
+                      <input type="number" class="form-control" formControlName="leaseTime" maxlength="2">
+                      <error-messages [control]="myFormDhcp.controls.leaseTime" class="text-danger"></error-messages>
+                </div>
+              </div> 
+            </div>   
+           
+        </form>
+   </wizard-step>
+
+     <wizard-step [title]="'DNS Details'" [maxStepWidth]="'60px'" [isValid]="step2Validition">
+        <form [formGroup]="myFormDns" style="border-left:#fff;"  novalidate (ngSubmit)="save(myFormDns.value, myFormDns.valid)">
+            <div class="row">
+              <div class="col-sm-12">
+              <p align="center">
+              <b><i>Please enter 'DNS' details</i>
+               <hr>
+              </b></p>       
+             </div>
+            </div>   
+
+          <div class="row">
+             <div class="col-sm-12">
+                <div class="form-group">
+                  <label for=""><b>Domain Name</b></label>
+                   <select class="form-control" formControlName="domain">
+                      <option value=""><b>Select One</b></option>
+                      <option *ngFor="let interfaceName of interfaceTypes" [value]="interfaceName">{{interfaceName}}</option>
+                    </select>
+                  <error-messages [control]="myFormDns.controls.domain" class="text-danger"></error-messages>
+                </div>
+              </div>  
+            </div>
+      <div class="row">      
+         <div class="col-sm-4">               <!--style="text-align: center"-->
+                <div class="form-group">
+                      <label for=""><b>Authoritative:&nbsp;</b></label>
+               <label> 
+                <input type="radio" id="authoritativeStatus" value="1" style="margin-right: 0" formControlName="authoritative"/>
+                 <b>Enable </b></label>     
+                <label>
+                <input type="radio" id="authoritativeStatus" value="0" style="margin-right: 0" formControlName="authoritative"/>
+                <b>Disable </b></label>  
+                 <error-messages [control]="myFormDns.controls.authoritative" class="text-danger"></error-messages>
+                </div>
+          </div>
+
+         <div class="col-sm-4">               <!--style="text-align: center"-->
+                <div class="form-group">
+                      <label for=""><b>Domain Needed:&nbsp;</b></label>
+               <label> 
+                <input type="radio" id="domainNeededStatus" value="1" style="margin-right: 0" formControlName="domainNeeded"/>
+                 <b>Enable </b></label>     
+                <label>
+                <input type="radio" id="domainNeededStatus" value="0" style="margin-right: 0" formControlName="domainNeeded"/>
+                <b>Disable </b></label>  
+                 <error-messages [control]="myFormDns.controls.domainNeeded" class="text-danger"></error-messages>
+                </div>
+          </div>          
+
+        <div class="col-sm-4">               <!--style="text-align: center"-->
+                <div class="form-group">
+                      <label for=""><b>Bogus Priv:&nbsp;</b></label>
+               <label> 
+                <input type="radio" id="bogusPrivStatus" value="1" style="margin-right: 0" formControlName="bogusPriv"/>
+                 <b>Enable </b></label>     
+                <label>
+                <input type="radio" id="bogusPrivStatus" value="0" style="margin-right: 0" formControlName="bogusPriv"/>
+                <b>Disable </b></label>  
+                 <error-messages [control]="myFormDns.controls.bogusPriv" class="text-danger"></error-messages>
+                </div>
+          </div>                    
+
+        </div>
+ 
+      <div class="row">      
+         <div class="col-sm-4">               <!--style="text-align: center"-->
+                <div class="form-group">
+                      <label for=""><b>Expand Hosts:&nbsp;</b></label>
+               <label> 
+                <input type="radio" id="expandHostsStatus" value="1" style="margin-right: 0" formControlName="expandHosts"/>
+                 <b>Enable </b></label>     
+                <label>
+                <input type="radio" id="expandHostsStatus" value="0" style="margin-right: 0" formControlName="expandHosts"/>
+                <b>Disable </b></label>  
+                 <error-messages [control]="myFormDns.controls.expandHosts" class="text-danger"></error-messages>
+                </div>
+          </div>
+
+         <div class="col-sm-4">               <!--style="text-align: center"-->
+                <div class="form-group">
+                      <label for=""><b>Localise Queries:&nbsp;</b></label>
+               <label> 
+                <input type="radio" id="localiseQueriesStatus" value="1" style="margin-right: 0" formControlName="localiseQueries"/>
+                 <b>Enable </b></label>     
+                <label>
+                <input type="radio" id="localiseQueriesStatus" value="0" style="margin-right: 0" formControlName="localiseQueries"/>
+                <b>Disable </b></label>  
+                 <error-messages [control]="myFormDns.controls.localiseQueries" class="text-danger"></error-messages>
+                </div>
+          </div>          
+
+        <div class="col-sm-4">               <!--style="text-align: center"-->
+                <div class="form-group">
+                      <label for=""><b>No Negative Cache:&nbsp;</b></label>
+               <label> 
+                <input type="radio" id="noNegativeCacheStatus" value="1" style="margin-right: 0" formControlName="noNegativeCache"/>
+                 <b>Enable </b></label>     
+                <label>
+                <input type="radio" id="noNegativeCacheStatus" value="0" style="margin-right: 0" formControlName="noNegativeCache"/>
+                <b>Disable </b></label>  
+                 <error-messages [control]="myFormDns.controls.noNegativeCache" class="text-danger"></error-messages>
+                </div>
+          </div>                    
+
+        </div>
+
+      <div class="row">      
+         <div class="col-sm-4">               <!--style="text-align: center"-->
+                <div class="form-group">
+                      <label for=""><b>Read Ethers:&nbsp;</b></label>
+               <label> 
+                <input type="radio" id="readEthersStatus" value="1" style="margin-right: 0" formControlName="readEthers"/>
+                 <b>Enable </b></label>     
+                <label>
+                <input type="radio" id="readEtherssStatus" value="0" style="margin-right: 0" formControlName="readEthers"/>
+                <b>Disable </b></label>  
+                 <error-messages [control]="myFormDns.controls.readEthers" class="text-danger"></error-messages>
+                </div>
+          </div>
+
+         <div class="col-sm-4">               <!--style="text-align: center"-->
+                <div class="form-group">
+                      <label for=""><b>Rebind Local Host:&nbsp;</b></label>
+               <label> 
+                <input type="radio" id="rebindLocalHostStatus" value="1" style="margin-right: 0" formControlName="rebindLocalHost"/>
+                 <b>Enable </b></label>     
+                <label>
+                <input type="radio" id="rebindLocalHostStatus" value="0" style="margin-right: 0" formControlName="rebindLocalHost"/>
+                <b>Disable </b></label>  
+                 <error-messages [control]="myFormDns.controls.rebindLocalHost" class="text-danger"></error-messages>
+                </div>
+          </div>          
+
+        <div class="col-sm-4">               <!--style="text-align: center"-->
+                <div class="form-group">
+                      <label for=""><b>Rebind Protection:&nbsp;</b></label>
+               <label> 
+                <input type="radio" id="RebindProtectionStatus" value="1" style="margin-right: 0" formControlName="rebindProtection"/>
+                 <b>Enable </b></label>     
+                <label>
+                <input type="radio" id="RebindProtectionStatus" value="0" style="margin-right: 0" formControlName="rebindProtection"/>
+                <b>Disable </b></label>  
+                 <error-messages [control]="myFormDns.controls.rebindProtection" class="text-danger"></error-messages>
+                </div>
+          </div>                    
+
+        </div>        
+       <div class="row">      
+         <div class="col-sm-4">               <!--style="text-align: center"-->
+                <div class="form-group">
+                      <label for=""><b>Filter win2k:&nbsp;</b></label>
+               <label> 
+                <input type="radio" id="filterwin2kStatus" value="1" style="margin-right: 0" formControlName="filterwin2k"/>
+                 <b>Enable </b></label>     
+                <label>
+                <input type="radio" id="filterwin2kStatus" value="0" style="margin-right: 0" formControlName="filterwin2k"/>
+                <b>Disable </b></label>  
+                 <error-messages [control]="myFormDns.controls.filterwin2k" class="text-danger"></error-messages>
+                </div>
+          </div> 
+         <div class="col-sm-4">               <!--style="text-align: center"-->
+                <div class="form-group">
+                      <label for=""><b>Local Service:&nbsp;</b></label>
+               <label> 
+                <input type="radio" id="localServiceStatus" value="1" style="margin-right: 0" formControlName="localService"/>
+                 <b>Enable </b></label>     
+                <label>
+                <input type="radio" id="localServiceStatus" value="0" style="margin-right: 0" formControlName="localService"/>
+                <b>Disable </b></label>  
+                 <error-messages [control]="myFormDns.controls.localService" class="text-danger"></error-messages>
+                </div>
+          </div> 
+
+       </div>       
+
+        </form>
+   </wizard-step>
+
+      <wizard-step [title]="'LAN Interface Details'" [maxStepWidth]="'60px'" [isValid]="step3Validition">
+        <form [formGroup]="myFormLanInterface" style="border-left:#fff;"  novalidate (ngSubmit)="save(myFormLanInterface.value, myFormLanInterface.valid)">
+            <div class="row">
+              <div class="col-sm-12">
+              <p align="center">
+              <b><i>Please enter 'Lan Interface' details</i>
+               <hr>
+              </b></p>       
+             </div>
+            </div>   
+
+            <div class="row">
+             <div class="col-sm-6">
+                <div class="form-group">
+                  <label for=""><b>Lan Interface Name</b></label>
+                   <select class="form-control" formControlName="lanIfName">
+                      <option value=""><b>Select One</b></option>
+                      <option *ngFor="let lanIfName of lanIntNames" [value]="lanIfName">{{lanIfName}}</option>
+                    </select>
+                  <error-messages [control]="myFormLanInterface.controls.lanIfName" class="text-danger"></error-messages>
+                </div>
+              </div>  
+            <div class="col-sm-6">
+                <div class="form-group">
+                     <label for="">
+                       <b>Lan Address</b>
+                     </label>
+                      <input type="text" class="form-control" formControlName="lanAddress">
+                      <error-messages [control]="myFormLanInterface.controls.lanAddress" class="text-danger"></error-messages>
+                </div>
+              </div> 
+            </div>
+       
+             <div class="row">
+             <div class="col-sm-6">
+                <div class="form-group">
+                  <label for=""><b>Proto Type</b></label>
+                   <select class="form-control" formControlName="lanProtoType">
+                      <option value=""><b>Select One</b></option>
+                      <option *ngFor="let lanProtoType of lanProtoTypes" [value]="lanProtoType">{{lanProtoType}}</option>
+                    </select>
+                  <error-messages [control]="myFormLanInterface.controls.lanProtoType" class="text-danger"></error-messages>
+                </div>
+              </div>  
+            <div class="col-sm-6">
+                <div class="form-group">
+                     <label for="">
+                       <b>Subnet</b>
+                     </label>
+                      <input type="text" class="form-control" formControlName="subnet">
+                      <error-messages [control]="myFormLanInterface.controls.subnet" class="text-danger"></error-messages>
+                </div>
+              </div> 
+            </div>
+           
+        </form>
+   </wizard-step>
+      <wizard-step [title]="'WAN Interface Details'" [maxStepWidth]="'60px'" [isValid]="step4Validition">
+        <form [formGroup]="myFormWanInterface" style="border-left:#fff;"  novalidate (ngSubmit)="save(myFormWanInterface.value, myFormWanInterface.valid)">
+            <div class="row">
+              <div class="col-sm-12">
+              <p align="center">
+              <b><i>Please enter 'Wan Interface' details</i>
+               <hr>
+              </b></p>       
+             </div>
+            </div>   
+
+            <div class="row">
+             <div class="col-sm-6">
+                <div class="form-group">
+                  <label for=""><b>Wan Interface Name</b></label>
+                   <select class="form-control" formControlName="wanIntName">
+                      <option value=""><b>Select One</b></option>
+                      <option *ngFor="let wanIfName of wanIntNames" [value]="wanIfName">{{wanIfName}}</option>
+                    </select>
+                  <error-messages [control]="myFormWanInterface.controls.wanIntName" class="text-danger"></error-messages>
+                </div>
+              </div>  
+            <div class="col-sm-6">
+                <div class="form-group">
+                     <label for="">
+                       <b>Wan Proto Type</b>
+                     </label>
+                  <select class="form-control" formControlName="wanProtoType">
+                      <option value=""><b>Select One</b></option>
+                      <option *ngFor="let wanProtoType of wanProtoTypes" [value]="wanProtoType">{{wanProtoType}}</option>
+                    </select>
+                <error-messages [control]="myFormWanInterface.controls.wanProtoType" class="text-danger"></error-messages>
+                </div>
+              </div> 
+            </div>
+         <br>
+           <div class="row">
+              <div class="col-sm-12">
+              <p align="center">
+              <b><i>Please enter 'Wwan0 Interface' details</i>
+               <hr>
+              </b></p>       
+             </div>
+            </div>   
+
+            <div class="row">
+             <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>Wwan0 Interface Name</b></label>
+                   <select class="form-control" formControlName="wwan0IntName">
+                      <option value=""><b>Select One</b></option>
+                      <option *ngFor="let wwan0IntName of wwan0IntNames" [value]="wwan0IntName">{{wwan0IntName}}</option>
+                    </select>
+                  <error-messages [control]="myFormWanInterface.controls.wwan0IntName" class="text-danger"></error-messages>
+                </div>
+              </div>  
+            <div class="col-sm-4">
+                <div class="form-group">
+                     <label for="">
+                       <b>Wwan0 Proto Type</b>
+                     </label>
+                  <select class="form-control" formControlName="wwan0ProtoType">
+                      <option value=""><b>Select One</b></option>
+                      <option *ngFor="let wwan0ProtoType of wwan0ProtoTypes" [value]="wwan0ProtoType">{{wwan0ProtoType}}</option>
+                    </select>
+                <error-messages [control]="myFormWanInterface.controls.wwan0ProtoType" class="text-danger"></error-messages>
+                </div>
+              </div> 
+           <div class="col-sm-4">
+                <div class="form-group">
+                     <label for="">
+                       <b>Wwan0 device Type</b>
+                     </label>
+                  <select class="form-control" formControlName="wwan0DeviceType">
+                      <option value=""><b>Select One</b></option>
+                      <option *ngFor="let wwan0DeviceType of wwan0DeviceTypes" [value]="wwan0DeviceType">{{wwan0DeviceType}}</option>
+                    </select>
+                <error-messages [control]="myFormWanInterface.controls.wwan0DeviceType" class="text-danger"></error-messages>
+                </div>
+              </div> 
+            </div>
+       <br>     
+        <div class="row">
+              <div class="col-sm-12">
+              <p align="center">
+              <b><i>Please enter 'Wwan1 Interface' details</i>
+               <hr>
+              </b></p>       
+             </div>
+            </div>   
+
+            <div class="row">
+             <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>Wwan1 Interface Name</b></label>
+                   <select class="form-control" formControlName="wwan1IntName">
+                      <option value=""><b>Select One</b></option>
+                      <option *ngFor="let wwan1IntName of wwan1IntNames" [value]="wwan1IntName">{{wwan1IntName}}</option>
+                    </select>
+                  <error-messages [control]="myFormWanInterface.controls.wwan1IntName" class="text-danger"></error-messages>
+                </div>
+              </div>  
+            <div class="col-sm-4">
+                <div class="form-group">
+                     <label for="">
+                       <b>Wwan1 Proto Type</b>
+                     </label>
+                  <select class="form-control" formControlName="wwan1ProtoType">
+                      <option value=""><b>Select One</b></option>
+                      <option *ngFor="let wwan1ProtoType of wwan1ProtoTypes" [value]="wwan0ProtoType">{{wwan1ProtoType}}</option>
+                    </select>
+                <error-messages [control]="myFormWanInterface.controls.wwan1ProtoType" class="text-danger"></error-messages>
+                </div>
+              </div> 
+           <div class="col-sm-4">
+                <div class="form-group">
+                     <label for="">
+                       <b>Wwan1 device Type</b>
+                     </label>
+                  <select class="form-control" formControlName="wwan1DeviceType">
+                      <option value=""><b>Select One</b></option>
+                      <option *ngFor="let wwan1DeviceType of wwan1DeviceTypes" [value]="wwan1DeviceType">{{wwan1DeviceType}}</option>
+                    </select>
+                <error-messages [control]="myFormWanInterface.controls.wwan1DeviceType" class="text-danger"></error-messages>
+                </div>
+              </div> 
+            </div>           
+        </form>
+   </wizard-step>   
+
+
+      <wizard-step [title]="'SIM APN Details'" [maxStepWidth]="'60px'" [isValid]="step5Validition">
+        <form [formGroup]="myFormSimApn" style="border-left:#fff;"  novalidate (ngSubmit)="save(myFormSimApn.value, myFormSimApn.valid)">
+            <div class="row">
+              <div class="col-sm-12">
+              <p align="center">
+              <b><i>Please enter 'Wwan0 Apn' details</i>
+               <hr>
+              </b></p>       
+             </div>
+            </div>   
+
+          <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                     <label for="">
+                       <b>Wwan0 Apn</b>
+                     </label>
+                      <input type="text" class="form-control" formControlName="wwan0Apn">
+                      <error-messages [control]="myFormSimApn.controls.wwan0Apn" class="text-danger"></error-messages>
+                </div>
+              </div> 
+            <div class="col-sm-6">
+                <div class="form-group">
+                     <label for="">
+                       <b>Wwan0 Pin</b>
+                     </label>
+                      <input type="text" class="form-control" formControlName="wwan0Pin">
+                      <error-messages [control]="myFormSimApn.controls.wwan0Pin" class="text-danger"></error-messages>
+                </div>
+              </div> 
+            </div>
+         <br>
+           <div class="row">
+              <div class="col-sm-12">
+              <p align="center">
+              <b><i>Please enter 'Wwan1 Apn' details</i>
+               <hr>
+              </b></p>       
+             </div>
+            </div>   
+
+          <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                     <label for="">
+                       <b>Wwan1 Apn</b>
+                     </label>
+                      <input type="text" class="form-control" formControlName="wwan1Apn">
+                      <error-messages [control]="myFormSimApn.controls.wwan1Apn" class="text-danger"></error-messages>
+                </div>
+              </div> 
+            <div class="col-sm-6">
+                <div class="form-group">
+                     <label for="">
+                       <b>Wwan1 Pin</b>
+                     </label>
+                      <input type="text" class="form-control" formControlName="wwan1Pin">
+                      <error-messages [control]="myFormSimApn.controls.wwan1Pin" class="text-danger"></error-messages>
+                </div>
+              </div> 
+            </div>
+                       
+        </form>
+   </wizard-step>   
+
+   <wizard-step [title]="'Radio Details'" [maxStepWidth]="'60px'" [isValid]="step6Validition">
+        <form [formGroup]="myFormRadio" style="border-left:#fff;"  novalidate (ngSubmit)="save(myFormRadio.value, myFormRadio.valid)">
+            <div class="row">
+              <div class="col-sm-12">
+              <p align="center">
+              <b><i>Please enter 'Radio' details</i>
+               <hr>
+              </b></p>       
+             </div>
+            </div>   
+
+          <div class="row">
+            <div class="col-sm-4">
+                <div class="form-group">
+                     <label for="">
+                       <b>Network</b>
+                     </label>
+                  <select class="form-control" formControlName="network">
+                      <option value=""><b>Select One</b></option>
+                      <option *ngFor="let networkType of networkTypes" [value]="networkType">{{networkType}}</option>
+                    </select>
+               <error-messages [control]="myFormRadio.controls.network" class="text-danger"></error-messages>
+                </div>
+              </div> 
+            <div class="col-sm-4">
+                <div class="form-group">
+                     <label for="">
+                       <b>SSID</b>
+                     </label>
+                      <input type="text" class="form-control" formControlName="ssid">
+                      <error-messages [control]="myFormRadio.controls.ssid" class="text-danger"></error-messages>
+                </div>
+              </div> 
+           <div class="col-sm-4">
+                <div class="form-group">
+                     <label for="">
+                       <b>Device</b>
+                     </label>
+                  <select class="form-control" formControlName="device">
+                      <option value=""><b>Select One</b></option>
+                      <option *ngFor="let deviceType of deviceTypes" [value]="deviceType">{{deviceType}}</option>
+                    </select>
+               <error-messages [control]="myFormRadio.controls.device" class="text-danger"></error-messages>
+                </div>
+              </div> 
+            </div>
+          <div class="row">
+            <div class="col-sm-4">
+                <div class="form-group">
+                     <label for="">
+                       <b>Htmode</b>
+                     </label>
+                  <select class="form-control" formControlName="htmode">
+                      <option value=""><b>Select One</b></option>
+                      <option *ngFor="let htmode of htmodes" [value]="htmode">{{htmode}}</option>
+                    </select>
+               <error-messages [control]="myFormRadio.controls.htmode" class="text-danger"></error-messages>
+                </div>
+              </div> 
+            <div class="col-sm-4">
+                <div class="form-group">
+                     <label for="">
+                       <b>Hwmode</b>
+                     </label>
+                 <select class="form-control" formControlName="hwmode">
+                      <option value=""><b>Select One</b></option>
+                      <option *ngFor="let hwmode of hwmodes" [value]="hwmode">{{hwmode}}</option>
+                    </select>
+                     <error-messages [control]="myFormRadio.controls.hwmode" class="text-danger"></error-messages>
+                </div>
+              </div> 
+           <div class="col-sm-4">
+                <div class="form-group">
+                     <label for="">
+                       <b>Mode</b>
+                     </label>
+                  <select class="form-control" formControlName="mode">
+                      <option value=""><b>Select One</b></option>
+                      <option *ngFor="let modeType of modeTypes" [value]="modeType">{{modeType}}</option>
+                    </select>
+               <error-messages [control]="myFormRadio.controls.mode" class="text-danger"></error-messages>
+                </div>
+              </div> 
+            </div>       
+
+       <div class="row">
+            <div class="col-sm-4">
+                <div class="form-group">
+                     <label for="">
+                       <b>Channel</b>
+                     </label>
+                  <select class="form-control" formControlName="channel">
+                      <option value=""><b>Select One</b></option>
+                      <option *ngFor="let channelType of channelTypes" [value]="channelType">{{channelType}}</option>
+                    </select>
+               <error-messages [control]="myFormRadio.controls.channel" class="text-danger"></error-messages>
+                </div>
+              </div> 
+            <div class="col-sm-4">
+                <div class="form-group">
+                     <label for="">
+                       <b>Authentication Types</b>
+                     </label>
+                 <select class="form-control" formControlName="authenticationType" (click)="authenticationProfiles($event)" >
+                      <option value=""><b>Select One</b></option>
+                      <option *ngFor="let authenticationType of authenticationTypes" [value]="authenticationType">{{authenticationType}}</option>
+                    </select>
+                     <error-messages [control]="myFormRadio.controls.authenticationType" class="text-danger"></error-messages>
+                </div>
+              </div> 
+
+
+           <div class="col-sm-4">
+            <div *ngIf="authenticationStatus=='psk'">    
+                <div class="form-group">
+                     <label for="">
+                       <b>Key</b>
+                     </label>
+                   <input type="text" class="form-control" formControlName="key">               
+               <error-messages [control]="myFormRadio.controls.key" class="text-danger"></error-messages>
+                </div>
+              </div> 
+              </div>
+            </div>                                         
+        </form>
+   </wizard-step>   
+
+
+      <wizard-step [title]="'Captive Portal'" [maxStepWidth]="'60px'" [isValid]="step7Validition">
+        <form [formGroup]="myFormCaptive" style="border-left:#fff;"  novalidate (ngSubmit)="save(myFormCaptive.value, myFormCaptive.valid)">
+            <div class="row">
+              <div class="col-sm-12">
+              <p align="center">
+              <b><i>Please enter 'Portal' details</i>
+               <hr>
+              </b></p>       
+             </div>
+            </div>   
+
+          <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                     <label for="">
+                       <b>Portal Ip</b>
+                     </label>
+                      <input type="text" class="form-control" formControlName="portalIP">
+                      <error-messages [control]="myFormCaptive.controls.portalIP" class="text-danger"></error-messages>
+                </div>
+              </div> 
+            <div class="col-sm-6">
+                <div class="form-group">
+                     <label for="">
+                       <b>Redirect Url</b>
+                     </label>
+                      <input type="text" class="form-control" formControlName="redirectUrl">
+                      <error-messages [control]="myFormCaptive.controls.redirectUrl" class="text-danger"></error-messages>
+                </div>
+              </div> 
+            </div>
+          <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                     <label for="">
+                       <b>Nas Interface</b>
+                     </label>
+                  <select class="form-control" formControlName="nasIntf">
+                      <option value=""><b>Select One</b></option>
+                      <option *ngFor="let nasInterface of nasInterfaces" [value]="nasInterface">{{nasInterface}}</option>
+                    </select>
+               <error-messages [control]="myFormCaptive.controls.nasIntf" class="text-danger"></error-messages>
+                </div>
+              </div> 
+     
+           <div class="col-sm-6">
+                <div class="form-group">
+                     <label for="">
+                       <b>Portal Port</b>
+                     </label>
+                  <input type="number" class="form-control" formControlName="portalPort">
+               <error-messages [control]="myFormCaptive.controls.portalPort" class="text-danger"></error-messages>
+                </div>
+              </div> 
+            </div>       
+        </form>
+   </wizard-step>  
+
+
+      <wizard-step [title]="'VPN'" [maxStepWidth]="'60px'" [isValid]="step8Validition">
+        <form [formGroup]="myFormVpn" style="border-left:#fff;"  novalidate (ngSubmit)="save(myFormVpn.value, myFormVpn.valid)">
+            <div class="row">
+              <div class="col-sm-12">
+              <p align="center">
+              <b><i>Please enter 'VPN' details</i>
+               <hr>
+              </b></p>       
+             </div>
+            </div>   
+
+          <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                     <label for="">
+                       <b>Vpn Server</b>
+                     </label>
+                      <input type="text" class="form-control" formControlName="vpnServer">
+                      <error-messages [control]="myFormVpn.controls.vpnServer" class="text-danger"></error-messages>
+                </div>
+              </div> 
+            <div class="col-sm-6">
+                <div class="form-group">
+                     <label for="">
+                       <b>Vpn External Ip</b>
+                     </label>
+                      <input type="text" class="form-control" formControlName="vpnExtIp">
+                      <error-messages [control]="myFormVpn.controls.vpnExtIp" class="text-danger"></error-messages>
+                </div>
+              </div> 
+            </div>
+           <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                     <label for="">
+                       <b>Netmask</b>
+                     </label>
+                      <input type="text" class="form-control" formControlName="netmask">
+                      <error-messages [control]="myFormVpn.controls.netmask" class="text-danger"></error-messages>
+                </div>
+              </div> 
+            <div class="col-sm-6">
+                <div class="form-group">
+                     <label for="">
+                       <b>Lan Address</b>
+                     </label>
+                      <input type="text" class="form-control" formControlName="lanIP">
+                      <error-messages [control]="myFormVpn.controls.lanIP" class="text-danger"></error-messages>
+                </div>
+              </div> 
+            </div>         
+               
+        </form>
+   </wizard-step>  
+
+
+      <wizard-step [title]="'NTP Details'" [maxStepWidth]="'60px'" [isValid]="step9Validition">
+        <form [formGroup]="myFormNtp" style="border-left:#fff;"  novalidate (ngSubmit)="save(myFormNtp.value, myFormNtp.valid)">
+            <div class="row">
+              <div class="col-sm-12">
+              <p align="center">
+              <b><i>Please enter 'NTP' details</i>
+               <hr>
+              </b></p>       
+             </div>
+            </div>   
+      <div class="row">
+         <div class="col-sm-6">               <!--style="text-align: center"-->
+                <div class="form-group">
+                      <label for=""><b>Enable Server Status:&nbsp;</b></label>
+               <label> 
+                <input type="radio" id="enableServerStatus" value="1" style="margin-right: 0" formControlName="enableServer"/>
+                 <b>Enable </b></label>     
+                <label>
+                <input type="radio" id="enableServerStatus" value="0" style="margin-right: 0" formControlName="enableServer"/>
+                <b>Disable </b></label>  
+                 <error-messages [control]="myFormNtp.controls.enableServer" class="text-danger"></error-messages>
+                </div>
+          </div>         
+         <div class="col-sm-6">               <!--style="text-align: center"-->
+                <div class="form-group">
+                      <label for=""><b>Ntp Status:&nbsp;</b></label>
+               <label> 
+                <input type="radio" id="ntpStatus" value="1" style="margin-right: 0" formControlName="ntpStatus"/>
+                 <b>Enable </b></label>     
+                <label>
+                <input type="radio" id="ntpStatus" value="0" style="margin-right: 0" formControlName="ntpStatus"/>
+                <b>Disable </b></label>  
+                 <error-messages [control]="myFormNtp.controls.ntpStatus" class="text-danger"></error-messages>
+                </div>
+          </div>         
+       </div>         
+            <div class="row">
+              <div class="col-sm-12">
+              <p align="center">
+              <b><i>Please click Add button to enter 'NTP Server List' details</i>
+               <hr>
+              </b></p>       
+             </div>
+            </div>   
+        <div>
+             <div class="col-xs-8 pull-left box-tools"> 
+                    <button id="ntpListAddButton" class="btn btn-sm btn-success" data-toggle="tooltip" title="" value ="Enable"  (click)="ntpListAddProfiles($event)" ><i class="fa fa-plus"></i>Add</button>
+                </div>  
+                   <div class="col-xs-4 pull-right box-tools"> 
+                    <button id="deleteNtpListProfile" class="btn btn-sm btn-danger" data-toggle="tooltip" title="" [disabled]= "ntpListSelectedRowsForDeletion.length==0" (click)="deleteNtpListSelectedProfiles($event)"><i class="fa fa-minus"></i> Delete</button>
+                    <!--<button id="deleteProfile" class="btn btn-sm btn-danger" data-toggle="tooltip" title=""  (click)="deleteSelectedProfiles($event)"><i class="fa fa-minus"></i> Delete</button>-->
+                 </div>               
+          </div>
+        <div *ngIf="addNtpListStatus=='Enable'">  
+        <br><br>
+       <div class="row">
+          <div class="col-sm-4">
+                <div class="form-group">
+                       <label for=""><b>Server</b></label>
+                      <input type="text" class="form-control" formControlName="server">
+                      <error-messages [control]="myFormNtp.controls.server" class="text-danger"></error-messages>
+                </div>
+              </div>
+      </div> 
+             <div>
+                   <div class="col-xs-4 pull-left box-tools"> 
+                    <button id="submitNtpListProfile" class="btn  btn-primary" data-toggle="tooltip" title="" (click)="submitNtpListProfiles($event)" >Submit</button>
+                </div>
+               </div>
+               <div>
+                  <div class="col-xs-4 pull-right box-tools"> 
+                   <button id="cancelNtpListProfile" class="btn btn-warning" data-toggle="tooltip"  value ="Disable" title="" (click)="cancelNtpListProfiles($event)" >Cancel</button>
+                </div>              
+               </div>
+          
+              <div class="row">
+                    <div class="col-sm-12">
+                     <small [ngStyle] = "{'display':showNtpListTableErrorMsg}"  class="text-danger">Please select required fields above.</small>
+                    </div>
+               </div>             
+        </div>       
+                    <table class="table table-striped" >
+                      <thead>
+                      <tr>
+                          <th style="width: 5%"></th>
+                          <th style="width: 90%"><b>Server</b></th>
+                      </tr>    
+                      </thead>
+                      <tbody>
+                      <tr *ngFor="let profile of allNtpListProfiles">
+                         <td style="width: 5%"><input type="checkbox"  (click)="maintainNtpListSelectedData($event,profile)" value="{{profile.id}}" /></td>
+                          <td style="width: 30%">{{profile.server}}</td>                  
+                                    
+                          </tr>
+                      </tbody>
+                  </table>              
+        </form>
+   </wizard-step>  
+ 
+   <wizard-step [title]="'Snmp Details'" [maxStepWidth]="'60px'" [isValid]="step10Validition">
+        <form [formGroup]="myFormSnmp" style="border-left:#fff;"  novalidate (ngSubmit)="save(myFormSnmp.value, myFormSnmp.valid)">
+            <div class="row">
+              <div class="col-sm-12">
+              <p align="center">
+              <b><i>Please enter 'SNMP PrivateV2c' details</i>
+               <hr>
+              </b></p>       
+             </div>
+            </div>   
+
+            <div class="row">
+             <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>Group Name</b></label>
+                   <select class="form-control" formControlName="privateGroup">
+                      <option value=""><b>Select One</b></option>
+                      <option *ngFor="let snmpGroup of snmpGroups" [value]="snmpGroup">{{snmpGroup}}</option>
+                    </select>
+                  <error-messages [control]="myFormSnmp.controls.privateGroup" class="text-danger"></error-messages>
+                </div>
+              </div>  
+            <div class="col-sm-4">
+                <div class="form-group">
+                     <label for="">
+                       <b>SecName</b>
+                     </label>
+                  <select class="form-control" formControlName="privateSecName">
+                      <option value=""><b>Select One</b></option>
+                      <option *ngFor="let snmpSecName of snmpSecNames" [value]="snmpSecName">{{snmpSecName}}</option>
+                    </select>
+                     <error-messages [control]="myFormSnmp.controls.privateSecName" class="text-danger"></error-messages>
+                </div>
+              </div> 
+             <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>Version</b></label>
+                   <select class="form-control" formControlName="privateVersion">
+                      <option value=""><b>Select One</b></option>
+                      <option *ngFor="let snmpVersion of snmpVersions" [value]="snmpVersion">{{snmpVersion}}</option>
+                    </select>
+                  <error-messages [control]="myFormSnmp.controls.privateVersion" class="text-danger"></error-messages>
+                </div>
+              </div>  
+            </div>
+      <br>
+           <div class="row">
+              <div class="col-sm-12">
+              <p align="center">
+              <b><i>Please enter 'SNMP PublicV2c' details</i>
+               <hr>
+              </b></p>       
+             </div>
+            </div>   
+
+            <div class="row">
+             <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>Group Name</b></label>
+                   <select class="form-control" formControlName="publicGroup">
+                      <option value=""><b>Select One</b></option>
+                      <option *ngFor="let snmpGroup of snmpGroups" [value]="snmpGroup">{{snmpGroup}}</option>
+                    </select>
+                  <error-messages [control]="myFormSnmp.controls.publicGroup" class="text-danger"></error-messages>
+                </div>
+              </div>  
+            <div class="col-sm-4">
+                <div class="form-group">
+                     <label for="">
+                       <b>SecName</b>
+                     </label>
+                  <select class="form-control" formControlName="publicSecName">
+                      <option value=""><b>Select One</b></option>
+                      <option *ngFor="let snmpSecName of snmpSecNames" [value]="snmpSecName">{{snmpSecName}}</option>
+                    </select>
+                     <error-messages [control]="myFormSnmp.controls.publicSecName" class="text-danger"></error-messages>
+                </div>
+              </div> 
+             <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>Version</b></label>
+                   <select class="form-control" formControlName="publicVersion">
+                      <option value=""><b>Select One</b></option>
+                      <option *ngFor="let snmpVersion of snmpVersions" [value]="snmpVersion">{{snmpVersion}}</option>
+                    </select>
+                  <error-messages [control]="myFormSnmp.controls.publicVersion" class="text-danger"></error-messages>
+                </div>
+              </div>  
+ 
+            </div>           
+
+
+        </form>
+   </wizard-step>
+
+     <wizard-step [title]="'Hostname'" [maxStepWidth]="'60px'" [isValid]="step11Validition">
+        <form [formGroup]="myFormHostname" style="border-left:#fff;"  novalidate (ngSubmit)="save(myFormHostname.value, myFormHostname.valid)">
+            <div class="row">
+              <div class="col-sm-12">
+              <p align="center">
+              <b><i>Please enter 'Hostname' Details</i>
+               <hr>
+              </b></p>       
+             </div>
+            </div>   
+
+          <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+                     <label for="">
+                       <b>Host Name</b>
+                     </label>
+                      <input type="text" class="form-control" formControlName="hostname">
+                      <error-messages [control]="myFormHostname.controls.hostname" class="text-danger"></error-messages>
+                </div>
+              </div> 
+            </div>            
+        </form>
+   </wizard-step>  
+
+   
+ </form-wizard>

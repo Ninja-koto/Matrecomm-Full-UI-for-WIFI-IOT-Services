@@ -1,0 +1,33 @@
+    <form-wizard (finalSubmit)="gotoFinalSubmit($event)">  
+      <wizard-step [title]="'Telnet Details'" [maxStepWidth]="'200px'" [isValid]="step1Validition">
+        <form [formGroup]="myForm" style="border-left:#fff;"  novalidate (ngSubmit)="save(myForm.value, myForm.valid)">
+        <div class="row">
+              <div class="col-sm-8">
+                <div class="form-group">
+                      <label for="">UserName</label>
+                      <input type="text" class="form-control" formControlName="username" placeholder="Enter UserName">      
+                      <error-messages [control]="myForm.controls.username" class="text-danger"></error-messages>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-8">
+                <div class="form-group">
+                  <label for="">Password</label>
+                      <input type="password" class="form-control" formControlName="password" placeholder="Enter Password">
+                      <error-messages [control]="myForm.controls.password" class="text-danger"></error-messages>
+                </div>
+              </div>
+            </div>   
+              <div class="row">
+              <div class="col-sm-8">
+                <div class="form-group">
+                  <label for="">Enable Password (optional)</label>
+                      <input type="password" class="form-control" formControlName="enablePassword" placeholder="Enter Enable Password">
+                      <error-messages [control]="myForm.controls.enablePassword" class="text-danger"></error-messages>
+                </div>
+              </div>
+            </div>   
+        </form>
+  </wizard-step>
+  </form-wizard>

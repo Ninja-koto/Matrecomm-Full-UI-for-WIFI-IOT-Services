@@ -1,0 +1,390 @@
+    <form-wizard (finalSubmit)="gotoFinalSubmit($event)">  
+      <wizard-step [title]="'Address'" [maxStepWidth]="'200px'" [isValid]="step1Validition" (onLoad)="onStepLoad($event)">
+        <form [formGroup]="myForm" style="border-left:#fff;"  novalidate (ngSubmit)="save(myForm.value, myForm.valid)">
+            <div class="row">
+              <div class="col-sm-12">
+              <p align="center">
+              <b><i>Please enter your organization location details</i>
+              </b></p>       
+             </div>
+            </div>   
+        <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                      <label for="">Address</label>
+                      <textarea  rows="1" class="form-control" formControlName="address" placeholder="Please enter your organization address ">
+                      </textarea>
+                      <error-messages [control]="myForm.controls.address" class="text-danger"></error-messages>          
+                </div>
+              </div>
+            </div>           
+             <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="">Building Name</label>
+                      <input type="text" class="form-control" formControlName="Building" placeholder="Building Name">
+                      <error-messages [control]="myForm.controls.Building" class="text-danger"></error-messages>
+                </div>
+              </div>
+           
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="">City</label>
+                      <input type="text" class="form-control" formControlName="City" placeholder="Please enter city">
+                      <error-messages [control]="myForm.controls.City" class="text-danger"></error-messages>
+                </div>
+              </div>
+             <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="">Office Phone</label>
+                      <input type="text" class="form-control" formControlName="officePhone" placeholder="Please enter office phone number">
+                      <error-messages [control]="myForm.controls.officePhone" class="text-danger"></error-messages>
+                </div>
+              </div>              
+            </div>    
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="">Continent</label>
+                      <select class="form-control" id = "Continent" formControlName="Continent" (change)="getCountries($event)">
+                        <option *ngFor="let continentName of continentNames" [value]="continentName.value" >{{continentName.display}}</option>
+                      </select>
+                      <error-messages [control]="myForm.controls.Continent" class="text-danger"></error-messages>
+                </div>
+              </div>
+             <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="">Country</label>
+                      <select class="form-control" formControlName="Country">
+                        <option value="">Select One</option>
+                        <option *ngFor="let countriesName of countries" [value]="countriesName">{{countriesName}}</option>
+                      </select>
+                      <error-messages [control]="myForm.controls.Country" class="text-danger"></error-messages>
+                </div>
+              </div>  
+             <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="">Zip Code</label>
+                      <input type="text" class="form-control" formControlName="zipcode" placeholder="Please enter zipCode">
+                      <error-messages [control]="myForm.controls.zipcode" class="text-danger"></error-messages>
+                </div>
+              </div>                
+            </div> 
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label for="">E-Mail</label>
+                      <input type="text" class="form-control" formControlName="email" placeholder="Please enter organization E-Mail">
+                      <error-messages [control]="myForm.controls.email" class="text-danger"></error-messages>
+                </div>
+              </div>
+            </div> 
+        </form>
+  </wizard-step>
+      <wizard-step [title]="'IPV4 Details'" [maxStepWidth]="'200px'" [isValid]="step2Validition" (onLoad)="onStepLoad($event)">
+        <form [formGroup]="myFormIpv4" style="border-left:#fff;"  novalidate (ngSubmit)="save(myFormIpv4.value, myFormIpv4.valid)">
+            <div class="row">
+              <div class="col-sm-12">
+              <p align="center">
+              <b><i>Please enter your organization IPv4 details</i>
+              </b></p>       
+             </div>
+            </div>   
+            <div class="row">
+              <div class="col-sm-12">
+              <p align="center">
+              <b><i>In Case of Vehicles enter Start and End IPv4 addresses are same</i>
+              </b></p>       
+             </div>
+            </div>               
+       <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                      <label for="">Start IPv4 Address</label>
+                      <input type="text" class="form-control" formControlName="startIPv4">
+                      <error-messages [control]="myFormIpv4.controls.startIPv4" class="text-danger"></error-messages>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="">End IPv4 Address</label>
+                      <input type="text" class="form-control" formControlName="endIPv4">
+                        <error-messages [control]="myFormIpv4.controls.endIPv4" class="text-danger"></error-messages>
+                </div>
+              </div>
+            </div>  
+              <div class="row">
+                    <div class="col-sm-12">
+                     <small [ngStyle] = "{'display':showIpv4TableErrorMsg}"  class="text-danger">Please select startipv4 -> endipv4 </small>
+                    </div>
+               </div>             
+              <div class="col-xs-4 pull-left box-tools"> 
+                    <button id="addIpv4Profile" class="btn btn-sm btn-success" data-toggle="tooltip" title="" (click)="addIpv4Profiles($event)" ><i class="fa fa-plus"></i>Add</button>
+                </div>
+                <div class="col-xs-4 pull-right box-tools"> 
+                    <button id="deleteIpv4Profile" class="btn btn-sm btn-danger" data-toggle="tooltip" title="" [disabled]= "ipv4SelectedRowsForDeletion.length==0" (click)="deleteIpv4SelectedProfiles($event)"><i class="fa fa-minus"></i> Delete</button>
+                    <!--<button id="deleteProfile" class="btn btn-sm btn-danger" data-toggle="tooltip" title=""  (click)="deleteSelectedProfiles($event)"><i class="fa fa-minus"></i> Delete</button>-->
+                </div>
+                    <table class="table table-striped" >
+                      <thead>
+                      <tr>
+                          <th style="width: 5%"></th>
+                          <th style="width: 45%">Start IPV4 Address</th>
+                          <th style="width: 45%">End IPV4 Address</th>
+                      </tr>    
+                      </thead>
+                      <tbody>
+                      <tr *ngFor="let profile of allIpv4Profiles">
+                         <td style="width: 5%"><input type="checkbox"  (click)="maintainIpv4SelectedData($event,profile)" value="{{profile.id}}" /></td>
+                          <td style="width: 45%">{{profile.startIPv4}}</td>
+                          <td style="width: 45%">{{profile.endIPv4}}</td>
+                          </tr>
+                      </tbody>
+                  </table>
+        </form>
+  </wizard-step>
+        <wizard-step [title]="'IPV6 Details'" [maxStepWidth]="'200px'" [isValid]="step3Validition" (onLoad)="onStepLoad($event)">
+        <form [formGroup]="myFormIpv6" style="border-left:#fff;"  novalidate (ngSubmit)="save(myFormIpv6.value, myFormIpv6.valid)">
+            <div class="row">
+              <div class="col-sm-12">
+              <p align="center">
+              <b><i>Please provide IPv6 details of assets discovered in your organization</i>
+              </b></p>       
+             </div>
+            </div>   
+            <div class="row">
+               <div class="col-sm-12">
+                <div class="form-group">
+            <div>
+              <label> 
+                <input type="radio" id="selectIPV6" value="NoIPV6"  formControlName="selectIPV6address" (click)="selectIpv6Type($event)">
+                I do not have assets with IPV6 addresses in the organization </label>     
+                 </div>
+                 <div>
+                <label>
+                <input type="radio" id="selectIPV6" value="IPV6" formControlName="selectIPV6address" (click)="selectIpv6Type($event)" />
+                I have assets with IPV6 addresses in the organization</label>
+                 </div>
+                </div>
+              </div>
+              </div>
+
+       <div *ngIf="selectIPV6address=='IPV6'">
+          <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                      <label for="">IPv6 Details:</label>
+                </div>
+              </div>
+          </div>               
+       <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                      <label for="">IPv6 Address</label>
+                      <input type="text" class="form-control" formControlName="IPv6">
+                      <error-messages [control]="myFormIpv6.controls.IPv6" class="text-danger"></error-messages>
+                </div>
+              </div> 
+            </div>   
+                    <div class="row">
+                        <div class="col-sm-12">
+                        <small [ngStyle] = "{'display':showIpv6TableErrorMsg}"  class="text-danger">Please select ipv6 address.</small>
+                        </div>
+                    </div>            
+              <div class="col-xs-4 pull-left box-tools"> 
+                    <button id="addIpv6Profile" class="btn btn-sm btn-success" data-toggle="tooltip" title="" (click)="addIpv6Profiles($event)" ><i class="fa fa-plus"></i>Add</button>
+                </div>
+                <div class="col-xs-4 pull-right box-tools"> 
+                    <button id="deleteIpv6Profile" class="btn btn-sm btn-danger" data-toggle="tooltip" title="" [disabled]= "ipv6SelectedRowsForDeletion.length==0" (click)="deleteIpv6SelectedProfiles($event)"><i class="fa fa-minus"></i> Delete</button>
+                    <!--<button id="deleteProfile" class="btn btn-sm btn-danger" data-toggle="tooltip" title=""  (click)="deleteSelectedProfiles($event)"><i class="fa fa-minus"></i> Delete</button>-->
+                </div>
+                    <table class="table table-striped" >
+                      <thead>
+                      <tr>
+                          <th style="width: 5%"></th>
+                          <th style="width: 90%"> IPV6 Address</th>
+                      </tr>    
+                      </thead>
+                      <tbody>
+                      <tr *ngFor="let profile of allIpv6Profiles">
+                         <td style="width: 5%"><input type="checkbox"  (click)="maintainIpv6SelectedData($event,profile)" value="{{profile.id}}" /></td>
+                          <td style="width: 90%">{{profile.IPv6}}</td>
+                          </tr>
+                      </tbody>
+                  </table>
+      </div>  
+      
+        </form>
+  </wizard-step>
+
+        <wizard-step [title]="'Image Profile'" [maxStepWidth]="'200px'" [isValid]="step4Validition" (onLoad)="onStepLoad($event)">
+        <form [formGroup]="myFormImage" style="border-left:#fff;"  novalidate (ngSubmit)="save(myFormImage.value, myFormImage.valid)">
+            <div class="row">
+              <div class="col-sm-12">
+              <p align="center">
+              <b><i>Please provide floor layout image details of your organization</i>
+              </b></p>       
+             </div>
+            </div>   
+            <div class="row">
+               <div class="col-sm-12">
+                <div class="form-group">
+            <div>
+              <label> 
+                <input type="radio" id="locationType" value="nonMovable"  formControlName="locationType" (click)="selectLocationType($event)">
+                Non-Movable Location</label>     
+                 </div>
+                 <div>
+                <label>
+                <input type="radio" id="locationType" value="movable" formControlName="locationType" (click)="selectLocationType($event)" />
+                Movable Location</label>
+                 </div>
+                </div>
+              </div>
+              </div>
+
+        
+       <div class="row">
+          <div class="col-sm-6">
+              <div *ngIf="locationType=='nonMovable'"> 
+                <div class="form-group">
+                      <label for="">Floor Name</label>
+                      <input type="text" class="form-control" formControlName="Floor" placeholder="Name of Floor">
+                      <error-messages [control]="myFormImage.controls.Floor" class="text-danger"></error-messages>
+                </div>
+              </div>
+           <div *ngIf="locationType=='movable'">                 
+                <div class="form-group">
+                      <label for="">Vehicle ID</label>
+                      <input type="text" class="form-control" formControlName="vehicleID" placeholder="Vehicle ID">
+                      <error-messages [control]="myFormImage.controls.vehicleID" class="text-danger"></error-messages>
+                </div>
+              </div>
+           </div> 
+            <div class="col-sm-6">
+                <div class="form-group">
+                      <label for="">Connection Timeout</label>
+                      <input type="text" class="form-control" formControlName="connectionTimeout" placeholder="in seconds">
+                      <error-messages [control]="myFormImage.controls.connectionTimeout" class="text-danger"></error-messages>
+                </div>
+              </div>              
+             
+      </div>  
+            <div class="row">
+               <div class="col-sm-12">
+                <div class="form-group">
+            <div>
+              <label> 
+                <input type="radio" id="floorMapType" value="NoFloorMap"  formControlName="enableFloorImageDetails" (click)="selectFloorMapType($event)">
+                I do not have image representing floor map</label>     
+                 </div>
+                 <div>
+                <label>
+                <input type="radio" id="floorMapType" value="FloorMap" formControlName="enableFloorImageDetails" (click)="selectFloorMapType($event)" />
+                I have image representing floor map</label>
+                 </div>
+                </div>
+              </div>
+              </div>
+        <div *ngIf="floorMapType=='FloorMap'">      
+          <div class="row">
+           <div class="col-sm-12">
+                <div class="form-group">
+                      <label for="">Enter Image Profile Details</label>
+                </div>
+           </div>
+        </div>
+        <div class="row">
+           <div class="col-sm-12">
+                <div class="form-group">
+                      <label for="">Image Profile Name</label>
+                      <input type="text" class="form-control" formControlName="ImageProfilename" placeholder="Name of Image Profile">
+                      <error-messages [control]="myFormImage.controls.ImageProfilename" class="text-danger"></error-messages>
+                </div>
+           </div>
+        </div>
+        <div *ngIf="locationType=='nonMovable'">         
+           <div class="row">
+              <div class="col-sm-12">
+              FloorMap Image Layout
+              </div>
+              <div class="col-sm-4" style="width: 150px;height: 100px;" >
+                <div class="form-group">
+                  <input type="file" id="floorFileSelect"  accept="image/gif,image/jpeg,image/png" (change)="onFloorFileChange($event)" class="form-control" formControlName="FloorImage">
+                  <error-messages [control]="myFormImage.controls.FloorImage" class="text-danger"></error-messages>
+                </div>
+              </div>
+              <div class="col-sm-4" style="width: 150px;height: 100px;">
+              <div class="form-group">
+              <button id="loadFloorFile" [disabled]="disableLoadButton" class="btn btn-sm btn-success" title="" (click)="floorLoadInitiated($event)" >Load Profile</button>
+              </div>
+              </div>
+              <div *ngIf="showFloorMap">
+                <div class="col-sm-4" style="width: 150px;height: 100px;">
+                  <button type="button" class="close close-image" (click)="closeImage($event)">
+                    <span aria-hidden="true">✖</span><span class="sr-only">Close</span>
+                  </button>
+                <img id="imageUrl" style="width: 150px;height: 60px;" src="{{floorMapImageURL}}" alt="your image" />
+
+                </div>
+              </div>
+
+            </div>   
+         </div>
+       <div *ngIf="locationType=='movable'"> 
+          <div class="row">
+              <div class="col-sm-12">
+               Vehicle Layout
+              </div>
+              <div class="col-sm-4" style="width: 150px;height: 100px;">
+                <div class="form-group">
+                  <input type="file" id="vehicleFileSelect"  accept="image/gif,image/jpeg,image/png" (change)="onVehicleFileChange($event)" class="form-control" formControlName="vehicleFileType">
+                  <error-messages [control]="myFormImage.controls.vehicleFileType" class="text-danger"></error-messages>
+                </div>
+              </div>
+              <div class="col-sm-4">
+              <div class="form-group">
+              <button id="loadVehicleFile" [disabled]="disableVehicleLoadButton" class="btn btn-sm btn-success" title="" (click)="vehicleLoadInitiated($event)" >Load Profile</button>
+              </div>
+              </div>
+               <div *ngIf="showVehicleFloorMap">
+                <div class="col-sm-4" style="width: 150px;height: 100px;">
+                  <button type="button" class="close close-image" (click)="closeVehicleImage($event)">
+                    <span aria-hidden="true">✖</span><span class="sr-only">Close</span>
+                  </button>
+                <img id="vehicleImageUrl" style="width: 150px;height: 60px;" src="{{vehicleFloorMapImageURL}}" alt="your image" />
+
+                </div>
+              </div>
+            </div>   
+       </div>
+       <div class="row">
+           <div class="col-sm-4">
+                <div class="form-group">
+                      <label for="">Default InterFloor Attenuation(in db)</label>
+                      <input type="text" class="form-control" formControlName="defaultInterFloorAttenuation" placeholder="Default InterFloor Attenuation">
+                      <error-messages [control]="myFormImage.controls.defaultInterFloorAttenuation" class="text-danger"></error-messages>
+                </div>
+           </div>
+           <div class="col-sm-4">
+                <div class="form-group">
+                      <label for="">Default Level Attenuation(in db)</label>
+                      <input type="text" class="form-control" formControlName="defaultLevelAttenuation" placeholder="Default Level Attenuation">
+                      <error-messages [control]="myFormImage.controls.defaultLevelAttenuation" class="text-danger"></error-messages>
+                </div>
+           </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="">Choose propagation Model</label>
+                      <select class="form-control" formControlName="choosePropagationModel">
+                        <option *ngFor="let propagationType of propagationTypes" [value]="propagationType.value">{{propagationType.display}}</option>
+                      </select>
+                      <error-messages [control]="myFormImage.controls.choosePropagationModel" class="text-danger"></error-messages>
+                </div>
+              </div>
+              </div>
+      </div>
+                
+        </form>
+  </wizard-step>
+  </form-wizard>

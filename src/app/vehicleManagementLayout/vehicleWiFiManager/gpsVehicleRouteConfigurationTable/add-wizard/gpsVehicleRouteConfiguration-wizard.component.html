@@ -1,0 +1,155 @@
+    <form-wizard (finalSubmit)="gotoFinalSubmit($event)">  
+    <wizard-step [title]="'Bus Route Details'" [maxStepWidth]="'200px'" [isValid]="step1Validition">
+       <form [formGroup]="myFormGPSVehicleRoute" style="border-left:#fff;"  onload="loadingForm1($event)" novalidate (ngSubmit)="save(myFormGPSVehicleRoute.value, myFormGPSVehicleRoute.valid)">
+        <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                      <label for=""><b>Enter Route Name</b></label>
+                      <input type="text" class="form-control" formControlName="routeNumber" placeholder="Route Name" (keydown)='changeFunction($event,"fromRouteNum")' (change)='changeFunction($event,"fromRouteNum")' >
+                      <error-messages [control]="myFormGPSVehicleRoute.controls.routeNumber" class="text-danger"></error-messages>          
+                </div>
+              </div>   
+            <div class="col-sm-6">
+                <div class="form-group">
+                  <label for=""><b>Select UnAssigned Bus</b></label>
+                      <select class="form-control" formControlName="busRegNumber" (change)='changeFunction($event,"fromBusReg")'  >
+                        <option value="">Select One</option>
+                        <option *ngFor="let busRegNumber of busRegNumbers" [value]="busRegNumber">{{busRegNumber}}</option>
+                      </select>
+                      <error-messages [control]="myFormGPSVehicleRoute.controls.busRegNumber" class="text-danger"></error-messages>
+                </div>
+              </div>                 
+           </div>
+         
+           <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for=""><b>Event Start Date</b></label><br>
+                     <input class="picker-input form-control" style="color: #000000;" [ngModel]="startTimeValue | date: 'short'" 
+                      [(dateTimePicker)]="startTimeValue" 
+                      readonly formControlName="startTime"
+                      (dateTimePickerChange) = "startAndEndTimeChanged($event,'fromStart')" placeholder=" click here" />                    
+                      <error-messages [control]="myFormGPSVehicleRoute.controls.startTime" class="text-danger"></error-messages>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group"> 
+                  <label for=""><b>Event End Date</b></label><br>
+                     <input class="picker-input form-control" style="color: #000000;" [ngModel]="endTimeValue | date: 'short'" 
+                      [(dateTimePicker)]="endTimeValue" 
+                      readonly formControlName="endTime"
+                      (dateTimePickerChange) = "startAndEndTimeChanged($event,'fromEnd')" placeholder=" click here" />                  
+                      <error-messages [control]="myFormGPSVehicleRoute.controls.endTime" class="text-danger"></error-messages>
+                </div>
+              </div>
+             </div>   
+         <div class="row">
+            <div class="col-sm-12">
+            <small [ngStyle] = "{'display':showTimeErrorMsg}"  class="text-danger">{{timeErrMsg}}</small>
+            </div>
+        </div>               
+
+   </form>
+  </wizard-step>
+
+    <wizard-step [title]="'Boarding Points'" [maxStepWidth]="'200px'" [isValid]="step2Validition">
+      <form [formGroup]="myFormBoarding" style="border-left:#fff;"  onload="loadingForm1($event)"  novalidate (ngSubmit)="save(myFormBoarding.value, myFormBoarding.valid)">
+            <div class="row">
+              <div class="col-sm-12">
+              <p align="center">
+              <b><i>Please click Add button to enter boarding points details</i>
+               <hr>
+              </b></p>       
+             </div>
+            </div>   
+       <div>
+             <div class="col-xs-8 pull-left box-tools"> 
+                    <button id="boardingAddButton" class="btn btn-sm btn-success" data-toggle="tooltip" title="" value ="Enable"  (click)="boardingAddProfiles($event)" ><i class="fa fa-plus"></i>Add</button>
+                </div>  
+
+                   <div class="col-xs-4 pull-right box-tools"> 
+                    <button id="deleteBoardingProfile" class="btn btn-sm btn-danger" data-toggle="tooltip" title="" [disabled]= "boardingSelectedRowsForDeletion.length==0" (click)="deleteBoardingSelectedProfiles($event)"><i class="fa fa-minus"></i> Delete</button>
+                 </div>               
+          </div>
+        <div *ngIf="addBoardingStatus=='Enable'">  
+        <br><br>
+          <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for=""><b>Pick Up Time</b></label><br>
+                     <input class="picker-input form-control" style="color: #000000;" [ngModel]="pickupTimeValue | date: 'shortTime'" 
+                      [(dateTimePicker)]="pickupTimeValue" 
+                       [pickerType]="'time'" 
+                      readonly formControlName="pickupTime"
+                      (dateTimePickerChange) = "scheduleChanged($event,'fromPickup')" placeholder=" click here" />                    
+                      <error-messages [control]="myFormBoarding.controls.pickupTime" class="text-danger"></error-messages>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group"> 
+                  <label for=""><b>Drop Time</b></label><br>
+                     <input class="picker-input form-control" style="color: #000000;" [ngModel]="dropTimeValue | date: 'shortTime'" 
+                      [(dateTimePicker)]="dropTimeValue" 
+                       [pickerType]="'time'" 
+                      readonly formControlName="dropTime"
+                      (dateTimePickerChange) = "scheduleChanged($event,'fromDrop')" placeholder=" click here" />                  
+                      <error-messages [control]="myFormBoarding.controls.dropTime" class="text-danger"></error-messages>
+                </div>
+              </div>
+             </div>       
+       <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label for=""><b>Enter Boarding Point Name</b></label>
+                      <input type="text" class="form-control" formControlName="boardingPointName" placeholder="Boarding Point Name">
+                        <error-messages [control]="myFormBoarding.controls.boardingPointName" class="text-danger"></error-messages>
+                </div>
+              </div>
+        </div>    
+        <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                      <label for=""><b>Address</b></label>
+                      <textarea  rows="1" class="form-control" formControlName="address" placeholder="Please enter BoardingPoint address">
+                      </textarea>
+                      <error-messages [control]="myFormBoarding.controls.address" class="text-danger"></error-messages>          
+                </div>
+              </div>
+            </div>        
+             <div>
+                   <div class="col-xs-4 pull-left box-tools"> 
+                    <button id="submitBoardingProfile" class="btn  btn-primary" data-toggle="tooltip" title="" (click)="submitBoardingProfiles($event)" >Submit</button>
+                </div>
+               </div>
+               <div>
+                  <div class="col-xs-4 pull-right box-tools"> 
+                   <button id="cancelBoardingProfile" class="btn btn-warning" data-toggle="tooltip"  value ="Disable" title="" (click)="cancelBoardingProfiles($event)" >Cancel</button>
+                </div>              
+               </div>
+              <div class="row">
+                    <div class="col-sm-12">
+                     <small [ngStyle] = "{'display':showBoardingTableErrorMsg}"  class="text-danger">Please select: pickupTime -> dropTime ->boardingPointName -> address</small>
+                    </div>
+               </div>             
+        </div>       
+                     <table class="table table-striped" >
+                      <thead>
+                      <tr>
+                          <th style="width: 6%"></th>
+                          <th style="width: 30%"><b>Boarding Point</b></th>
+                          <th style="width: 30%"><b>Pick Up time</b></th>
+                          <th style="width: 30%"><b>Drop Time</b></th>
+                      </tr>    
+                      </thead>
+                      <tbody>
+                      <tr *ngFor="let profile of allBoardingProfiles">
+                         <td style="width: 6%"><input type="checkbox"  (click)="maintainBoardingSelectedData($event,profile)" value="{{profile.id}}" /></td>
+                          <td style="width: 30%">{{profile.boardingPointName}}</td>
+                          <td style="width: 30%">{{profile.pickupTime}}</td>
+                           <td style="width: 30%">{{profile.dropTime}}</td>
+                          </tr>
+                      </tbody>
+                  </table>
+        </form>
+</wizard-step>
+</form-wizard>

@@ -1,0 +1,35 @@
+    <form-wizard (finalSubmit)="gotoFinalSubmit($event)">  
+      <wizard-step [title]="'Media Files'" [maxStepWidth]="'200px'" [isValid]="step1Validition">
+        <form [formGroup]="myForm" style="border-left:#fff;"  novalidate (ngSubmit)="save(myForm.value, myForm.valid)">
+        
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label for="">File Unique Short Name</label>
+                      <input type="text" class="form-control" formControlName="fileName">
+                      <error-messages [control]="myForm.controls.fileName" class="text-danger"></error-messages>
+                </div>
+              </div>
+            </div>  
+            <div class ="row">
+              <div class="col-sm-12">
+                <div class="form-group">  
+                  <label> <b> CaptivePortal Logo</b></label>
+                </div>   
+              </div>         
+              <div class="col-sm-4" style="width: 150px;height: 100px;">
+                 <div class="form-group">
+                   <input type="file" id="fileSelect" name="file" accept="image/gif,image/jpeg,image/png" (change)="onImageLogoChange($event)" class="form-control" formControlName="logoImage">
+                   <error-messages [control]="myFormLoginDetails.controls.logoImage" class="text-danger"></error-messages>
+                 </div>
+              </div>
+            </div>
+
+
+
+          
+            
+        </form>
+  </wizard-step>
+    
+  </form-wizard>

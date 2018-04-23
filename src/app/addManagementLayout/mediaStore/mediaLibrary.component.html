@@ -1,0 +1,197 @@
+<div >
+  <style>
+          .ellipsis { text-overflow: ellipsis; white-space: nowrap;overflow: hidden; }
+  </style>
+    <modal  [animation]="animation" [keyboard]="keyboard" [backdrop]="'static'" (onClose)="closed()" (onDismiss)="dismissed()"
+           (onOpen)="opened()" #validationModal>
+           <form #modalForm="ngForm">
+               <modal-header [show-close]="true">
+                   <h4 class="modal-title">{{currWizardOp}} Add Media Files</h4>
+               </modal-header>
+               <modal-body>        
+                 <div *ngIf="showWizard">                   
+                   <mediaLibrary-add
+                   [data]="currWizardData" 
+                   [operation]="currWizardOp"
+                   (closeModal)="close1($event)" 
+                   (closeModalWizard)="closeWizard(); validationModal.dismiss()">                  
+                 ></mediaLibrary-add>
+                 </div>
+               </modal-body>
+               <modal-footer>
+              </modal-footer>
+           </form>
+       </modal>
+       </div>
+<nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+ <button class=" btn-xs navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+   <span class="navbar-toggler-icon"></span>
+ </button>
+ <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+   <ul class="navbar-nav mr-auto mt-2 mt-md-0">
+      <li class="nav-item">
+       <button class="btn btn-outline-success" type="button">All Media</button> 
+     </li>
+     <li class="nav-item dropdown">
+       <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+         Movies
+       </a>
+       <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+         <a class="dropdown-item" >Action</a>
+         <a class="dropdown-item" >Drama</a>
+         <a class="dropdown-item" >Comedy</a>
+         <a class="dropdown-item" >Horror</a>
+         <a class="dropdown-item" >Top Rated</a>
+         <a class="dropdown-item" >English</a>
+         <a class="dropdown-item" >Hindi</a>
+         <a class="dropdown-item" >Kannada</a>
+         <a class="dropdown-item" >Tamil</a>
+         <a class="dropdown-item" >Telugu</a>
+       </div>
+     </li>
+       <li class="nav-item dropdown">
+       <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+         Songs
+       </a>
+       <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+         <a class="dropdown-item" >Top Rated</a>
+          <a class="dropdown-item" >BollyWood</a>
+         <a class="dropdown-item" >Pop</a>
+         <a class="dropdown-item" >Rock</a>
+         <a class="dropdown-item" >90's Music</a>
+         <a class="dropdown-item" >Artists</a>
+         <a class="dropdown-item" >Albums</a>
+         <a class="dropdown-item" >English</a>
+         <a class="dropdown-item" >Hindi</a>
+         <a class="dropdown-item" >Kannada</a>
+         <a class="dropdown-item" >Tamil</a>
+         <a class="dropdown-item" >Telugu</a>
+       </div>
+     </li>
+      <li class="nav-item dropdown">
+       <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+         Serials
+       </a>
+       <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+         <a class="dropdown-item" >Action</a>
+         <a class="dropdown-item" >Drama</a>
+         <a class="dropdown-item" >Comedy</a>
+         <a class="dropdown-item" >Horror</a>
+         <a class="dropdown-item" >Top Rated</a>
+         <a class="dropdown-item" >English</a>
+         <a class="dropdown-item" >Hindi</a>
+         <a class="dropdown-item" >Kannada</a>
+         <a class="dropdown-item" >Tamil</a>
+         <a class="dropdown-item" >Telugu</a>
+       </div>
+     </li>
+       <li class="nav-item dropdown">
+       <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+         News
+       </a>
+       <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+         <a class="dropdown-item">Regional</a>
+         <a class="dropdown-item" >National</a>
+         <a class="dropdown-item" >International</a>
+         <a class="dropdown-item" >English</a>
+         <a class="dropdown-item" >Hindi</a>
+         <a class="dropdown-item" >Kannada</a>
+         <a class="dropdown-item" >Tamil</a>
+         <a class="dropdown-item" >Telugu</a>
+       </div>
+     </li>
+      <li class="nav-item dropdown">
+       <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+         Sort
+       </a>
+       <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+         <a class="dropdown-item" >By Name</a>
+         <a class="dropdown-item" >By Type</a>
+         <a class="dropdown-item" >By Size</a>
+       </div>
+     </li>
+      <li class="nav-item">
+       <a class="nav-link" >Recently Added</a>
+     </li>
+   </ul>
+   <div class="form-inline my-2 my-lg-0">
+     <input class="form-control mr-sm-2" type="text" [(ngModel)]="userFilter.selectedMediaFilename" placeholder="Search">
+   </div>
+ </div>
+</nav>
+<hr/>
+<nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+ <button class=" btn-xs navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+   <span class="navbar-toggler-icon"></span>
+ </button>
+ <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+   <ul class="navbar-nav mr-auto mt-2 mt-md-0">
+    <li class="nav-item">
+      <button class="btn btn-outline-success" type="button" (click)="validationModal.open('lg'); showUploadWizard();">Add</button>
+     </li>
+      <li class="nav-item">
+       <a class="nav-link" >Trending</a>
+     </li>
+     
+       <li class="nav-item">
+       <a class="nav-link" >Spotlight</a>
+     </li>
+          <li class="nav-item dropdown">
+       <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+         Video
+       </a>
+       <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+         <a class="dropdown-item" >Top Rated</a>
+         <a class="dropdown-item" >English</a>
+         <a class="dropdown-item" >Hindi</a>
+         <a class="dropdown-item" >Kannada</a>
+         <a class="dropdown-item" >Tamil</a>
+         <a class="dropdown-item" >Telugu</a>
+       </div>
+     </li>
+           <li class="nav-item dropdown">
+       <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+         Filter
+       </a>
+       <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+         <a class="dropdown-item" >Entertainment</a>
+         <a class="dropdown-item" >Lifestyle</a>
+         <a class="dropdown-item" >Business News</a>
+       </div>
+     </li>
+   </ul>
+ </div>
+</nav>
+<hr/>
+<div>
+  <!--<img id="tempImg" src=""  alt="embedded icon">-->
+  <div class="row">
+  <div class="col-md-3" *ngFor="let file of uploadedFiles | filterBy: userFilter">
+    <div class="card">
+    <div class="image" style="position: relative">
+        <img class="card-img-top img-fluid" src="{{file.img}}" alt="Card image cap">
+        <div class="dropdown" style="position: absolute; left: 0; top: 0; height: 50px; ">
+            <a style=" padding-left: 1em;padding-right: 1em;border-radius: 15px;display: block; background-color: rgba(255, 255, 255, 0.5); color: black;" 
+              href="http://example.com" id="navbarDropdownMenuLink" 
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <b>
+                <div style="    font-size: 20px;">.</div>
+                <div style="    font-size: 20px;">.</div>
+                <div style="    font-size: 20px;">.</div>
+              </b>
+            </a>
+            <div class="dropdown-menu"  aria-labelledby="navbarDropdownMenuLink">
+                <button type="button" style="color: #1b1919;" class="btn btn-outline-danger  btn-xs dropdown-item" (click)="getFileInfo(file,$event)"><b><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;&nbsp;Info</b></button>  
+                <button type="button" style="color: #f70606;" class="btn btn-outline-danger  btn-xs dropdown-item" (click)="deleteFile(file,$event)"><b><i class="fa fa-minus-circle" aria-hidden="true"></i>&nbsp;&nbsp;Delete</b></button>
+                <button type="button" style="color: #23847b;" class="btn btn-outline-primary  btn-xs dropdown-item" (click)="editFile(file,$event)"><b><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;&nbsp;Modify</b></button>
+            </div>
+        </div>
+    </div>
+    <div class="card-block">
+      <h5 class="card-title ellipsis" style="text-transform: none;" title="{{file.selectedMediaFilename}}">{{file.selectedMediaFilename}}</h5>
+      <p class="card-text ellipsis"><small class="text-muted pull-right">{{getDateFormat(file.date)}}</small></p>
+    </div>
+    </div>
+  </div>
+  </div>
+</div>

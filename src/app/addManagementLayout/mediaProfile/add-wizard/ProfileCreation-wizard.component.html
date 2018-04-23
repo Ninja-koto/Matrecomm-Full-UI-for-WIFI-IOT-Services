@@ -1,0 +1,85 @@
+<form-wizard (finalSubmit)="gotoFinalSubmit($event)">
+  <wizard-step [title]="'Media Profile'" [maxStepWidth]="'200px'" [isValid]="step1Validition">
+    <form [formGroup]="myFormProfile" style="border-left:#fff;" novalidate (ngSubmit)="save(myFormProfile.value, myFormProfile.valid)">
+ <div class="row">
+        <div class="col-sm-12">
+          <p align="center">
+            <b>Please enter Media Profile name
+              </b></p>
+        </div>
+      </div>
+      <hr/>
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="form-group">
+            <label for=""><b> Media Profile Name</b></label>
+            <input type="text" class="form-control" formControlName="profileName">
+            <error-messages [control]="myFormProfile.controls.profileName" class="text-danger"></error-messages>
+          </div>
+        </div>
+      </div>
+     </form>
+  </wizard-step>
+  <wizard-step [title]="'Media Movies'" (onLoad)="onPageLoadMediaMovies($event)" [maxStepWidth]="'200px'" [isValid]="step2Validition">
+    <form [formGroup]="myFormProfileMovies" style="border-left:#fff;" novalidate (ngSubmit)="save(myFormProfileMovies.value, myFormProfileMovies.valid)">
+       <div class="row">
+        <div class="col-sm-12">
+          <p align="center">
+            <b>Select Media Movies To Be Added
+              </b></p>
+        </div>
+      </div>
+      <hr/>
+      <div class="row">
+              <div class="container">
+                <dual-list [source]="sourceMovies" [(destination)]="targetMovies" height="150px"></dual-list>
+              </div>
+          </div>
+
+          <hr/>
+    </form>
+  </wizard-step>
+  <wizard-step [title]="'Media Songs'" (onLoad)="onPageLoadMediaSongs($event)" [maxStepWidth]="'200px'" [isValid]="step3Validition">
+    <form [formGroup]="myFormProfileSongs" style="border-left:#fff;" novalidate (ngSubmit)="save(myFormProfileSongs.value, myFormProfileSongs.valid)">
+       <div class="row">
+        <div class="col-sm-12">
+          <p align="center">
+            <b>Select Media Songs To Be Added
+              </b></p>
+        </div>
+      </div>
+      <hr/>
+      <div class="row">
+              <div class="container">
+                <dual-list [source]="sourceSongs" [(destination)]="targetSongs" height="150px"  ></dual-list>
+              </div>
+          </div>
+
+          <hr/>
+    </form>
+  </wizard-step>  
+
+  <wizard-step [title]="'Media Serials'" (onLoad)="onPageLoadMediaSerials($event)" [maxStepWidth]="'200px'" [isValid]="step4Validition">
+    <form [formGroup]="myFormProfileSerials" style="border-left:#fff;" novalidate (ngSubmit)="save(myFormProfileSerials.value, myFormProfileSerials.valid)">
+       <div class="row">
+        <div class="col-sm-12">
+          <p align="center">
+            <b>Select Media Serials To Be Added
+              </b></p>
+        </div>
+      </div>
+      <hr/>
+      <div class="row">
+              <div class="container">
+                <dual-list [source]="sourceSerials" [(destination)]="targetSerials" height="150px"  ></dual-list>
+              </div>
+          </div>
+          <hr/>
+    </form>
+  </wizard-step>
+
+ 
+
+
+
+</form-wizard>

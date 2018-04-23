@@ -1,0 +1,113 @@
+    <form-wizard (finalSubmit)="gotoFinalSubmit($event)">  
+     <wizard-step [title]="'Basic Information'" [maxStepWidth]="'200px'" [isValid]="step1Validition">
+        <form [formGroup]="myFormBasic" style="border-left:#fff;"  novalidate (ngSubmit)="save(myFormBasic.value, myFormBasic.valid)" >
+            <div class="row">
+              <div class="col-sm-12">
+              <p align="center">
+              <b><i>Please enter the information of administrator</i>
+               <hr>
+              </b></p>       
+             </div>
+            </div>             
+        <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group">
+                      <label for=""><b>First Name</b></label>
+                      <input type="text" class="form-control" formControlName="firstName" placeholder="First Name">
+                      <error-messages [control]="myFormBasic.controls.firstName" class="text-danger"></error-messages>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>Middle Name</b></label>
+                      <input type="text" class="form-control" formControlName="middleName" placeholder="Middle Name">
+                      <error-messages [control]="myFormBasic.controls.middleName" class="text-danger"></error-messages>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>Last Name</b></label>
+                      <input type="text" class="form-control" formControlName="lastName" placeholder="Last Name">
+                      <error-messages [control]="myFormBasic.controls.lastName" class="text-danger"></error-messages>
+                </div>
+              </div>             
+            </div>
+
+              <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>E-Mail</b></label>
+                      <input type="text" class="form-control" formControlName="email" placeholder="E-Mail Address">
+                      <error-messages [control]="myFormBasic.controls.email" class="text-danger"></error-messages>
+                </div>
+              </div>
+           
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>Office Phone</b></label>
+                      <input type="text" class="form-control" formControlName="officePhone" placeholder="Office Phone">
+                      <error-messages [control]="myFormBasic.controls.officePhone" class="text-danger"></error-messages>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>Mobile Phone</b></label>
+                      <input type="text" class="form-control" formControlName="mobilePhone" placeholder="Mobile Phone" maxlength="10">
+                      <error-messages [control]="myFormBasic.controls.mobilePhone" class="text-danger"></error-messages>
+                </div>
+              </div>
+            </div>                     
+        </form>
+  </wizard-step>
+  <wizard-step [title]="'Contact Address'" [maxStepWidth]="'200px'" [isValid]="step2Validition">
+       <form [formGroup]="myFormAddress" style="border-left:#fff;"  onload="loadingForm1($event)" novalidate (ngSubmit)="save(myFormAddress.value, myFormAddress.valid)">
+           <div class="row">
+            <div class="col-sm-12">
+              <p align="center">
+              <b><i>Please enter the address details of administrator</i>
+               <hr>
+              </b></p>       
+           </div>
+       </div>      
+        <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                      <label for=""><b>Address</b></label>
+                      <textarea  rows="1" class="form-control" formControlName="address">
+                      </textarea>
+                      <error-messages [control]="myFormAddress.controls.address" class="text-danger"></error-messages>          
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>Continent</b></label>
+                      <select class="form-control" id = "Continent" formControlName="continent" (change)="getCountries($event)">
+                        <option *ngFor="let continentName of continentNames" [value]="continentName.value" >{{continentName.display}}</option>
+                      </select>
+                      <error-messages [control]="myFormAddress.controls.continent" class="text-danger"></error-messages>
+                </div>
+              </div>
+             <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>Country</b></label>
+                      <select class="form-control" formControlName="country">
+                        <option value="">Select One</option>
+                        <option *ngFor="let countriesName of countries" [value]="countriesName">{{countriesName}}</option>
+                      </select>
+                      <error-messages [control]="myFormAddress.controls.country" class="text-danger"></error-messages>
+                </div>
+              </div>              
+             
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>City</b></label>
+                      <input type="text" class="form-control" formControlName="city" placeholder="City">
+                      <error-messages [control]="myFormAddress.controls.city" class="text-danger"></error-messages>
+                </div>
+              </div>
+             </div>                                           
+   </form>
+  </wizard-step>
+  </form-wizard>

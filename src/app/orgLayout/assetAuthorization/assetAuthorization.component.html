@@ -1,0 +1,23 @@
+
+
+
+<tabs-panel (onTabChanged)="mainTabChanged($event)">  
+    <tab [title]="'AccessPoints'" [tabID]="'apAuthorizationTab'" [tabIcon]="'fa fa-wifi'" [maxStepWidth]="'200px'">
+    <div *ngIf="mainTab=='apAuthorizationTab'" style="min-height: 500px;width: 100%">
+        <asset-authorizationMac></asset-authorizationMac>
+        <asset-authorizationVendor></asset-authorizationVendor>
+    </div>
+    </tab>
+    <tab [title]="'Switches'" [tabID]="'switchAuthorizationTab'" [tabIcon]="'fa fa-square'" [maxStepWidth]="'200px'">
+    <div *ngIf="mainTab=='switchAuthorizationTab'" style="min-height: 500px;width: 100%">
+        <switch-authorizationMac></switch-authorizationMac>
+        <switch-authorizationVendor></switch-authorizationVendor>
+    </div>
+    </tab>
+    <tab [title]="'Clients/Users'" [tabID]="'clientAuthorizationTab'" [tabIcon]="'fa fa-user'" [maxStepWidth]="'200px'">
+    <div *ngIf="mainTab=='clientAuthorizationTab'" style="min-height: 500px;width: 100%">
+        <client-authorizationMac></client-authorizationMac>
+        <client-authorizationVendor></client-authorizationVendor>
+    </div>
+    </tab>
+</tabs-panel>

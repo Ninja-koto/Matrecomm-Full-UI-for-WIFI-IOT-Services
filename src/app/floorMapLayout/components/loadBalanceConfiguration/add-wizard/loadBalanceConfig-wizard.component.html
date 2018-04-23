@@ -1,0 +1,29 @@
+  <form-wizard (finalSubmit)="gotoFinalSubmit($event)">  
+      <wizard-step [title]="'Load Balance Configuration'" [maxStepWidth]="'200px'" [isValid]="step1Validition">
+        <form [formGroup]="myForm" style="border-left:#fff;"  novalidate (ngSubmit)="save(myForm.value, myForm.valid)">
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                 <label for="">Profile Name</label>
+                      <input type="text" class="form-control" formControlName="profileName">
+                      <error-messages [control]="myForm.controls.profileName" class="text-danger"></error-messages>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label for="">Load Balance Type</label>
+                      <select class="form-control" formControlName="loadBalanceType">
+                        <option *ngFor="let lbOption of loadBalanceOptions" [value]="lbOption.value">{{lbOption.key}}</option>
+                      </select>
+                      <error-messages [control]="myForm.controls.loadBalanceType" class="text-danger"></error-messages>
+                </div>
+              </div>
+            </div>
+            
+        </form>
+  </wizard-step>
+    
+  </form-wizard>

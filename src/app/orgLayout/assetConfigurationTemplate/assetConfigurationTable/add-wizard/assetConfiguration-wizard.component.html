@@ -1,0 +1,50 @@
+    <form-wizard (finalSubmit)="gotoFinalSubmit($event)">  
+      <wizard-step [title]="'Assign Devices To Floor'" [maxStepWidth]="'200px'" [isValid]="step1Validition">
+        <form [formGroup]="myForm" style="border-left:#fff;"  novalidate (ngSubmit)="save(myForm.value, myForm.valid)">
+            <div class="row">
+               <div class="col-sm-12">
+                <div class="form-group">
+                      <label for="">Asset Configuration Profile Name</label>
+                      <input type="text" class="form-control" formControlName="configurationProfileName" placeholder="Profile Name">
+                      <error-messages [control]="myForm.controls.configurationProfileName" class="text-danger"></error-messages>
+                   <label for="">Please select the Configuration Templates from Registered Asset Profiles</label>                            
+                </div>
+              </div>
+              </div>
+         <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="">Select Vendor:</label>
+                      <select class="form-control" id = "Vendor" formControlName="vendor" (click)="getModelsAndProfiles($event)">
+                        <option value="">Select One</option>
+                        <option *ngFor="let vendor of vendors" [value]="vendor" >{{vendor}}</option>
+                      </select>
+                      <error-messages [control]="myForm.controls.vendor" class="text-danger"></error-messages>
+                </div>
+              </div>
+  
+             <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="">Select Model:</label>
+                      <select class="form-control" formControlName="model" (click)="getProfiles($event)">
+                        <option value="">Select One</option>
+                        <option *ngFor="let model of models" [value]="model">{{model}}</option>
+                      </select>
+                      <error-messages [control]="myForm.controls.model" class="text-danger"></error-messages>
+                </div>
+              </div>    
+         </div>
+          <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                   <label for="">Configuration Templates - Registered Asset Profiles :</label>                 
+                      <select class="form-control" formControlName="selectProfile">
+                        <option value="">Select One</option>
+                        <option *ngFor="let profileName of profileNames" [value]="profileName">{{profileName}}</option>
+                      </select>
+                </div>
+              </div>   
+         </div>        
+        </form>
+  </wizard-step>
+  </form-wizard>

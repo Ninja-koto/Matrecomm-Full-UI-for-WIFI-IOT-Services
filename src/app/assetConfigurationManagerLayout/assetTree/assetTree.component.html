@@ -1,0 +1,14 @@
+<div>
+  <div class="row" >
+    <div class="col-md-12" style="color: red;font-size: small;text-align: center;">
+    {{errMsg}}
+    </div>
+  </div>
+<tree-root [nodes]="treeData"
+ [focused]="true"
+ [options]="options"
+   (onActivate)="onEvent($event)"
+    style="color:#0969f9;font-size: small;"
+    >
+</tree-root>
+</div>

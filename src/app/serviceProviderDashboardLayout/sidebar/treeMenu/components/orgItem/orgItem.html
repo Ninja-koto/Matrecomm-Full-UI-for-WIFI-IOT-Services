@@ -1,0 +1,9 @@
+<div (click)="orgTreeDivClicked($event)">
+<tree-root [nodes]="treeData"
+ [focused]="true"
+ [options]="options"
+   (onActivate)="onEvent($event)"
+    style="color:#f95609"
+    >
+</tree-root>
+</div>

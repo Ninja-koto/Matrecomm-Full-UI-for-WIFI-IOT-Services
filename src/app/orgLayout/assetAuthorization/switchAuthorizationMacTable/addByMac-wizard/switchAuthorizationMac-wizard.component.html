@@ -1,0 +1,139 @@
+    <form-wizard (finalSubmit)="gotoFinalSubmit($event)">  
+      <wizard-step [title]="'Switch Addition Mode'" [maxStepWidth]="'200px'" [isValid]="step1Validition">
+        <form [formGroup]="myForm" style="border-left:#fff;"  novalidate (ngSubmit)="save(myForm.value, myForm.valid)">
+            <div class="row">
+               <div class="col-sm-12">
+                <div class="form-group">
+                  <label for=""><b><i>Please select the Mode of Operation to enter the End User Switch details</i></b></label>                            
+            <div>
+              <label>   <!--(click)="modeType($event)"
+              (click)="fileModeType($event)"
+              -->
+                <input type="radio" id="manualMode" value="manualMode"  formControlName="modeType" (click)="modeType($event)">
+                <b>Enter the details Manually </b></label>     
+                 </div>
+                 <div>
+                <label>
+                 
+                <input type="radio" id="uploadFileMode" value="uploadFileMode" formControlName="modeType" (click)="modeType($event)" />
+               <b> Upload using CSV File</b></label>
+                 </div>
+                </div>
+               <p><i>Please enter the csv file has following format</i> </p>
+               <p><i>HeaderName:Switch Name---> Switch Name</i></p>      
+               <p><i>HeaderName:Mac Address---> Mac Address</i></p>      
+               <p><i>HeaderName:Serial Number---> Serial Number</i></p>      
+              </div>
+              </div>
+        </form>
+  </wizard-step>
+        <wizard-step [title]="'Add Switches'" [maxStepWidth]="'200px'" [isValid]="step2Validition">
+      <div *ngIf ="showManualMode">
+        <form [formGroup]="myFormManual" style="border-left:#fff;"  novalidate (ngSubmit)="save(myFormManual.value, myFormManual.valid)">
+            <div class="row">
+               <div class="col-sm-4">
+                <div class="form-group">
+                    <label for=""><b>Switch Name</b></label>
+                      <input type="text" class="form-control" formControlName="switchName" placeholder="Switch Name">
+                      <error-messages [control]="myFormManual.controls.switchName" class="text-danger"></error-messages>
+                </div>
+               </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                    <label for=""><b>MAC Address</b></label>
+                      <input type="text" class="form-control" formControlName="macAddress" placeholder="Mac Address">
+                      <error-messages [control]="myFormManual.controls.macAddress" class="text-danger"></error-messages>
+                </div>
+               </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                    <label for=""><b>Serial Number</b></label>
+                      <input type="text" class="form-control" formControlName="serialNumber" placeholder="Serial Number">
+                      <error-messages [control]="myFormManual.controls.serialNumber" class="text-danger"></error-messages>
+                </div>
+               </div>                              
+              </div>
+              <div class="row">
+                  <div class="col-sm-12">
+                  <small [ngStyle] = "{'display':showTableErrorMsg}"  class="text-danger">{{manualModeTableErrMsg}}</small>
+                  </div>
+              </div>
+              <div class="col-xs-4 pull-left box-tools"> 
+                  <button id="addSwitch" class="btn btn-sm btn-success" data-toggle="tooltip" title="" (click)="addSwitches($event)" ><i class="fa fa-plus"></i>Add</button>
+              </div>
+              <div class="col-xs-4 pull-right box-tools"> 
+                  <button id="deleteSwitch" class="btn btn-sm btn-danger" data-toggle="tooltip" title="" [disabled]= "manualModeSelectedRowsForDeletion.length==0"  (click)="deleteSelectedSwitches($event)"><i class="fa fa-minus"></i> Delete</button>                    
+              </div>
+              <table class="table table-striped" >
+                <thead>
+                <tr>
+                    <th style="width: 5%"></th>
+                    <th style="width: 30%">Switch Name</th>
+                    <th style="width: 30%">Mac Address</th>
+                    <th style="width: 30%">Serial Number</th>
+                </tr>    
+                </thead>
+                <tbody>
+                <tr *ngFor="let switch of authorisedSwitches">
+                    <td style="width: 5%"><input type="checkbox"  (click)="maintainSelectedData($event,switch)" value="{{switch.id}}" /></td>
+                    <td style="width: 30%">{{switch.switchName}}</td>
+                    <td style="width: 30%">{{switch.macAddress}}</td>
+                    <td style="width: 30%">{{switch.serialNumber}}</td>
+                    </tr>
+                </tbody>
+            </table>
+   
+        </form>
+      </div>   
+      <div *ngIf ="!showManualMode">
+        <form [formGroup]="myFormCSVMode" style="border-left:#fff;"  novalidate (ngSubmit)="save(myFormManual.value, myFormManual.valid)">
+            <div class="row">
+              <div class="col-sm-12">
+              Please select CSV file to upload
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <input type="file" id="fileSelect" name="file" accept=".csv" (change)="onFileChange($event)" class="form-control" formControlName="autherizedSwitchesCSVFile">
+                  <error-messages [control]="myFormCSVMode.controls.autherizedSwitchesCSVFile" class="text-danger"></error-messages>
+                </div>
+              </div>
+              <!--<div class="col-sm-6">
+              <div class="form-group">
+                   <button id="loadFile" [disabled]="disableLoadButton" class="btn btn-sm btn-success" title="" (click)="loadInitiated($event)" >Load File</button>
+              </div>
+              </div>-->
+            </div>
+              
+            <table class="table table-striped" >
+                <thead>
+                <tr>
+                    <th style="width: 33.3%">Switch Name</th>
+                    <th style="width: 33.3%">Mac Address</th>
+                    <th style="width: 33.3%">Serial Number</th>
+                </tr>    
+                </thead>
+                <tbody>
+                <tr *ngFor="let switch of authorisedSwitches">
+                    <td style="width: 33.3%">{{switch.switchName}}</td>
+                    <td style="width: 33.3%">{{switch.macAddress}}</td>
+                    <td style="width: 33.3%">{{switch.serialNumber}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+      </div>   
+  </wizard-step>
+  <wizard-step [title]="'Select Locations'" [maxStepWidth]="'200px'" [isValid]="step3Validition">
+        <form [formGroup]="myFormLocations" style="border-left:#fff;"  novalidate (ngSubmit)="save(myFormLocations.value, myFormLocations.valid)">
+          <div class="row">
+              <div class="col-sm-12">
+              <!--  <div class="form-group">-->
+                  <label for=""><b>Select Locations</b></label><br>
+                <ss-multiselect-dropdown [options]="locOptions" [texts]="myTexts" [settings]="mySettings" formControlName="locations"></ss-multiselect-dropdown>
+                <error-messages [control]="myFormLocations.controls.locations" class="text-danger"></error-messages>
+              <!--   </div>-->
+              </div>
+          </div>
+        </form>
+    </wizard-step>
+  </form-wizard>

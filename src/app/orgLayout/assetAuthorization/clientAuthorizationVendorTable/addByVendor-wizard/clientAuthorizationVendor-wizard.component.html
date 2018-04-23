@@ -1,0 +1,90 @@
+    <form-wizard (finalSubmit)="gotoFinalSubmit($event)">  
+      <wizard-step [title]="'Authorised Client Information'" [maxStepWidth]="'200px'" [isValid]="step1Validition">
+        <form [formGroup]="myForm" style="border-left:#fff;"  novalidate (ngSubmit)="save(myForm.value, myForm.valid)">
+            <div class="row">
+               <div class="col-sm-12">
+                <div class="form-group">
+                      <label for=""><b>Profile Name</b></label>
+                      <input type="text" class="form-control" formControlName="profileName" placeholder="Profile Name">
+                      <error-messages [control]="myForm.controls.profileName" class="text-danger"></error-messages>
+                </div>
+              </div>
+              </div>
+         <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>Select Vendor</b></label>
+                      <select class="form-control" id = "vendor" formControlName="vendor">
+                        <option *ngFor="let vendorName of vendorNames" [value]="vendorName.value" >{{vendorName.display}}</option>
+                      </select>
+                      <error-messages [control]="myForm.controls.vendor" class="text-danger"></error-messages>
+                </div>
+              </div>
+  
+             <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>Select Model</b></label>
+                      <select class="form-control" id = "model" formControlName="model">
+                        <option *ngFor="let modelName of modelNames" [value]="modelName.value">{{modelName.display}}</option>              
+                      </select>
+                      <error-messages [control]="myForm.controls.model" class="text-danger"></error-messages>
+                </div>
+              </div>    
+             <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>Firmware</b></label>
+                      <select class="form-control" id = "firmware" formControlName="firmware">
+                        <option *ngFor="let firmwareVersion of firmwareVersions" [value]="firmwareVersion.value">{{firmwareVersion.display}}</option>
+                      </select>
+                      <error-messages [control]="myForm.controls.firmware" class="text-danger"></error-messages>
+                </div>
+              </div>                  
+         </div>
+          <div class="row">
+                  <div class="col-sm-12">
+                  <small [ngStyle] = "{'display':showTableErrorMsg}"  class="text-danger">Please select: profileName --> vendor -->model -->firmware</small>
+                  </div>
+          </div> 
+              <div class="col-xs-4 pull-left box-tools"> 
+                  <button id="addClient" class="btn btn-sm btn-success" data-toggle="tooltip" title="" (click)="addClients($event)" ><i class="fa fa-plus"></i>Add</button>
+              </div>
+              <div class="col-xs-4 pull-right box-tools"> 
+                  <button id="deleteClient" class="btn btn-sm btn-danger" data-toggle="tooltip" title="" [disabled]= "manualModeSelectedRowsForDeletion.length==0"  (click)="deleteSelectedClients($event)"><i class="fa fa-minus"></i> Delete</button>                    
+              </div>
+              <table class="table table-striped" >
+                <thead>
+                <tr>
+                    <th style="width: 5%"></th>
+                    <th style="width: 30%">Vendor</th>
+                    <th style="width: 30%">Model</th>
+                    <th style="width: 30%">Firmware Version</th>
+                </tr>    
+                </thead>
+                <tbody>
+                <tr *ngFor="let client of authorisedClients">
+                    <td style="width: 5%"><input type="checkbox"  (click)="maintainSelectedData($event,client)" value="{{client.id}}" /></td>
+                    <td style="width: 30%">{{client.vendor}}</td>
+                    <td style="width: 30%">{{client.model}}</td>
+                    <td style="width: 30%">{{client.firmware}}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </form>
+      </wizard-step>
+ <wizard-step [title]="'Select Locations'" [maxStepWidth]="'200px'" [isValid]="step2Validition">
+        <form [formGroup]="myFormLocations" style="border-left:#fff;"  novalidate (ngSubmit)="save(myFormLocations.value, myFormLocations.valid)">
+          <div class="row">
+              <div class="col-sm-12">
+              <!--  <div class="form-group">-->
+                  <label for=""><b>Select Locations</b></label><br>
+                <ss-multiselect-dropdown [options]="locOptions" [texts]="myTexts" [settings]="mySettings" formControlName="locations"></ss-multiselect-dropdown>
+                <error-messages [control]="myFormLocations.controls.locations" class="text-danger"></error-messages>
+              <!--   </div>-->
+              </div>
+          </div>
+        </form>
+    </wizard-step>
+
+
+  </form-wizard>

@@ -1,0 +1,113 @@
+<form-wizard (finalSubmit)="gotoFinalSubmit($event)">
+<wizard-step [title]="'Media Store'" [maxStepWidth]="'100px'" [isValid]="step1Validition">    
+        <form [formGroup]="myFormMediaLibrary" style="border-left:#fff;"  novalidate (ngSubmit)="save(myFormMediaLibrary.value, myFormMediaLibrary.valid)">
+            <div class="row">
+                <div class="col-sm-12">
+                <p align="center">
+                <b><i>Please enter Required "Media Store" details</i>
+                 <hr>
+                </b></p>       
+               </div>
+              </div>     
+              <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group">
+                         <label for="">
+                           <b>Title: </b>
+                         </label>
+                          <input type="text" class="form-control" formControlName="mediaStoreTitle">
+                          <error-messages [control]="myFormMediaLibrary.controls.mediaStoreTitle" class="text-danger"></error-messages>
+                    </div>
+                  </div> 
+                 </div>
+                 <div class="row">                 
+                <div class="col-sm-12">
+                    <div class="form-group">
+                         <label for="">
+                           <b>Description</b>
+                         </label>
+                          <textarea rows="1" cols="30"  class="form-control" formControlName="mediaStoreDescription"></textarea>
+                          <error-messages [control]="myFormMediaLibrary.controls.mediaStoreDescription" class="text-danger"></error-messages>
+                    </div>
+                  </div>    
+            </div>
+          </form>
+        </wizard-step>              
+  <wizard-step [title]="'Select Media Store'" [maxStepWidth]="'100px'" [isValid]="step2Validition">    
+      <form [formGroup]="myFormSelectMediaLibrary" style="border-left:#fff;"  novalidate (ngSubmit)="save(myFormSelectMediaLibrary.value, myFormSelectMediaLibrary.valid)">
+          <div class="row">
+              <div class="col-sm-12">
+              <p align="center">
+              <b><i>Please select Required "Media Store" details</i>
+                <hr>
+              </b></p>       
+              </div>
+            </div>     
+
+          <div class ="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                 <label for=""><b>Select Thumbnail File</b></label>
+                <input type="file" id="fileSelect" name="file" accept="image/gif,image/jpeg,image/png" formControlName="adThumbFile" (change)="thumbnailFileChange_New($event)"
+                 class="form-control" >
+                 <label id="showSelectThumbnailFileErrmsg" style="color:#D61818;" for="">{{selectFileErrmsg}}</label>
+              </div>
+           </div>
+  
+            <div class="col-sm-6">
+             <div class="form-group">
+                <label for=""><b>Select Media File</b></label>
+               <input type="file" id="fileSelect" name="file" formControlName="adFile" (change)="mediaFileChange_New($event)"
+                class="form-control" >
+                <label id="showSelectFileErrmsg" style="color:#D61818;" for="">{{selectFileErrmsg}}</label>
+             </div>
+          </div>
+          </div>
+          <div class ="row">
+              <div class="col-sm-6">
+                <span>Thumbnail Progress: <b>{{thumbnailProgressStatus}}%</b></span><br>
+                <progress id="progressBar" value="{{thumbnailProgressStatus}}" max="100"></progress>
+                </div>
+            
+          <div class="col-sm-6">
+            <span>Media Progress: <b>{{mediaProgressStatus}}%</b></span><br>
+            <progress id="progressBar" value="{{mediaProgressStatus}}" max="100"></progress>
+          </div>
+ 
+          </div> 
+            <hr>
+            <div class ="row">
+                <div class="col-sm-6">           
+            <button type="button" class="btn btn-primary" [disabled]="!canProceedToUpload" (click)="uploadFile($event)">Upload</button>
+          </div>
+        </div>         
+
+          <div class="row">
+          <div class="col-sm-6">
+              <div class="form-group">
+                   <label for="">
+                     <b>Genre</b>
+                   </label>
+                   <select class="form-control" formControlName="mediaStoreGenre">
+                    <option value=""><b>Select One</b></option>
+                    <option *ngFor="let mediaGenreType of mediaGenreTypes" [value]="mediaGenreType">{{mediaGenreType}}</option>
+                  </select>
+                   <error-messages [control]="myFormSelectMediaLibrary.controls.mediaStoreGenre" class="text-danger"></error-messages>
+              </div>
+            </div>          
+            <div class="col-sm-6">
+                <div class="form-group">
+                     <label for="">
+                       <b>Languages</b>
+                     </label>
+                     <select class="form-control" formControlName="mediaStoreLanguage">
+                      <option value=""><b>Select One</b></option>
+                      <option *ngFor="let mediaLanguage of mediaLanguages" [value]="mediaLanguage">{{mediaLanguage}}</option>
+                    </select>
+                     <error-messages [control]="myFormSelectMediaLibrary.controls.mediaStoreLanguage" class="text-danger"></error-messages>
+                </div>
+              </div>                         
+         </div>
+        </form>
+      </wizard-step>       
+    </form-wizard>

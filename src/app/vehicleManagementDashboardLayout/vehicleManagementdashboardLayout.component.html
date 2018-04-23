@@ -1,0 +1,205 @@
+<tree-sidebar
+ (sidebar)='Click($event)'
+></tree-sidebar>
+
+    <!--<ba-page-top></ba-page-top>-->
+    <page-top></page-top>
+    <div class="al-main">
+      <div class="al-content">
+        <ba-content-top></ba-content-top>
+        <div class="row">
+              
+                    <div class="col-md-4">
+                            <div class="card card-inverse" style="max-width: 20rem;border-color: #fff;">
+                            <div class="card-header" style="background-color: #0c9bef; 
+                                                background: -webkit-linear-gradient(/*left,*/#0c9bef, white);
+                                                background: -o-linear-gradient(/*right,*/#0c9bef, white);
+                                                background: -moz-linear-gradient(/*right,*/#0c9bef, white);
+                                                background: linear-gradient(/*right,*/#0c9bef, white); border-color: #fff;color: #000;">
+
+                                <div style="width: 20%; float: left;">     
+                                <i class="fa fa-user fa-2x" aria-hidden="true"></i>
+                                </div>
+                                <div style="float: right;width: 80%;"> 
+                                      <div style="float: left;width: 70%;"> 
+                                      
+                                      </div>
+                                      <div style="float: right;width: 30%;"> 
+                                        {{activeUserCount}}
+                                      </div>
+                                </div>
+                            </div>
+                            <div class="card-block">
+                                <!--<div style="width: 300px;height: 50px;"> -->
+                                  <div>
+                                       Consumed Data  : <b>{{userUsedData}}</b>
+                                </div>
+                            </div>
+                            <!--<div class="card-footer" style="border-color: #fff;">
+                                    50 % increased in 2 days
+                            </div>-->
+                    </div>
+                    </div>
+
+                    <div class="col-md-4">
+                    <div class="card card-inverse" style="max-width: 20rem;border-color: #fff;">
+                            <div class="card-header" style="background-color: #f0ad4e; 
+                                                background: -webkit-linear-gradient(/*left,*/#f0ad4e, white);
+                                                background: -o-linear-gradient(/*right,*/#f0ad4e, white);
+                                                background: -moz-linear-gradient(/*right,*/#f0ad4e, white);
+                                                background: linear-gradient(/*right,*/#f0ad4e, white); border-color: #fff;color: #000;">
+
+                                <div style="width: 20%; float: left;">     
+                                <i class="fa fa-bus fa-2x" aria-hidden="true"></i>
+                                </div>
+                                <div style="float: right;width: 80%;">     
+                                      <div style="float: left;width: 70%;"> 
+                                      
+                                      </div>
+                                      <div style="float: right;width: 30%;"> 
+                                        {{activeRouteCount}}
+                                      </div>
+                                </div>
+                            </div>
+                            <div class="card-block">
+                                <!--<div style="width: 300px;height: 50px;"> -->
+                                  <div> 
+                                        &nbsp;&nbsp;
+                                </div>
+                            </div>
+                            <!--<div class="card-footer">50 % increased in 2 days</div>-->
+                    </div>
+                    </div>
+
+                    <div class="col-md-4">
+                    <div class="card card-inverse" style="max-width: 20rem;border-color: #fff;">
+                            <div class="card-header" style="background-color: #7e8604; 
+                                                background: -webkit-linear-gradient(/*left,*/#7e8604, white);
+                                                background: -o-linear-gradient(/*right,*/#7e8604, white);
+                                                background: -moz-linear-gradient(/*right,*/#7e8604, white);
+                                                background: linear-gradient(/*right,*/#7e8604, white); border-color: #fff;color: #000;">
+                                <div style="width: 20%; float: left;">     
+                                <i class="fa fa-wifi fa-2x" aria-hidden="true"></i>
+                                </div>
+                                <div style="float: left;width: 80%;">     
+                                      <div style="float: left;width: 70%;"> 
+                                      
+                                      </div>
+                                      <div style="float: right;width: 30%;"> 
+                                        100
+                                      </div>
+                                </div>
+                            </div>
+                            <div class="card-block">
+                                <!--<div style="width: 300px;height: 50px;"> -->
+                                  <div> 
+                                        &nbsp;&nbsp;
+                                </div>
+                            </div>
+                            <!--<div class="card-footer">50 % increased in 2 days</div>-->
+                    </div>
+                    </div>
+                                    
+        </div>
+        <ba-card>
+          <div class="row">
+            
+            <div *ngIf="selectedLocation==''" class="col-md-12">
+              <marquee id="hmenu" behavior="scroll" direction="left" onmouseover="this.stop();" onmouseout="this.start();">
+                  <div > 
+                    <img src="/assets/img/bus.png" alt="Smiley face">&nbsp;<b>Please select a Location/ Route in the side tree to see detailed info...</b>
+                </div>
+              </marquee>
+            </div>
+            <div *ngIf="selectedLocation!=''" class="col-md-12" style="color: #099c44;font-size: 16px;">
+              <b>Selected Location : {{selectedLocation}}</b>
+            </div>
+          </div>
+        </ba-card>
+       <ba-card *ngIf="assetDataCollected">
+        <app-ngxline-chart
+          [viewName]="getNameSpace('radiusAcctActiveSessions')"
+          [pipeLine]="getClientRadiusStatsQuery()"
+          [getFrom]="'aggregate'"
+          [lTitle]="'UserNames'"
+          [showChart]="true"
+          chartTitle = "Client Statistics"
+          yAxisLabel = 'Data Usage(MB)'
+          xAxisLabel = 'Date'
+          [deviceID]="deviceID"
+          [locationType]="currentLocationType"
+          [locationName]="currentLocation">
+      </app-ngxline-chart>
+        </ba-card>
+        
+       <ba-card *ngIf="assetDataCollected">
+      <app-ngxline-chart
+          [viewName]="getNameSpace('assetStatsFromRadiusData')"
+          [pipeLine]="getAssetRadiusStatsQuery()"
+          [getFrom]="'aggregate'"
+          [lTitle]="'Assets'"
+          chartTitle = "Asset Statistics"
+          yAxisLabel = 'Data Usage(MB)'
+          xAxisLabel = 'Date'
+          [deviceID]="deviceID"
+          [locationType]="currentLocationType"
+          [locationName]="currentLocation">
+        </app-ngxline-chart>
+        </ba-card>
+        <ba-card *ngIf="assetDataCollected">
+      <app-ngxline-chart
+          [viewName]="getNameSpace('userCountForEachApFromRadiusData')"
+          [pipeLine]="getUserCountStatsQuery()"
+          [getFrom]="'aggregate'"
+          [lTitle]="'Assets'"
+          chartTitle = "Users Count by Asset"
+          yAxisLabel = 'Count'
+          xAxisLabel = 'Date'
+          [deviceID]="deviceID"
+          [locationType]="currentLocationType"
+          [locationName]="currentLocation">
+        </app-ngxline-chart>
+        </ba-card>
+      <ba-card *ngIf="assetDataCollected">
+        <dashboard-table 
+        [assetsData]="assetsData"
+        [locationType]="currentLocationType"
+        [locationName]="currentLocation"
+        [tableTitle]= "'Current User Details'"
+        [deviceID]="deviceID"
+        [assignedTo]="'Vehicle'"
+        [collName]="'radiusAcctActiveSessions'"
+        [dateRange] = "getDateRange()"
+        [columns]="columns">
+        </dashboard-table>
+      </ba-card>
+
+      <ba-card *ngIf="assetDataCollected">
+        <dashboard-table 
+        [assetsData]="assetsData"
+        [locationType]="currentLocationType"
+        [locationName]="currentLocation"
+        [tableTitle]= "'User Historical Details'"
+        [deviceID]="deviceID"
+        [assignedTo]="'Vehicle'"
+        [collName]="'radiusAcctHistoricalLogs'"
+        [dateRange] = "getDateRange()"
+        [columns]="columns">
+        </dashboard-table>
+      </ba-card>
+
+      </div>      
+    </div>
+    <footer class="al-footer clearfix">
+      <!--<div class="al-footer-right">Created with <i class="ion-heart"></i></div>-->
+      <div class="al-footer-main clearfix">
+        <div class="al-copy">&copy; <a href="http://matrecomm.com/">MatreComm Technologies Pvt Ltd </a> 2017</div>
+        <!--<ul class="al-share clearfix">
+          <li><i class="socicon socicon-facebook"></i></li>
+          <li><i class="socicon socicon-twitter"></i></li>
+          <li><i class="socicon socicon-google"></i></li>
+          <li><i class="socicon socicon-github"></i></li>
+        </ul>-->
+      </div>
+    </footer>
+    <ba-back-top position="200"></ba-back-top>

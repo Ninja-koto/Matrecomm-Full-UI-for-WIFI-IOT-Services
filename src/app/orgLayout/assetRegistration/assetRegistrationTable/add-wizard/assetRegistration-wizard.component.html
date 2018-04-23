@@ -1,0 +1,119 @@
+    <form-wizard (finalSubmit)="gotoFinalSubmit($event)">  
+      <wizard-step [title]="'Asset Registration Details'" [maxStepWidth]="'200px'" [isValid]="step1Validition">
+        <form [formGroup]="myForm" style="border-left:#fff;"  novalidate (ngSubmit)="save(myForm.value, myForm.valid)">
+            <div class="row">
+              <div class="col-sm-12">
+              Please Upload the Configuration file and enter URL for firmware Details
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <input type="file" id="fileSelect" name="file" accept=".config" (change)="onFileChange($event)" class="form-control" formControlName="fileType">
+                  <error-messages [control]="myForm.controls.fileType" class="text-danger"></error-messages>
+                </div>
+              </div>
+              <div class="col-sm-6">
+              <div class="form-group">
+                   <button id="loadFile" [disabled]="disableLoadButton" class="btn btn-sm btn-success" title="" (click)="loadInitiated($event)" >Load Profile</button>
+              </div>
+              </div>
+            </div>   
+            <div class="row">
+              <div *ngIf="showProfileTable">
+                <div class="col-sm-12">
+                  <table class="table table-striped ">
+                      <thead>
+                      <tr><th><b>Profile Name</b></th><th><b>Vendor</b></th><th><b>Model</b></th><th><b>Firmware Version</b></th></tr>    
+                      </thead>
+                      <tbody>
+                      <tr>
+                          <td style="width: 25%" >{{configFile.profileName}}</td>
+                          <td style="width: 25%">{{configFile.vendor}}</td>
+                          <td style="width: 25%">{{configFile.model}}</td>
+                          <td style="width: 25%">{{configFile.firmwareVersion}}</td>
+                      </tr>
+                      </tbody>
+                  </table>
+                </div>
+
+                <div class="col-md-12" >                                       
+                  <label><b>Select url type</b></label><br>
+                  <label>
+                  <input type="radio" value="ftp"  formControlName="urlType" (click)="selectURLType($event)">
+                  ftp</label>
+                  <label>
+                  <input type="radio" value="tftp"   formControlName="urlType" (click)="selectURLType($event)"/>
+                  tftp</label>
+                  <label>
+                  <input type="radio" value="http"   formControlName="urlType" (click)="selectURLType($event)"/>
+                  http</label>
+              </div>
+              <div class="col-md-12" >
+                  
+                <div *ngIf="showUrlType=='ftp'">
+                  <div class="row">
+                      <div class="col-sm-4">
+                        <div class="form-group">
+                          <label for=""><b>Please Enter Firmware Location URL</b></label>
+                            <input type="text" class="form-control" formControlName="firmwareLocationURL" (change)="onFirmWareLocationURLChange($event,'ftp://')" placeholder="ftp://xyz.com">
+                            <error-messages [control]="myForm.controls.firmwareLocationURL" class="text-danger"></error-messages>
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="form-group">
+                          <label for=""><b>Enter UserName</b></label>
+                              <input type="text" class="form-control" formControlName="userName" placeholder="UserName">               
+                              <error-messages [control]="myForm.controls.userName" class="text-danger"></error-messages>
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="form-group">
+                          <label for=""><b>Enter Password</b></label>
+                              <input type="text" class="form-control" formControlName="password" placeholder="Password">               
+                              <error-messages [control]="myForm.controls.password" class="text-danger"></error-messages>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+                <div *ngIf="showUrlType=='tftp'">
+                  <div class="row col-sm-4">
+                        <div class="form-group">
+                          <label for=""><b>Please Enter Firmware Location URL</b></label>
+                            <input type="text" class="form-control" formControlName="firmwareLocationURL" (change)="onFirmWareLocationURLChange($event,'tftp://')" placeholder="tftp://xyz.com">
+                            <error-messages [control]="myForm.controls.firmwareLocationURL" class="text-danger"></error-messages>
+                        </div>
+                      </div>
+                </div>
+                <div *ngIf="showUrlType=='http'">
+                    <div class="row">
+                      <div class="col-sm-4">
+                        <div class="form-group">
+                          <label for=""><b>Please Enter Firmware Location URL</b></label>
+                            <input type="text" class="form-control" formControlName="firmwareLocationURL" (change)="onFirmWareLocationURLChange($event,'http://')" placeholder="http://xyz.com">
+                            <error-messages [control]="myForm.controls.firmwareLocationURL" class="text-danger"></error-messages>
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="form-group">
+                          <label for=""><b>Enter UserName</b></label>
+                              <input type="text" class="form-control" formControlName="userName" placeholder="UserName">               
+                              <error-messages [control]="myForm.controls.userName" class="text-danger"></error-messages>
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="form-group">
+                          <label for=""><b>Enter Password</b></label>
+                              <input type="text" class="form-control" formControlName="password" placeholder="Password">               
+                              <error-messages [control]="myForm.controls.password" class="text-danger"></error-messages>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+              </div>
+
+              </div>
+            </div>
+
+              
+        </form>
+  </wizard-step>
+  </form-wizard>

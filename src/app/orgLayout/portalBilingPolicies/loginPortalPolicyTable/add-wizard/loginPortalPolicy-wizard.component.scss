@@ -1,0 +1,31 @@
+.close-image {
+    display: block;
+    float: right;
+    position: relative;
+    top: 10px;
+    right: 0px;
+    height: 20px;
+}
+   		.close-image1{
+		    display: block;
+		    float:right;
+		    position:relative;
+		    top:0px;
+		    right: 0px;
+		    height: 20px;
+		}
+  /* thead, tbody { display: block; }-*/
+
+tbody {
+    height: 5%;       /* Just for the demo          */
+    overflow-y: auto;    /* Trigger vertical scroll    */
+    overflow-x: hidden;  /* Hide the horizontal scroll */
+}
+  
+input[type="radio"] {
+  margin-right: 0;
+}  
+
+.answerBottomYesNo input[type="radio"]{
+    margin-right:20px;
+}

@@ -1,0 +1,48 @@
+<!--<div (mouseleave)="resetClock()" (mouseenter)="resetClock()">
+    
+    <div >
+ <modal  [animation]="animation" [keyboard]="keyboard" [backdrop]="'static'" (onClose)="closed()" (onDismiss)="dismissed()"
+        (onOpen)="opened()" #validationModal>
+        <form #modalForm="ngForm">
+            <modal-header [show-close]="true">
+                <h4 class="modal-title">{{currWizardOp}} User</h4>
+            </modal-header>
+            <modal-body>
+                <div *ngIf="addWizard||modifyWizard">
+                    <app-add-wizard [data]="currWizardData" [operation]="currWizardOp" (closeModal)="close1($event)" (closeModalWizard)="validationModal.dismiss()"></app-add-wizard>
+                </div>
+                <div *ngIf="(!addWizard)&&(!modifyWizard)">
+                    Selected Operation {{currWizardOp}}
+                </div>
+            </modal-body>
+            <modal-footer>
+           </modal-footer>
+        </form>
+    </modal>
+
+    </div>
+    <ba-card baCardClass="with-scroll table-panel">
+    <collection-table
+        [collectionTableData]= tableData
+        [columns]= columns
+        [hideWizardButtons]=false
+        [hideSearchBox]=false
+        tableID = "userTable1"
+        tableTitle ="User Table"
+        addButtonID="addWizard1"
+        modifyButtonID="modifyWizard1"
+        deleteButtonID="deleteWizard1"
+        enableUnselectOnExit="yes"
+        [rowsOnPage] = 3
+        sortBy = "authcode"
+        sortOrder = "asc"
+        [rowsOnPageButtons] = [1,3,5,10,15]
+        (clickedButtonID) = "validationModal.open('lg')"
+        (selectedData) = "selectedRowData($event)"
+        (selectedWizardOperation) = "selectedWizardOperation($event)"
+        >
+    </collection-table>
+    </ba-card>
+</div>-->
+
+<h1>Users....</h1>

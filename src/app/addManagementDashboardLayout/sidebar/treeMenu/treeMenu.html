@@ -1,0 +1,20 @@
+<ul id="al-sidebar-list" class="al-sidebar-list" baSlimScroll [baSlimScrollOptions]="{height: menuHeight}"
+    (mouseleave)="hoverElemTop=outOfArea">
+  <tree-menu-item
+    [menuItem]="item"
+    (itemHover)="hoverItem($event)"
+    (toggleSubMenu)="toggleSubMenu($event)"
+    *ngFor="let item of menuItems"
+    ></tree-menu-item>
+      <hr>
+      <app-tree 
+        [treeType]="'common'"
+        (notify)='onClicked($event)'
+      ></app-tree>
+</ul>
+
+<div class="sidebar-hover-elem" [ngStyle]="{top: hoverElemTop + 'px', height: hoverElemHeight + 'px'}"
+     [ngClass]="{'show-hover-elem': showHoverElem }">
+</div>
+
+  

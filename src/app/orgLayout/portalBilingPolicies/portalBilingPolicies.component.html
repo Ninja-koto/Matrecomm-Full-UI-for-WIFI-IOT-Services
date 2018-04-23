@@ -1,0 +1,13 @@
+
+<tabs-panel (onTabChanged)="mainTabChanged($event)">  
+    <tab [title]="'Login Portal Policy'" [tabID]="'loginPortalPolicyTab'" [tabIcon]="'fa fa-user-secret'" [maxStepWidth]="'200px'">
+    <div *ngIf="mainTab=='loginPortalPolicyTab'" style="min-height: 500px;width: 100%">
+        <login-PortalPolicy></login-PortalPolicy>
+    </div>
+    </tab>
+    <!--<tab [title]="'Billing Policy'" [tabID]="'billingPolicyTab'" [tabIcon]="'fa fa-usd'" [maxStepWidth]="'200px'">
+    <div *ngIf="mainTab=='billingPolicyTab'" style="min-height: 500px;width: 100%">
+        <billing-Policy></billing-Policy>
+    </div>
+    </tab>-->
+</tabs-panel>

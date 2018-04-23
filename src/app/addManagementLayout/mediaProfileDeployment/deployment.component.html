@@ -1,0 +1,7 @@
+<tabs-panel (onTabChanged)="mainTabChanged($event)">  
+    <tab [title]="'Deployment Target'" [tabID]="'deployment'" [tabIcon]="'fa fa-user'" [maxStepWidth]="'200px'">
+      <div *ngIf="mainTab=='deployment'" style="min-height: 500px;width: 100%">
+           <Deployment-Table></Deployment-Table>
+      </div>
+    </tab>
+</tabs-panel>

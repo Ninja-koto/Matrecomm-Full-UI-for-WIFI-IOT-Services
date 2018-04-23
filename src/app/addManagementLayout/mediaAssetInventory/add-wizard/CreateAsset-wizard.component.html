@@ -1,0 +1,80 @@
+<form-wizard (finalSubmit)="gotoFinalSubmit($event)">
+  <wizard-step [title]="'Asset Inventory'" [maxStepWidth]="'200px'" [isValid]="step1Validition">
+    <form [formGroup]="myFormAssetInventory" style="border-left:#fff;" novalidate (ngSubmit)="save(myFormAssetInventory.value, myFormAssetInventory.valid)">
+       <div class="row">
+        <div class="col-sm-12">
+          <p align="center">
+            <b><i>Please enter "Asset Inventory" details</i>
+              <hr>
+              </b></p>
+        </div>
+      </div>
+      <div class="row">
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label for=""><b>Device Name</b></label>
+                  <input type="text" class="form-control" formControlName="assetDeviceName" placeholder="Device Name">
+                    <error-messages [control]="myFormAssetInventory.controls.assetDeviceName" class="text-danger"></error-messages>
+            </div>
+          </div>
+         <div class="col-sm-4">
+            <div class="form-group">
+              <label for=""><b>Asset IP Address</b></label>
+              <input type="text" class="form-control" formControlName="assetIPAddress" placeholder="IP Address">        
+                <error-messages [control]="myFormAssetInventory.controls.assetIPAddress" class="text-danger"></error-messages>
+            </div>
+          </div>
+          <div class="col-sm-4">
+              <div class="form-group">
+                <label for=""><b>Asset MAC Address</b></label>
+                <input type="text" class="form-control" formControlName="assetMACAddress" placeholder="Mac Address">                    
+                  <error-messages [control]="myFormAssetInventory.controls.assetMACAddress" class="text-danger"></error-messages>
+              </div>
+            </div>
+        </div> 
+        <div class="row">
+            <div class="col-sm-4">
+              <div class="form-group">
+                <label for=""><b>Username</b></label>
+                <input type="text" class="form-control" placeholder="Username" formControlName="assetUsername">
+                <error-messages [control]="myFormAssetInventory.controls.assetUsername" class="text-danger"></error-messages>
+                
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group">
+                <label for=""><b> Password</b></label>
+                <input type="text" class="form-control" placeholder=" Password" formControlName="assetPassword">
+                <error-messages [control]="myFormAssetInventory.controls.assetPassword" class="text-danger"></error-messages>
+                
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group">
+                <label for=""><b>Specify Storage Size</b></label>
+                <input type="number" class="form-control" placeholder="Storage Size" formControlName="assetStorageSize">
+                <error-messages [control]="myFormAssetInventory.controls.assetStorageSize" class="text-danger"></error-messages>
+                
+              </div>
+            </div>
+          </div>
+          <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b> Specify Max Number Of Users</b></label>
+                  <input type="number" class="form-control" placeholder=" Max Number Of users" formControlName="assetMaxUsers">
+                  <error-messages [control]="myFormAssetInventory.controls.assetMaxUsers" class="text-danger"></error-messages>
+                  
+                </div>
+              </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>Specify Device Configuration</b></label>
+                  <input type="text" class="form-control" placeholder="Configuration" formControlName="assetDeviceConfig">
+                  <error-messages [control]="myFormAssetInventory.controls.assetDeviceConfig" class="text-danger"></error-messages>
+                </div>
+              </div>
+            </div>
+    </form>
+  </wizard-step>
+</form-wizard>

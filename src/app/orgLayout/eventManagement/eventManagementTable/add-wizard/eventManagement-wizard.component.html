@@ -1,0 +1,337 @@
+    <form-wizard (finalSubmit)="gotoFinalSubmit($event)">  
+      <wizard-step [title]="'Admin Details'" [maxStepWidth]="'100px'" [isValid]="step1Validition">
+        <form [formGroup]="myForm" style="border-left:#fff;"  novalidate (ngSubmit)="save(myForm.value, myForm.valid)">
+            <div class="row">
+              <div class="col-sm-12">
+              <p align="center">
+              <b><i>Event Administrator Details</i>
+              </b></p>       
+             </div>
+            </div>   
+             <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for=""><b>Event Name</b></label>
+                      <input type="text" class="form-control" formControlName="eventName" placeholder="Event Name">
+                      <error-messages [control]="myForm.controls.eventName" class="text-danger"></error-messages>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group"> 
+                  <label for=""><b>Event SSID Name</b></label>
+                      <input type="text" class="form-control" formControlName="ssidName" placeholder="SSID">
+                      <error-messages [control]="myForm.controls.ssidName" class="text-danger"></error-messages>
+                </div>
+              </div>
+             </div>
+             <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for=""><b>Event Start Date</b></label><br>
+                     <input class="picker-input form-control" style="color: #000000;" [ngModel]="startTimeValue | date: 'short'" 
+                      [(dateTimePicker)]="startTimeValue" 
+                      readonly formControlName="startTime"
+                      (dateTimePickerChange) = "startAndEndTimeChanged($event,'fromStart')" placeholder=" click here" />                    
+                      <error-messages [control]="myForm.controls.startTime" class="text-danger"></error-messages>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group"> 
+                  <label for=""><b>Event End Date</b></label><br>
+                     <input class="picker-input form-control" style="color: #000000;" [ngModel]="endTimeValue | date: 'short'" 
+                      [(dateTimePicker)]="endTimeValue" 
+                      readonly formControlName="endTime"
+                      (dateTimePickerChange) = "startAndEndTimeChanged($event,'fromEnd')" placeholder=" click here" />                  
+                      <error-messages [control]="myForm.controls.endTime" class="text-danger"></error-messages>
+                </div>
+              </div>
+             </div>             
+             <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                      <label for=""><b>Address</b></label>
+                      <textarea  rows="1" class="form-control" formControlName="address" placeholder="Client address ">
+                      </textarea>
+                      <error-messages [control]="myForm.controls.address" class="text-danger"></error-messages>          
+                </div>
+              </div>
+            </div>           
+        
+        </form>
+        </wizard-step>
+
+    <wizard-step [title]="'Client Contact Details'" [maxStepWidth]="'100px'" [isValid]="step2Validition">
+        <form [formGroup]="myFormContact" style="border-left:#fff;"  novalidate (ngSubmit)="save(myFormContact.value, myFormContact.valid)">
+             <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>Client Name</b></label>
+                      <input type="text" class="form-control" formControlName="clientName" placeholder="Enter Client Name">
+                      <error-messages [control]="myFormContact.controls.clientName" class="text-danger"></error-messages>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group"> 
+                  <label for=""><b>Mobile</b></label>
+                      <input type="text" class="form-control" formControlName="mobile" placeholder="Enter Mobile Number" maxlength="10">
+                      <error-messages [control]="myFormContact.controls.mobile" class="text-danger"></error-messages>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>E-Mail</b></label>
+                      <input type="text" class="form-control" formControlName="email" placeholder="E-Mail Address">
+                      <error-messages [control]="myFormContact.controls.email" class="text-danger"></error-messages>
+                </div>
+              </div>
+
+             </div>       
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                      <label for=""><b>Address</b></label>
+                      <textarea  rows="1" class="form-control" formControlName="clientAddress" placeholder="Client address ">
+                      </textarea>
+                      <error-messages [control]="myFormContact.controls.clientAddress" class="text-danger"></error-messages>          
+                </div>
+              </div>
+            </div>           
+                
+        </form>
+        </wizard-step>       
+ <wizard-step [title]="'AP Details & User Settings'" [maxStepWidth]="'100px'" [isValid]="step3Validition">
+       <form [formGroup]="myFormAPDetails" style="border-left:#fff;"   novalidate (ngSubmit)="save(myFormAPDetails.value, myFormAPDetails.valid)">
+           <div class="row">
+            <div class="col-sm-12">
+              <p align="center">
+              <b><i>AccessPoint Details ....</i>
+               <hr>
+              </b></p>       
+           </div>
+       </div>     
+         <div class="row"> 
+               <div class="col-sm-12">
+                <div class="form-group">
+                  <label for=""><b>Enter User Session Time Duration (in Minutes)</b></label>
+                      <input type="number" class="form-control" formControlName="userSessionTimeLimit" placeholder="Session Time Limit in Minutes">
+                      <error-messages [control]="myFormAPDetails.controls.userSessionTimeLimit" class="text-danger"></error-messages>
+                </div>
+               </div>
+             </div>      
+            <div class="row">
+               <div class="col-sm-12">
+              <label> 
+                <input type="checkbox" id="allowSingleSessionPerUser" value="true" style="margin-right: 0" formControlName="allowSingleSessionPerUser" (click)="selectActionEventType($event)" />
+                 <b>Allow Single Session Per User </b>
+                 </label>
+               </div>
+            </div>      
+                <div class="row">
+               <div class="col-sm-12">
+                <label>
+                <input type="checkbox" id="enableMacAddressAuth" value="true" style="margin-right: 0" formControlName="enableMacAddressAuth" (click)="selectActionEventType($event)" />
+                <b>Enable MAC Address Authentication </b></label>  
+                </div>
+              </div>    
+      <div *ngIf="macSelectStatus==true">        
+       <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                      <label for=""><b>Enter AccessPoint MAC Address</b></label>
+                      <input type="text" class="form-control" formControlName="apMAC">
+                      <error-messages [control]="myFormAPDetails.controls.apMAC" class="text-danger"></error-messages>
+                </div>
+              </div> 
+            </div>   
+                    <div class="row">
+                        <div class="col-sm-12">
+                        <small [ngStyle] = "{'display':showMACTableErrorMsg}"  class="text-danger">Please enter MAC address.</small>
+                        </div>
+                    </div>            
+              <div class="col-xs-4 pull-left box-tools"> 
+                    <button id="addMACProfile" class="btn btn-sm btn-success" data-toggle="tooltip" title="" (click)="addMACProfiles($event)" ><i class="fa fa-plus"></i>Add</button>
+                </div>
+                <div class="col-xs-4 pull-right box-tools"> 
+                    <button id="deleteMACProfile" class="btn btn-sm btn-danger" data-toggle="tooltip" title="" [disabled]= "macSelectedRowsForDeletion.length==0" (click)="deleteMACSelectedProfiles($event)"><i class="fa fa-minus"></i> Delete</button>
+                    <!--<button id="deleteProfile" class="btn btn-sm btn-danger" data-toggle="tooltip" title=""  (click)="deleteSelectedProfiles($event)"><i class="fa fa-minus"></i> Delete</button>-->
+                </div>
+                    <table class="table table-striped" >
+                      <thead>
+                      <tr>
+                          <th style="width: 5%"></th>
+                          <th style="width: 90%"> MAC Address</th>
+                      </tr>    
+                      </thead>
+                      <tbody>
+                      <tr *ngFor="let profile of allMACProfiles">
+                         <td style="width: 5%"><input type="checkbox"  (click)="maintainMACSelectedData($event,profile)" value="{{profile.id}}" /></td>
+                          <td style="width: 90%">{{profile.apMAC}}</td>
+                          </tr>
+                      </tbody>
+                  </table>
+      </div>  
+      
+   </form>
+  </wizard-step>       
+       <wizard-step [title]="'Bandwidth Management'" [maxStepWidth]="'100px'" [isValid]="step4Validition">
+        <form [formGroup]="myFormBandwidth" style="border-left:#fff;"  novalidate (ngSubmit)="save(myFormBandwidth.value, myFormBandwidth.valid)">
+            <div class="row">
+              <div class="col-sm-12">
+              <p align="center">
+              <b><i>Bandwidth Limit for the Event</i>
+              </b></p>       
+             </div>
+            </div>  
+              <div class="row">
+               <div class="col-sm-12">
+                 <div class="form-group">
+                <label>
+                <b>Select Required Bandwidth </b></label>  
+                </div>
+              </div>                 
+           </div>
+            <div class="row">
+               <div class="col-sm-12">
+                <div class="form-group">
+            <div>
+              <label> 
+                <input type="radio" id="BandwidthDetails" value="Unlimited"  formControlName="BandwidthDetails" (click)="selectBandwidthType($event)">
+                 Unlimited</label>     
+                <label>&nbsp;&nbsp;
+                <input type="radio" id="BandwidthDetails" value="DailyLimit" formControlName="BandwidthDetails" (click)="selectBandwidthType($event)" />
+                  Daily Limit</label>
+                 </div>
+                </div>
+              </div>
+              </div>
+       <div *ngIf="selectBandwidth=='DailyLimit'">      
+             <div class="row">
+               <div class="col-sm-12">
+                 <div class="form-group">
+                <label>
+                <b>Daily BandWidth Options</b></label>  
+                </div>
+              </div>                 
+           </div>
+          <div class="row">
+               <div class="col-sm-12">
+                <div class="form-group">
+            <div>
+              <label> 
+                <input type="radio" id="BandwidthDetails" value="DeviceBandwidth"  formControlName="DailyBandWidth" (click)="selectDailyBandwidthType($event)">
+               Device Bandwidth</label>     
+                <label>&nbsp;&nbsp;
+                <input type="radio" id="BandwidthDetails" value="PerUserBandwidth" formControlName="DailyBandWidth" (click)="selectDailyBandwidthType($event)" />
+              Per User Bandwidth</label>
+                 </div>
+                </div>
+              </div>
+            </div>
+
+       <div *ngIf="selectDailyBandwidth=='DeviceBandwidth'">      
+         <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                      <label for=""><b>Enter Device Bandwidth (Mbps)</b></label>
+                      <input type="number" class="form-control" formControlName="deviceBandwidth">
+                      <error-messages [control]="myFormBandwidth.controls.deviceBandwidth" class="text-danger"></error-messages>
+                </div>
+              </div> 
+            </div>   
+         </div>
+   <div *ngIf="selectDailyBandwidth=='PerUserBandwidth'">      
+         <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                      <label for=""><b>Enter Per User Bandwidth (Mbps)</b></label>
+                      <input type="number" class="form-control" formControlName="perUserBandwidth">
+                      <error-messages [control]="myFormBandwidth.controls.perUserBandwidth" class="text-danger"></error-messages>
+                </div>
+              </div> 
+            </div>   
+         </div>
+      </div>  
+        </form>
+  </wizard-step>
+   <wizard-step [title]="'Referrer URL Settings'" [maxStepWidth]="'100px'" [isValid]="step5Validition">
+              <form [formGroup]="myFormUrlSettings" style="border-left:#fff;"  novalidate (ngSubmit)="save(myFormUrlSettings.value, myFormUrlSettings.valid)">
+            <div class="row">
+              <div class="col-sm-12">
+              <p align="center">
+              <b><i>Referrer URL Details ....</i>
+               <hr>
+              </b></p>       
+             </div>
+            </div>   
+
+  <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                      <label for=""><b>Select Portal Policy Name</b></label>
+                      <select class="form-control" formControlName="portalPolicyName">
+                        <option value=""><b>Select One</b></option>
+                        <option *ngFor="let policyName of portalPolicyNames" [value]="policyName">{{policyName}}</option>
+                      </select>
+                      <error-messages [control]="myFormUrlSettings.controls.portalPolicyName" class="text-danger"></error-messages>
+     
+                </div>
+              </div>
+             <div class="col-sm-6">
+                <div class="form-group">
+                      <label for=""><b>Select Billing Policy Name</b></label>
+                      <select class="form-control" formControlName="billingPolicyName">
+                        <option value=""><b>Select One</b></option>
+                        <option *ngFor="let policyName of billingPolicyNames" [value]="policyName">{{policyName}}</option>
+                      </select>
+                      <error-messages [control]="myFormUrlSettings.controls.billingPolicyName" class="text-danger"></error-messages>
+     
+                </div>
+              </div>
+       </div>
+        <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for=""><b>Enter Domain Name</b></label>
+                     <input type="text" class="form-control" formControlName="domainName">
+                  <error-messages [control]="myFormUrlSettings.controls.domainName" class="text-danger"></error-messages>
+                </div>
+              </div>
+             <div class="col-sm-6">
+                <div class="form-group">
+                  <label for=""><b>Enter Referrer URL</b></label>
+                     <input type="text" class="form-control" formControlName="referrerURL">
+                  <error-messages [control]="myFormUrlSettings.controls.referrerURL" class="text-danger"></error-messages>
+                </div>
+              </div>              
+            </div> 
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                        <small [ngStyle] = "{'display':showUrlTableErrorMsg}"  class="text-danger">Please enter referrerURL.</small>
+                        </div>
+                    </div>            
+              <div class="col-xs-4 pull-left box-tools"> 
+                    <button id="addURLProfile" class="btn btn-sm btn-success" data-toggle="tooltip" title="" (click)="addURLProfiles($event)" ><i class="fa fa-plus"></i>Add</button>
+                </div>
+                <div class="col-xs-4 pull-right box-tools"> 
+                    <button id="deleteURLProfile" class="btn btn-sm btn-danger" data-toggle="tooltip" title="" [disabled]= "urlSelectedRowsForDeletion.length==0" (click)="deleteUrlSelectedProfiles($event)"><i class="fa fa-minus"></i> Delete</button>
+                    <!--<button id="deleteProfile" class="btn btn-sm btn-danger" data-toggle="tooltip" title=""  (click)="deleteSelectedProfiles($event)"><i class="fa fa-minus"></i> Delete</button>-->
+                </div>
+                    <table class="table table-striped" >
+                      <thead>
+                      <tr>
+                          <th style="width: 5%"></th>
+                          <th style="width: 90%"> Referrer URL</th>
+                      </tr>    
+                      </thead>
+                      <tbody>
+                      <tr *ngFor="let profile of allUrlProfiles">
+                         <td style="width: 5%"><input type="checkbox"  (click)="maintainUrlSelectedData($event,profile)" value="{{profile.id}}" /></td>
+                          <td style="width: 90%">{{profile.referrerURL}}</td>
+                          </tr>
+                      </tbody>
+                  </table>
+        </form>
+  </wizard-step>
+
+  </form-wizard>

@@ -1,0 +1,21 @@
+<!--<button type="button" class="btn btn-xs btn-danger taskMenuLItem" style="float: left">
+  Clear All
+</button>-->
+<div style="height: 100%; overflow-x: hidden; overflow-y: scroll;">
+<ul class="taskMenuList">
+    <!--<li class="taskMenuLItem" *ngFor="let item of items">
+      <div id={{item.id}} class="taskMenuChildItem" (click)="showSelectedTaskDetails(item)" >
+        <button type="button" class="close close-image taskMenuChildItem" (click)="removeSelectedTask(item)" >
+          <span class="taskMenuChildItem" aria-hidden="true">&times;</span><span class="sr-only taskMenuChildItem">Close</span>
+        </button>
+        {{item.name}}
+      </div>
+    </li>-->
+    <li class="taskMenuLItem" *ngFor="let item of items">
+    <app-menu-item [data]=item
+    (taskSelected)="showSelectedTaskDetails($event)"
+    (remove)="removeSelectedTask(item)"
+    ></app-menu-item>
+    </li>
+</ul>
+</div>

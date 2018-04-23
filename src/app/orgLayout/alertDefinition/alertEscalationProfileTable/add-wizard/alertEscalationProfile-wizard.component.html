@@ -1,0 +1,44 @@
+    <form-wizard (finalSubmit)="gotoFinalSubmit($event)">  
+  <wizard-step [title]="'Add Escalation Definition'" [maxStepWidth]="'200px'" [isValid]="step1Validition">
+       <form [formGroup]="myFormAddEscalation" style="border-left:#fff;"   novalidate (ngSubmit)="save(myFormAddEscalation.value, myFormAddEscalation.valid)">
+           <div class="row">
+            <div class="col-sm-12">
+              <p align="center">
+              <b><i>Please enter escalation definition</i>
+               <hr>
+              </b></p>       
+           </div>
+       </div>      
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for=""><b>Issue Severity</b></label>
+                      <select class="form-control" id = "severity" formControlName="severity">
+                        <option *ngFor="let severityName of severityNames" [value]="severityName.value" >{{severityName.display}}</option>
+                      </select>
+                      <error-messages [control]="myFormAddEscalation.controls.severity" class="text-danger"></error-messages>
+                </div>
+              </div>
+             <div class="col-sm-6">
+                <div class="form-group">
+                  <label for=""><b>Team</b></label>
+                      <select class="form-control" formControlName="team">
+                        <option value="">Select One</option>
+                        <option *ngFor="let team of allTeams" [value]="team.uuid">{{team.teamName}}</option>
+                      </select>
+                      <error-messages [control]="myFormAddEscalation.controls.team" class="text-danger"></error-messages>
+                </div>
+              </div>              
+             </div>      
+             <div class ="row">
+                <div class="col-sm-6">
+                <div class="form-group">
+                  <label for=""><b>Issue Resolution Cut-Off Time(In minutes)</b></label>
+                      <input type="text" class="form-control" formControlName="times" placeholder="Time">
+                      <error-messages [control]="myFormAddEscalation.controls.times" class="text-danger"></error-messages>
+                </div>
+              </div>
+              </div>                                   
+   </form>
+  </wizard-step>
+  </form-wizard>

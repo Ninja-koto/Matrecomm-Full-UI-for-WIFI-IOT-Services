@@ -1,0 +1,512 @@
+<tree-sidebar
+(sidebar)='Click($event)'
+></tree-sidebar>
+   <page-top></page-top>
+   <div class="al-main">
+     <div class="al-content">
+       <ba-content-top></ba-content-top>
+       <div class="row">
+          <div class="col-md-4">
+                        <div class="card card-inverse" style="max-width: 20rem;border-color: #fff;">
+                          <div class="card-header" style= "border-color: #fff;color: #000;">
+
+                            <div style="width: 20%; float: left;">     
+                            <i class="fa fa-user fa-2x" aria-hidden="true"></i>
+                            </div>
+                            <div style="float: right;width: 80%;"> 
+                                  <div style="float: left;width: 70%;"> 
+                                  Unique Visitors
+                                  </div>
+                                  <div style="float: right;width: 30%;"> 
+                                    200
+                                  </div>
+                            </div>
+                        </div>
+                        <div class="card-block">
+                              <div>
+                                   Attrition Rate  : <b>12%</b>
+                            </div>
+                        </div>
+                </div>
+                </div>
+
+                <div class="col-md-4">
+                <div class="card card-inverse" style="max-width: 20rem;border-color: #fff;">
+                          <div class="card-header" style= "border-color: #fff;color: #000;">      
+  
+                            <div style="width: 20%; float: left;">     
+                            <i class="fa fa-wifi fa-2x" aria-hidden="true"></i>
+                            </div>
+                            <div style="float: right;width: 80%;">  
+                              Repeat Visitors   
+                                  <div style="float: left;width: 70%;"> 
+                                  
+                                  </div>
+                                  <div style="float: right;width: 30%;"> 
+                                    26
+                                  </div>
+                            </div>
+                        </div>
+                        <div class="card-block">
+                            Capture Rate : <b>30%</b>
+                        </div>
+                </div>
+                </div>
+
+                <div class="col-md-4">
+                <div class="card card-inverse" style="max-width: 20rem;border-color: #fff;">
+                            <div class="card-header" style= "border-color: #fff;color: #000;">      
+                            <div style="width: 20%; float: left;">     
+                            <i class="fa fa-wifi fa-2x" aria-hidden="true"></i>
+                            </div>
+                            <div style="float: left;width: 80%;">     
+                                  <div style="float: left;width: 70%;"> 
+                                    Average Visit Duration
+                                  
+                                  </div>
+                                  <div style="float: right;width: 30%;"> 
+                                    
+                                  </div>
+                            </div>
+                        </div>
+                        <div class="card-block">
+                              <div> 
+                                 35min and 12 seconds
+                            </div>
+                        </div>
+                </div>
+                </div>                      
+    </div>
+
+
+       <div *ngIf="assetDataGathered">
+          
+          <div >
+              <modal  [animation]="animation" [keyboard]="keyboard"  (onClose)="closed()" (onDismiss)="dismissed()"
+                     (onOpen)="opened()" #validationModal1>
+                     <form #modalForm="ngForm">
+                         <modal-header [show-close]="true">
+                             <h4 class="modal-title">Alert</h4>
+                         </modal-header>
+                         <modal-body>
+                           <div style="height:100px;">
+                            <h3 style="color:red;">Please choose shorter range... Max Range 2 Days..</h3>
+                              <div class="card-block">
+                                  
+                              </div>
+        
+                            </div>
+                            <div class="row col-md-12">                    
+                              <button class="btn btn-xs btn-default" data-toggle="tooltip" title="" (click)="validationModal1.dismiss()" >Close</button>
+                            </div>
+                           
+                         </modal-body>
+                         <modal-footer>
+                        </modal-footer>
+                     </form>
+              </modal>
+              <button class="btn btn-xs btn-primary" id="alertModalButton" hidden data-toggle="tooltip" title="" (click)="validationModal1.open('lg')" ></button>
+            </div>
+          
+          <dash-tabs-panel (onTabChanged)="dataDisplayTabChanged($event)" >  
+              <dash-tab [title]="'OverView'" [tabID]="'overallStats'" [tabIcon]="'fa fa-info-circle'" [maxStepWidth]="'0px'">
+                  <div *ngIf="dataDisplayTab=='overallStats'">
+                    <div class = "row">
+                      <div class="col-md-12">
+                          <ba-card>
+                            <app-bar-stack-chart1
+                              [viewName]="getNameSpace('TempRadiusAcctActiveSessions')"
+                              [pipeLine]="getUserCountByUsageDurationByDatePipeLineQuery()"
+                              [getFrom]="'aggregate'"
+                              [filterData]="false"
+                              [showLegend]="true"
+                              chartTitle = "Visits By Duration"
+                              yAxisLabel = 'Users Count'
+                              xAxisLabel = 'Date'
+                              [chartWidth]="'100%'" 
+                              [chartHeight]="'300px'">  
+                            </app-bar-stack-chart1>
+                          </ba-card>
+                      </div>
+                      
+                      <div class="col-md-12">
+                          <ba-card>
+                            <app-bar-stack-chart1
+                              [viewName]="getNameSpace('TempNatLogs')"
+                              [pipeLine]="getUserCountByHoursDurationOfFewDaysPipeLineQuery()"
+                              [getFrom]="'aggregate'"
+                              [filterData]="false"
+                              [showLegend]="true"
+                              [legendTitle]="'Time Range'"
+                              chartTitle = "Total Traffic (User Count b/w Hours)"
+                              yAxisLabel = 'Users Count'
+                              xAxisLabel = 'Date'
+                              [chartWidth]="'100%'" 
+                              [chartHeight]="'300px'">  
+                            </app-bar-stack-chart1>
+                          </ba-card>
+                      </div>
+                  </div>
+                  </div>
+              </dash-tab>  
+              <dash-tab [title]="'Users'" [tabID]="'userStats'" [tabIcon]="'fa fa-info-circle'" [maxStepWidth]="'0px'">
+                <div *ngIf="dataDisplayTab=='userStats'" >
+                  <div class="col-md-12">
+                      <ba-card>
+                        <app-bar-stack-chart1
+                          [viewName]="getNameSpace('TempUserRegistration')"
+                          [pipeLine]="getNewUsersTrafficByTimePipeLineQuery()"
+                          [getFrom]="'aggregate'"
+                          [filterData]="false"
+                          [showLegend]="true"
+                          chartTitle = "New Users - Traffic by Time"
+                          yAxisLabel = 'Users count by hour'
+                          xAxisLabel = 'Date'
+                          [chartWidth]="'100%'" 
+                          [chartHeight]="'300px'">  
+                        </app-bar-stack-chart1>
+                      </ba-card>
+                  </div>
+                  
+                  <div class="col-md-12">
+                      <ba-card>
+                        <app-bar-chart1 
+                        [viewName]="getNameSpace('TempUserRegistration')"
+                        [pipeLine]="getUserCountTimeOfDayPipeLineQuery()"
+                        [getFrom]="'aggregate'"
+                        [filterData]="false"
+                        [showLegend]="true"
+                        chartTitle = "New Users - Time of Day"
+                        yAxisLabel = 'Users Count'
+                        xAxisLabel = 'Time of Day'
+                        [chartWidth]="'100%'" 
+                        [chartHeight]="'300px'">  
+                      </app-bar-chart1>
+                      </ba-card>
+                  </div>
+                  
+                  <div class="col-md-12">
+                      <ba-card>
+                        <app-bar-chart1 
+                        [viewName]="getNameSpace('TempUserRegistration')"
+                        [pipeLine]="getUserCountDayOfWeekPipeLineQuery()"
+                        [getFrom]="'aggregate'"
+                        [filterData]="false"
+                        [showLegend]="true"
+                        chartTitle = "New Users - Day of the Week"
+                        yAxisLabel = 'Users Count'
+                        xAxisLabel = 'Week Day'
+                        [chartWidth]="'100%'" 
+                        [chartHeight]="'300px'">  
+                      </app-bar-chart1>
+                      </ba-card>
+                  </div>
+                  
+                  <div class="col-md-12">
+                      <ba-card>
+                          <div class="col-md-12">
+                              <div class="col-md-9 pull-left">
+                              <h3>Alerts </h3>
+                              </div>
+                            </div>
+                          <div style="height:300px; width: 100%">
+                        <ngx-charts-gauge
+                        
+                        [scheme]="colorScheme"
+                        [results]="guageData"
+                        [min]="0"
+                        [max]="100"
+                        [angleSpan]="240"
+                        [startAngle]="-120"
+                        [units]="'alerts'"
+                        [bigSegments]="10"
+                        [smallSegments]="5"
+                        (select)="onSelect($event)">
+                      </ngx-charts-gauge>
+                          </div>
+                      </ba-card>
+                  </div>
+                </div>
+              </dash-tab>
+              <dash-tab [title]="'Internet'" [tabID]="'internetStats'" [tabIcon]="'fa fa-info-circle'" [maxStepWidth]="'0px'">
+                <div *ngIf="dataDisplayTab=='internetStats'">
+                    <div class="col-md-12">
+                        <ba-card>
+                          <app-bar-stack-chart1
+                            [viewName]="getNameSpace('TempRadiusAcctActiveSessions')"
+                            [pipeLine]="getUserCountByUsageDurationDayofWeekPipeLineQuery()"
+                            [getFrom]="'aggregate'"
+                            [filterData]="false"
+                            [showLegend]="true"
+                            [legendTitle]="'Usage Duration'"
+                            chartTitle = "Internet Time - Day of week"
+                            yAxisLabel = 'Users Count'
+                            xAxisLabel = 'Date'
+                            [chartWidth]="'100%'" 
+                            [chartHeight]="'300px'">  
+                          </app-bar-stack-chart1>
+                        </ba-card>
+                    </div>
+                    
+                    <div class="col-md-12">
+                        <ba-card>
+                          <app-bar-stack-chart1
+                            [viewName]="getNameSpace('TempRadiusAcctActiveSessions')"
+                            [pipeLine]="getUserCountByUsageDurationTimeOfDayPipeLineQuery()"
+                            [getFrom]="'aggregate'"
+                            [filterData]="false"
+                            [showLegend]="true"
+                            [legendTitle]="'Usage Duration'"
+                            chartTitle = "Internet by Duration - Time of the Day"
+                            yAxisLabel = 'Users Count'
+                            xAxisLabel = 'Date'
+                            [chartWidth]="'100%'" 
+                            [chartHeight]="'300px'">  
+                          </app-bar-stack-chart1>
+                        </ba-card>
+                    </div>
+                    <div class ="col-md-12">
+                            <ba-card>
+                                <div class="vertical-scroll">
+                                        <table class="table">
+                                          <tr>
+                                            <th>Tenant</th>
+                                            <th>Venues</th>
+                                            <th>Impressions</th>
+                                          </tr>
+                                          <tr>
+                                  
+                                            <td>Mark</td>
+                                            <td>Otto</td>
+                                            <td>@mdo</td>
+                                          </tr>
+                                          <tr>
+                                        
+                                            <td>Jacob</td>
+                                            <td>Thornton</td>
+                                            <td>yolo</td>
+                                          </tr>
+                                          <tr>
+                                            <td>3</td>
+                                            <td>Larry</td>
+                                            <td>Bird</td>
+                                          </tr>
+                                          <tr>
+                                            <td>4</td>
+                                            <td>John</td>
+                                            <td>Snow</td>
+                                          </tr>
+                                          <tr>
+                                            <td>5</td>
+                                            <td>Jack</td>
+                                            <td>Sparrow</td>
+                                          </tr>
+                                        </table>
+                                      </div>
+                                      </ba-card>
+                        </div>
+                        <div class = "col-md-12">
+                            <ba-card>
+                        <agm-map [latitude]="lat" [longitude]="lng"></agm-map>
+                    </ba-card>
+                        </div>
+                
+                </div>
+              </dash-tab>
+              <dash-tab [title]="'Connections'" [tabID]="'connectionStats'" [tabIcon]="'fa fa-info-circle'" [maxStepWidth]="'0px'">
+                  <div *ngIf="dataDisplayTab=='connectionStats'">
+                        <div class="col-md-12">
+                                <ba-card>
+                                  <app-bar-stack-chart1
+                                    [viewName]="getNameSpace('TempRadiusAcctActiveSessions')"
+                                    [pipeLine]="getUserCountByUsageDurationDayofWeekPipeLineQuery()"
+                                    [getFrom]="'aggregate'"
+                                    [filterData]="false"
+                                    [showLegend]="true"
+                                    [legendTitle]="'Usage Duration'"
+                                    chartTitle = "Connection Time - Day of week"
+                                    yAxisLabel = 'Users Count'
+                                    xAxisLabel = 'Date'
+                                    [chartWidth]="'100%'" 
+                                    [chartHeight]="'300px'">  
+                                  </app-bar-stack-chart1>
+                                </ba-card>
+                            </div>     
+                            <div class ="col-md-12">
+                                    <ba-card>
+                                        <div class="vertical-scroll">
+                                                <table class="table">
+                                                  <tr>
+                                                    <th>Tenant</th>
+                                                    <th>Venues</th>
+                                                    <th>Impressions</th>
+                                                  </tr>
+                                                  <tr>
+                                          
+                                                    <td>Mark</td>
+                                                    <td>Otto</td>
+                                                    <td>@mdo</td>
+                                                  </tr>
+                                                  <tr>
+                                                
+                                                    <td>Jacob</td>
+                                                    <td>Thornton</td>
+                                                    <td>yolo</td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td>3</td>
+                                                    <td>Larry</td>
+                                                    <td>Bird</td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td>4</td>
+                                                    <td>John</td>
+                                                    <td>Snow</td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td>5</td>
+                                                    <td>Jack</td>
+                                                    <td>Sparrow</td>
+                                                  </tr>
+                                                </table>
+                                              </div>
+                                              </ba-card>
+                                </div>
+                                <div class = "col-md-12">
+                                    <ba-card>
+                                <agm-map [latitude]="lat" [longitude]="lng"></agm-map>
+                            </ba-card>
+                                </div>
+                  </div>
+                </dash-tab>
+                <dash-tab [title]="'People'" [tabID]="'peopleStats'" [tabIcon]="'fa fa-info-circle'" [maxStepWidth]="'0px'">
+                        <div class="widgets">
+                              <div class="row">
+                                <ba-card cardTitle="Basic Example" baCardClass="with-scroll" class="smart-table-container">
+                                  <ng2-smart-table [settings]="settings" [source]="people"></ng2-smart-table>
+                                </ba-card>
+                              </div>                            
+                    </div>
+                  </dash-tab>
+                  <dash-tab [title]="'Impressions'" [tabID]="'peopleStats'" [tabIcon]="'fa fa-info-circle'" [maxStepWidth]="'0px'">
+                        <div class="col-md-12">
+                                <ba-card>
+                                  <app-bar-stack-chart1
+                                    [viewName]="getNameSpace('TempRadiusAcctActiveSessions')"
+                                    [pipeLine]="getUserCountByUsageDurationDayofWeekPipeLineQuery()"
+                                    [getFrom]="'aggregate'"
+                                    [filterData]="false"
+                                    [showLegend]="true"
+                                    [legendTitle]="'Usage Duration'"
+                                    chartTitle = "Impressions- Time of Day"
+                                    yAxisLabel = 'Users Count'
+                                    xAxisLabel = 'Date'
+                                    [chartWidth]="'100%'" 
+                                    [chartHeight]="'300px'">  
+                                  </app-bar-stack-chart1>
+                                </ba-card>
+                            </div>
+                            
+                            <div class="col-md-12">
+                                <ba-card>
+                                  <app-bar-stack-chart1
+                                    [viewName]="getNameSpace('TempRadiusAcctActiveSessions')"
+                                    [pipeLine]="getUserCountByUsageDurationTimeOfDayPipeLineQuery()"
+                                    [getFrom]="'aggregate'"
+                                    [filterData]="false"
+                                    [showLegend]="true"
+                                    [legendTitle]="'Usage Duration'"
+                                    chartTitle = "Impressions - Day of the week"
+                                    yAxisLabel = 'Users Count'
+                                    xAxisLabel = 'Date'
+                                    [chartWidth]="'100%'" 
+                                    [chartHeight]="'300px'">  
+                                  </app-bar-stack-chart1>
+                                </ba-card>
+                            </div>
+                            <div class ="col-md-12">
+                                <ba-card>
+                                    <div class="vertical-scroll">
+                                            <table class="table">
+                                              <tr>
+                                                <th>Tenant</th>
+                                                <th>Venues</th>
+                                                <th>Impressions</th>
+                                              </tr>
+                                              <tr>
+                                      
+                                                <td>Mark</td>
+                                                <td>Otto</td>
+                                                <td>@mdo</td>
+                                              </tr>
+                                              <tr>
+                                            
+                                                <td>Jacob</td>
+                                                <td>Thornton</td>
+                                                <td>yolo</td>
+                                              </tr>
+                                              <tr>
+                                                <td>3</td>
+                                                <td>Larry</td>
+                                                <td>Bird</td>
+                                              </tr>
+                                              <tr>
+                                                <td>4</td>
+                                                <td>John</td>
+                                                <td>Snow</td>
+                                              </tr>
+                                              <tr>
+                                                <td>5</td>
+                                                <td>Jack</td>
+                                                <td>Sparrow</td>
+                                              </tr>
+                                            </table>
+                                          </div>
+                                          </ba-card>
+                            </div>
+                                <ba-card>
+                            <agm-map [latitude]="lat" [longitude]="lng"></agm-map>
+                        </ba-card>
+                  </dash-tab>
+                  <dash-tab [title]="'Loyalty'" [tabID]="'peopleStats'" [tabIcon]="'fa fa-info-circle'" [maxStepWidth]="'0px'">
+                        <div class="col-md-12">
+                                <ba-card>
+                                  <app-bar-stack-chart1
+                                    [viewName]="getNameSpace('TempRadiusAcctActiveSessions')"
+                                    [pipeLine]="getUserCountByUsageDurationDayofWeekPipeLineQuery()"
+                                    [getFrom]="'aggregate'"
+                                    [filterData]="false"
+                                    [showLegend]="true"
+                                    [legendTitle]="'Usage Duration'"
+                                    chartTitle = "Loyalty Time - Day of week"
+                                    yAxisLabel = 'Users Count'
+                                    xAxisLabel = 'Date'
+                                    [chartWidth]="'100%'" 
+                                    [chartHeight]="'300px'">  
+                                  </app-bar-stack-chart1>
+                                </ba-card>
+                            </div>
+                            <div class="col-md-12">
+                                <ba-card>
+                                  <app-bar-stack-chart1
+                                    [viewName]="getNameSpace('TempRadiusAcctActiveSessions')"
+                                    [pipeLine]="getUserCountByUsageDurationTimeOfDayPipeLineQuery()"
+                                    [getFrom]="'aggregate'"
+                                    [filterData]="false"
+                                    [showLegend]="true"
+                                    [legendTitle]="'Usage Duration'"
+                                    chartTitle = "Loyalty by Duration - Time of the Day"
+                                    yAxisLabel = 'Users Count'
+                                    xAxisLabel = 'Date'
+                                    [chartWidth]="'100%'" 
+                                    [chartHeight]="'300px'">  
+                                  </app-bar-stack-chart1>
+                                </ba-card>
+                            </div>
+                        
+                  </dash-tab>
+          </dash-tabs-panel>
+       </div>
+     </div>
+   </div>
+

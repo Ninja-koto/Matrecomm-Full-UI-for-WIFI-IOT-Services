@@ -1,0 +1,105 @@
+<tree-sidebar
+ (sidebar)='Click($event)'
+></tree-sidebar>
+
+    <!--<ba-page-top></ba-page-top>-->
+    <page-top></page-top>
+    <div class="al-main">
+      <div class="al-content">
+        <!--<ba-content-top></ba-content-top>-->
+        <content-top [url]="'/serviceProvider/home'"></content-top>
+        <div class="row col-md-12">
+            <marquee id="hmenu" behavior="scroll" direction="left" onmouseover="this.stop();" onmouseout="this.start();">
+                <b>Select an Organization in the side tree to see Organizations Dashboard...</b>
+            </marquee>
+          </div>
+        <div class="row" >
+          <div class="col-md-12" style="color: red;font-size: 16px;text-align: center;">
+          <b>{{orgSelectionErrMsg}}</b>
+          </div>
+        </div>
+        <div *ngIf="showServiceProviderDashboard">
+          <div class="row" >
+          <div class="col-md-6">
+            <ba-card>
+            <app-bar-chart 
+              [viewName]="getServiceProviderNameSpace('serviceProviderAssetCountByOrg')"
+              [filterData]="false"
+              [pipeLine]="getServiceProviderUserCountQuery()"
+              [getFrom]="'aggregate'"
+              chartTitle = "Assets by Organization"
+              yAxisLabel = 'Asset Count'
+              xAxisLabel = 'Organizations'
+              [locationType]="currentLocationType"
+              [locationName]="currentLocation"
+              [chartWidth]="'100%'" 
+              [chartHeight]="'300px'">  
+            </app-bar-chart>
+            </ba-card>
+          </div>
+          <div class="col-md-6">
+            <ba-card>
+            <app-bar-chart 
+              [viewName]="getServiceProviderNameSpace('serviceProviderUsersCountByOrg')"
+              [filterData]="false"
+              [pipeLine]="getServiceProviderUserCountQuery()"
+              [getFrom]="'aggregate'"
+              chartTitle = "Users by Organization"
+              yAxisLabel = 'User Count'
+              xAxisLabel = 'Organizations'
+              [locationType]="currentLocationType"
+              [locationName]="currentLocation"
+              [chartWidth]="'100%'" 
+              [chartHeight]="'300px'">  
+            </app-bar-chart>
+            </ba-card>
+          </div>
+          </div>
+          <div class="row" >
+            <div class="col-md-12">
+              <ba-card>
+              <app-ngxline-chart
+                  [viewName]="getServiceProviderNameSpace('serviceProviderUsersCountSeriesByOrg')"
+                  [lTitle]="'Organizations'"
+                  [pipeLine]="getServiceProviderUserCountQuery()"
+                  [getFrom]="'aggregate'"
+                  [filterData]="false"
+                  chartTitle = "Users count by Organization"
+                  yAxisLabel = 'Users Count'
+                  xAxisLabel = 'Date'>
+              </app-ngxline-chart>
+              </ba-card>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="currentOrgUUID!=''&&currentOrgUUID!=undefined&&!showServiceProviderDashboard">
+          <div class="col-md-12">
+                  <button id="configure" class="btn btn-xs btn-warning" 
+                  data-toggle="tooltip" title="" (click)="showSdb($event)">
+                  Show ServiceProvider Dashboard</button>
+            <div class="row">
+              <div class="col-md-12" style="color: green;font-size: 16px;">
+                <b><u>Org Type:</u> {{currentOrgType}},&nbsp;&nbsp;<u>Org City:</u> {{currentOrgCity}},&nbsp;&nbsp;<u>Org Country:</u> {{currentOrgCountry}}</b>
+              </div>
+              <hr>
+            </div>
+            
+            <dashboard
+            [currentOrgName]="currentOrgName"
+            [currentOrgUUID]="currentOrgUUID" ></dashboard>
+        </div>
+      </div>      
+    </div>
+    <footer class="al-footer clearfix">
+      <!--<div class="al-footer-right">Created with <i class="ion-heart"></i></div>-->
+      <div class="al-footer-main clearfix">
+        <div class="al-copy">&copy; <a href="http://matrecomm.com/">MatreComm Technologies Pvt Ltd </a> 2017</div>
+        <!--<ul class="al-share clearfix">
+          <li><i class="socicon socicon-facebook"></i></li>
+          <li><i class="socicon socicon-twitter"></i></li>
+          <li><i class="socicon socicon-google"></i></li>
+          <li><i class="socicon socicon-github"></i></li>
+        </ul>-->
+      </div>
+    </footer>
+    <ba-back-top position="200"></ba-back-top>

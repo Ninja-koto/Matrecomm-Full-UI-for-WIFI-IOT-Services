@@ -1,0 +1,82 @@
+    <form-wizard (finalSubmit)="gotoFinalSubmit($event)">  
+      <wizard-step [title]="'Sample Data'" [maxStepWidth]="'200px'" [isValid]="step1Validition">
+        <form  style="border-left:#fff;"  novalidate >
+            <div class="row">
+               
+                <div class="col-md-12 float-md-right">
+                        <p><i>Please select the CSV file which has the following format</i> </p>
+                        <p><i><b>User Name, Customer ID, Circuit ID, City, Circle, Region</b> feilds are mandatory</i></p>
+                    <button type="button" class="btn btn-success btn-xs" (click)="downloadCSV($event)">
+                        <i class="fa fa-download" aria-hidden="true"></i>&nbsp;Sample CSV</button>
+                </div>
+            </div>
+        </form>
+  </wizard-step>
+    <wizard-step [title]="'Users'" [maxStepWidth]="'200px'" [isValid]="step2Validition">
+        
+      <div *ngIf ="!showManualMode">
+        <form [formGroup]="myFormCSVMode" style="border-left:#fff;"  novalidate (ngSubmit)="save(myFormManual.value, myFormManual.valid)">
+            <div class="row">
+              <div class="col-sm-12">
+              Please select CSV file to upload
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <input type="file" id="fileSelect" name="file" accept=".csv" (click)="resetToDefault($event)" (change)="onFileChange($event)" class="form-control" formControlName="apnUsersCSVFile">
+                  <error-messages [control]="myFormCSVMode.controls.apnUsersCSVFile" class="text-danger"></error-messages>
+                </div>
+              </div>
+              <!--<div class="col-sm-6">
+              <div class="form-group">
+                   <button id="loadFile" [disabled]="disableLoadButton" class="btn btn-sm btn-success" title="" (click)="loadInitiated($event)" >Load File</button>
+              </div>
+              </div>-->
+            </div>
+            <table class="table table-striped" >
+                    <thead>
+                    <tr>
+                        <th style="width: 5%">{{authorisedUsers.length}}</th>
+                        <th style="width: 30%"><b>User Name</b> </th>
+                        <th style="width: 30%"><b>Customer ID</b></th>
+                        <th style="width: 30%"><b>Circuit ID</b></th>
+                    </tr>    
+                    </thead>
+            </table>
+            <div style="height:11em;overflow:scroll;">
+            <table class="table table-striped" >
+                <tbody >
+                <tr *ngFor="let user of authorisedUsers">
+                    <th style="width: 5%">
+                        <button id="deleteUser" style="border-radius: 20px;" class="btn btn-xs btn-danger" data-toggle="tooltip" title=""  (click)="removeUser(user.id,$event)"><i class="fa fa-minus"></i>
+                        </button>
+                    </th>
+                     <td style="width: 30%">{{user.userName}}</td>
+                    <td style="width: 30%">{{user.customerID}}</td>
+                    <td style="width: 30%">{{user.circuitID}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+        </form>
+      </div>   
+  </wizard-step>
+ 
+  </form-wizard>
+
+
+
+  <!--<div class="row">
+    <div class="col-sm-4">
+    <div class="form-group">
+            <input type="text" [(ngModel)]="" class="form-control" formControlName="getUserNameControlName('userName',i) " placeholder="UserName" maxlength="10">
+            <error-messages [control]=" getUserNameErrControlName('userName',i)" class="text-danger"></error-messages>
+    </div>
+    </div>
+    
+    <div class="col-sm-4">
+    <div class="form-group">
+            <input type="number" class="form-control" formControlName="getPasswordControlName('mobileNumber',i) " placeholder="Mobile Number" maxlength="10">
+            <error-messages [control]="getPasswordErrControlName('mobileNumber',i)" class="text-danger"></error-messages>
+    </div>
+    </div>
+</div>-->

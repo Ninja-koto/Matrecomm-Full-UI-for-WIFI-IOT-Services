@@ -1,0 +1,85 @@
+<tree-sidebar
+ (sidebar)='Click($event)'
+></tree-sidebar>
+
+    <!--<ba-page-top></ba-page-top>-->
+    <page-top></page-top>
+    <div class="al-main">
+      <div class="al-content">
+        <ba-content-top></ba-content-top>
+        
+                <!--<ba-card class="col-xlg-8 col-lg-12 col-md-12 col-sm-12 col-12"
+                    title="floor map" baCardClass="medium-card">-->
+                    
+                    
+              <tabs-panel (onTabChanged)="mainTabChanged($event)">  
+                <tab [title]="'Floor Map'" [tabID]="'floorMapTab'" [tabIcon]="'fa fa-map'" [maxStepWidth]="'200px'">
+                <div *ngIf="mainTab=='floorMapTab'" style="min-height: 500px;width: 100%">
+                  <div class="row">
+                  <div class="col-md-12">
+                    <marquee id="hmenu" behavior="scroll" direction="left" onmouseover="this.stop();" onmouseout="this.start();">
+                        <b>Please select a Floor in the side tree</b>
+                    </marquee>
+                  </div>
+                  </div>
+                    <div *ngIf="!showFloorMap">
+                      <div class="row" >
+                        <div class="col-md-12" style="color: red;font-size: 16px;text-align: center;">
+                        <b>{{fMapErrMsg}}</b>
+                        </div>
+                      </div>
+                    </div>
+                    <div *ngIf="showFloorMap">
+                      <jquery-dnd
+                            [locationType]="locType"
+                            [locationName]="locName"
+                            [locationStruct]="locStruct"
+                            [floorMapErrorMsg]="fMapErrMsg"
+                            [floorUUID]="fUUID"
+                            [floorMapImage]="fImage"
+                            [currentLocationName]="currLocationName"
+                            [floorAssignedAssetsData]="assignedAssetData"
+                            [floorUnAssignedAssetsData]="unAssignedAssetData"
+                            (deleteAsset)="deleteAssignedAsset($event)"
+                            (mapRefresh)="updateFloorMap($event)">
+                      </jquery-dnd>
+                    </div>
+                </div>
+                </tab>
+                <tab [title]="'Load Balancing Config'" [tabID]="'loadBalancingTab'" [tabIcon]="'fa fa-check-square-o'" [maxStepWidth]="'200px'">
+                <div *ngIf="mainTab=='loadBalancingTab'" style="min-height: 500px;width: 100%">
+                    <loadBalance-config></loadBalance-config>
+                </div>
+                </tab>
+                <tab [title]="'Assigned Assets'" [tabID]="'assignedAssetsTab'" [tabIcon]="'fa fa-check-square-o'" [maxStepWidth]="'200px'">
+                <div *ngIf="mainTab=='assignedAssetsTab'" style="min-height: 500px;width: 100%">
+                    <floor-assignedAssets></floor-assignedAssets>
+                </div>
+                </tab>
+                <tab [title]="'Un Assigned Assets'" [tabID]="'unAssignedAssetsTab'" [tabIcon]="'fa fa-circle-o'" [maxStepWidth]="'200px'">
+                <div *ngIf="mainTab=='unAssignedAssetsTab'" style="min-height: 500px;width: 100%">
+                    <floor-unAssignedAssets></floor-unAssignedAssets>
+                </div>
+                </tab>
+              </tabs-panel>
+                         
+                <!--</ba-card>-->
+               <!--<app-dragula></app-dragula>-->
+              
+      </div>      
+    </div>
+    <!--<footer class="al-footer clearfix">
+      <div class="al-footer-right">Created with <i class="ion-heart"></i></div>
+      <div class="al-footer-main clearfix">
+        <div class="al-copy">&copy; <a href="http://akveo.com">Akveo</a> 2016</div>
+        <ul class="al-share clearfix">
+          <li><i class="socicon socicon-facebook"></i></li>
+          <li><i class="socicon socicon-twitter"></i></li>
+          <li><i class="socicon socicon-google"></i></li>
+          <li><i class="socicon socicon-github"></i></li>
+        </ul>
+        <p>abcbbc:{{sidebar}}</p>
+      </div>
+    </footer>-->
+    <ba-back-top position="200"></ba-back-top>
+  

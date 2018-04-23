@@ -1,0 +1,8 @@
+<aside class="al-sidebar" sidebarResize>
+  <tree-menu [menuHeight]="menuHeight"
+            [showTree]="showTree"
+           [sidebarCollapsed]="isMenuCollapsed"
+           (expandMenu)="menuExpand()"    
+           (treeMenu)='Clicked($event)'
+           ></tree-menu>
+</aside>

@@ -1,0 +1,235 @@
+    <form-wizard (finalSubmit)="gotoFinalSubmit($event)">  
+    <wizard-step [title]="'WiFi Enable Schedule'" [maxStepWidth]="'200px'" [isValid]="step1Validition">
+       <form [formGroup]="myFormVehiclePolicy" style="border-left:#fff;"  onload="loadingForm1($event)" novalidate (ngSubmit)="save(myFormVehiclePolicy.value, myFormVehiclePolicy.valid)">
+        <div class="row">
+              <div class="col-sm-10">
+                <div class="form-group">
+                      <label for=""><b>Policy Name</b></label>
+                      <input type="text" class="form-control" formControlName="policyName" placeholder="Policy Name" (click)='selectPolicy($event)'>
+                      <error-messages [control]="myFormVehiclePolicy.controls.policyName" class="text-danger"></error-messages>          
+                </div>
+              </div>           
+           </div>
+          
+             <div class="row">
+               <div class="col-sm-12">
+                <div class="form-group">
+                  <label for=""><b>Select Schedule Type  :</b></label><br>
+              <label> 
+                <input type="radio" id="daily" value="Daily" style="margin-right: 0" formControlName="scheduleType" (click)="selectScheduleStatus($event)"/>
+                 <b>Daily</b></label> &nbsp;&nbsp;   
+                <label>
+                <input type="radio" id="selectedDays" value="SelectedDays" style="margin-right: 0" formControlName="scheduleType" (click)="selectScheduleStatus($event)"/>
+                <b>Selected Days</b></label>  
+                </div>
+              </div>
+              </div>        
+            
+               <div *ngIf="scheduleStatus=='SelectedDays'"> 
+                   <div class="col-md-6 pull-left">
+                      <div class="form-group" formGroupName="selectedWeekDays">
+                        <label><input type="checkbox" formControlName ="sunday" value="0"  (click)="selectWeekDays($event)">&nbsp;Sunday</label><br>
+                        <label><input type="checkbox" formControlName ="monday" value="1" (click)="selectWeekDays($event)">&nbsp;Monday</label><br>
+                        <label><input type="checkbox" formControlName ="tuesday" value="2" (click)="selectWeekDays($event)">&nbsp;Tuesday</label><br>
+                        <label><input type="checkbox" formControlName ="wednesday" value="3" (click)="selectWeekDays($event)">&nbsp;Wednesday</label><br>
+                        <label><input type="checkbox" formControlName ="thursday" value="4" (click)="selectWeekDays($event)">&nbsp;Thursday</label><br>
+                        <label><input type="checkbox" formControlName ="friday" value="5" (click)="selectWeekDays($event)">&nbsp;Friday</label><br>
+                        <label><input type="checkbox" formControlName ="saturday" value="6" (click)="selectWeekDays($event)">&nbsp;Saturday</label><br>
+                      </div>
+                   </div>      
+               </div>
+                
+          <div *ngIf="scheduleStatus=='SelectedDays'"> 
+           <br><br><br><br><br><br><br><br><br>     
+          </div>
+<div>
+ <div class="col-sm-10" style="overflow:auto; border-style: solid;border-radius: 20px;">     
+   <br>         
+         <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                &nbsp;&nbsp;<label for=""><b>Morning Start Time</b></label>
+                &nbsp;&nbsp;<input class="picker-input form-control" style="color: #000000;" [ngModel]="mStartTimeValue | date: 'shortTime'"  (change)='mstarttime($event)'
+                      [(dateTimePicker)]="mStartTimeValue" 
+                       [pickerType]="'time'" 
+                      readonly formControlName="mStartTime"
+                      (dateTimePickerChange) = "scheduleChanged($event,'fromMStart')" placeholder=" click here" />                    
+                      <error-messages [control]="myFormVehiclePolicy.controls.mStartTime" class="text-danger"></error-messages>
+                </div>
+              </div>           
+              <div class="col-sm-6">
+                <div class="form-group"> 
+                  &nbsp;&nbsp;<label for=""><b>Morning End Time</b></label>
+                  &nbsp;&nbsp;<input class="picker-input form-control" style="color: #000000;" [ngModel]="mEndTimeValue | date: 'shortTime'" 
+                      [(dateTimePicker)]="mEndTimeValue" 
+                       [pickerType]="'time'" 
+                      readonly formControlName="mEndTime"
+                      (dateTimePickerChange) = "scheduleChanged($event,'fromMEnd')" placeholder=" click here" />                  
+                      <error-messages [control]="myFormVehiclePolicy.controls.mEndTime" class="text-danger"></error-messages>
+                </div>
+              </div>
+             </div>    
+         <div class="row">
+            <div class="col-sm-6">
+            <small [ngStyle] = "{'display':showMStartTimeErrorMsg}"  class="text-danger">{{mStartTimeErrMsg}}</small>
+            </div>
+           <div class="col-sm-6">
+            <small [ngStyle] = "{'display':showMEndTimeErrorMsg}"  class="text-danger">{{mEndTimeErrMsg}}</small>
+            </div>            
+        </div>   
+           <div class="row">
+            <div class="col-sm-12">
+            <small [ngStyle] = "{'display':showMStartEndTimeErrorMsg}"  class="text-danger">{{mStartmEndTimeErrMsg}}</small>
+            </div>  
+           </div>                   
+            
+    </div>
+    <div class="col-sm-10" style="overflow:auto; border-style: solid; border-top: none;border-radius: 20px;">              
+      <br>  
+         <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                &nbsp;&nbsp;<label for=""><b>Evening Start Time</b></label>
+                &nbsp;&nbsp;<input class="picker-input form-control" style="color: #000000;" [ngModel]="eStartTimeValue | date: 'shortTime'" 
+                      [(dateTimePicker)]="eStartTimeValue" 
+                       [pickerType]="'time'" 
+                      readonly formControlName="eStartTime"
+                      (dateTimePickerChange) = "scheduleChanged($event,'fromEStart')" placeholder=" click here" />                    
+                      <error-messages [control]="myFormVehiclePolicy.controls.eStartTime" class="text-danger"></error-messages>
+                </div>
+              </div>
+         
+              <div class="col-sm-6">
+                <div class="form-group"> 
+                  &nbsp;&nbsp;<label for=""><b>Evening End Time</b></label>
+                  &nbsp;&nbsp;<input class="picker-input form-control" style="color: #000000;" [ngModel]="eEndTimeValue | date: 'shortTime'" 
+                      [(dateTimePicker)]="eEndTimeValue" 
+                       [pickerType]="'time'" 
+                      readonly formControlName="eEndTime"
+                      (dateTimePickerChange) = "scheduleChanged($event,'fromEEnd')" placeholder=" click here" />                  
+                      <error-messages [control]="myFormVehiclePolicy.controls.eEndTime" class="text-danger"></error-messages>
+                </div>
+              </div>
+             </div>     
+              <div class="row">
+            <div class="col-sm-6">
+            <small [ngStyle] = "{'display':showEStartTimeErrorMsg}"  class="text-danger">{{eStartTimeErrMsg}}</small>
+            </div>
+           <div class="col-sm-6">
+            <small [ngStyle] = "{'display':showEEndTimeErrorMsg}"  class="text-danger">{{eEndTimeErrMsg}}</small>
+            </div>            
+        </div>   
+           <div class="row">
+            <div class="col-sm-12">
+            <small [ngStyle] = "{'display':showEStartEndTimeErrorMsg}"  class="text-danger">{{eStartmEndTimeErrMsg}}</small>
+            </div>  
+           </div>             
+    </div>
+</div>
+
+
+   </form>
+  </wizard-step>
+
+<!--
+    <wizard-step [title]="'Boarding Points'" [maxStepWidth]="'200px'" [isValid]="step2Validition">
+      <form [formGroup]="myFormBoarding" style="border-left:#fff;"  onload="loadingForm1($event)"  novalidate (ngSubmit)="save(myFormBoarding.value, myFormBoarding.valid)">
+            <div class="row">
+              <div class="col-sm-12">
+              <p align="center">
+              <b><i>Please click Add button to enter boarding points details</i>
+               <hr>
+              </b></p>       
+             </div>
+            </div>   
+       <div>
+             <div class="col-xs-8 pull-left box-tools"> 
+                    <button id="boardingAddButton" class="btn btn-sm btn-success" data-toggle="tooltip" title="" value ="Enable"  (click)="boardingAddProfiles($event)" ><i class="fa fa-plus"></i>Add</button>
+                </div>  
+
+                   <div class="col-xs-4 pull-right box-tools"> 
+                    <button id="deleteBoardingProfile" class="btn btn-sm btn-danger" data-toggle="tooltip" title="" [disabled]= "boardingSelectedRowsForDeletion.length==0" (click)="deleteBoardingSelectedProfiles($event)"><i class="fa fa-minus"></i> Delete</button>
+                 </div>               
+          </div>
+        <div *ngIf="addBoardingStatus=='Enable'">  
+        <br><br>
+          <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for=""><b>Pick Up Time</b></label><br>
+                     <input class="picker-input" [ngModel]="pickupTimeValue | date: 'shortTime'" 
+                      [(dateTimePicker)]="pickupTimeValue" 
+                       [pickerType]="'time'" 
+                      readonly formControlName="pickupTime"
+                      (dateTimePickerChange) = "scheduleChanged($event,'fromPickup')" placeholder=" click here" />                    
+                      <error-messages [control]="myFormBoarding.controls.pickupTime" class="text-danger"></error-messages>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group"> 
+                  <label for=""><b>Drop Time</b></label><br>
+                     <input class="picker-input" [ngModel]="dropTimeValue | date: 'shortTime'" 
+                      [(dateTimePicker)]="dropTimeValue" 
+                       [pickerType]="'time'" 
+                      readonly formControlName="dropTime"
+                      (dateTimePickerChange) = "scheduleChanged($event,'fromDrop')" placeholder=" click here" />                  
+                      <error-messages [control]="myFormBoarding.controls.dropTime" class="text-danger"></error-messages>
+                </div>
+              </div>
+             </div>       
+       <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label for=""><b>Enter Boarding Point Name</b></label>
+                      <input type="text" class="form-control" formControlName="boardingPointName" placeholder="Boarding Point Name">
+                        <error-messages [control]="myFormBoarding.controls.boardingPointName" class="text-danger"></error-messages>
+                </div>
+              </div>
+        </div>    
+        <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                      <label for=""><b>Address</b></label>
+                      <textarea  rows="1" class="form-control" formControlName="address" placeholder="Please enter BoardingPoint address">
+                      </textarea>
+                      <error-messages [control]="myFormBoarding.controls.address" class="text-danger"></error-messages>          
+                </div>
+              </div>
+            </div>        
+             <div>
+                   <div class="col-xs-4 pull-left box-tools"> 
+                    <button id="submitBoardingProfile" class="btn  btn-primary" data-toggle="tooltip" title="" (click)="submitBoardingProfiles($event)" >Submit</button>
+                </div>
+               </div>
+               <div>
+                  <div class="col-xs-4 pull-right box-tools"> 
+                   <button id="cancelBoardingProfile" class="btn btn-warning" data-toggle="tooltip"  value ="Disable" title="" (click)="cancelBoardingProfiles($event)" >Cancel</button>
+                </div>              
+               </div>
+              <div class="row">
+                    <div class="col-sm-12">
+                     <small [ngStyle] = "{'display':showBoardingTableErrorMsg}"  class="text-danger">Please select: pickupTime -> dropTime ->boardingPointName -> address</small>
+                    </div>
+               </div>             
+        </div>       
+                     <table class="table table-striped" >
+                      <thead>
+                      <tr>
+                          <th style="width: 6%"></th>
+                          <th style="width: 30%"><b>Boarding Point</b></th>
+                          <th style="width: 30%"><b>Pick Up time</b></th>
+                          <th style="width: 30%"><b>Drop Time</b></th>
+                      </tr>    
+                      </thead>
+                      <tbody>
+                      <tr *ngFor="let profile of allBoardingProfiles">
+                         <td style="width: 6%"><input type="checkbox"  (click)="maintainBoardingSelectedData($event,profile)" value="{{profile.id}}" /></td>
+                          <td style="width: 30%">{{profile.boardingPointName}}</td>
+                          <td style="width: 30%">{{profile.pickupTime}}</td>
+                           <td style="width: 30%">{{profile.dropTime}}</td>
+                          </tr>
+                      </tbody>
+                  </table>
+        </form>
+</wizard-step>-->
+</form-wizard>

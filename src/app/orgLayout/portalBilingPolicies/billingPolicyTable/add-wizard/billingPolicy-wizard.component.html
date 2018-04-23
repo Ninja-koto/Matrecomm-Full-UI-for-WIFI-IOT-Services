@@ -1,0 +1,69 @@
+    <form-wizard (finalSubmit)="gotoFinalSubmit($event)">  
+  <wizard-step [title]="'Billing Options Details'" [maxStepWidth]="'200px'" [isValid]="step1Validition">
+       <form [formGroup]="myFormBillingOptions" style="border-left:#fff;"   novalidate (ngSubmit)="save(myFormBillingOptions.value, myFormBillingOptions.valid)">  
+              <div class ="row">
+                <div class="col-sm-12">
+                <div class="form-group">
+                  <label for=""><b>Enter Billing Plan Name</b></label>
+                      <input type="text" class="form-control" formControlName="billingPlanName" placeholder="Plan Name">
+                      <error-messages [control]="myFormBillingOptions.controls.billingPlanName" class="text-danger"></error-messages>
+                </div>
+              </div>
+              </div>   
+
+                <div class ="row">
+                <div class="col-sm-12">
+                <div class="form-group">            
+              <p><b>Add attributes to Billing Option</b></p>  
+                </div>
+                </div>
+              </div>                 
+             <div class ="row">
+                <div class="col-sm-12">
+                <div class="form-group">
+                  <label for=""><b>Name</b></label>
+                      <input type="text" class="form-control" formControlName="option1Name" placeholder="Enter Name">
+                      <error-messages [control]="myFormBillingOptions.controls.option1Name" class="text-danger"></error-messages>
+                </div>
+              </div>
+              </div>  
+             <div class ="row">
+                <div class="col-sm-12">
+                <div class="form-group">
+                  <label for=""><b>Value</b></label>
+                      <input type="text" class="form-control" formControlName="option1Value" placeholder="Enter Value">
+                      <error-messages [control]="myFormBillingOptions.controls.option1Value" class="text-danger"></error-messages>
+                </div>
+              </div>
+              </div>  
+             <div class="row">
+                    <div class="col-sm-12">
+                     <small [ngStyle] = "{'display':showBillingOptionTableErrorMsg}"  class="text-danger">Please select billing option  Name -> Value </small>
+                    </div>
+               </div>             
+              <div class="col-xs-4 pull-left box-tools"> 
+                    <button id="addBillingOptionProfile" class="btn btn-sm btn-success" data-toggle="tooltip" title="" (click)="addBillingOptionProfiles($event)" ><i class="fa fa-plus"></i>Add</button>
+                </div>
+                <div class="col-xs-4 pull-right box-tools"> 
+                    <button id="deleteBillingOptionProfile" class="btn btn-sm btn-danger" data-toggle="tooltip" title="" [disabled]= "billingOptionSelectedRowsForDeletion.length==0" (click)="deleteBillingOptionSelectedProfiles($event)"><i class="fa fa-minus"></i> Delete</button>
+                    <!--<button id="deleteProfile" class="btn btn-sm btn-danger" data-toggle="tooltip" title=""  (click)="deleteSelectedProfiles($event)"><i class="fa fa-minus"></i> Delete</button>-->
+                </div>
+                    <table class="table table-striped" >
+                      <thead>
+                      <tr>
+                          <th style="width: 5%"></th>
+                          <th style="width: 45%">Name</th>
+                          <th style="width: 45%">Vlaue</th>
+                      </tr>    
+                      </thead>
+                      <tbody>
+                      <tr *ngFor="let profile of allBillingOptionProfiles">
+                         <td style="width: 5%"><input type="checkbox"  (click)="maintainBillingOptionSelectedData($event,profile)" value="{{profile.id}}" /></td>
+                          <td style="width: 45%">{{profile.option1Name}}</td>
+                          <td style="width: 45%">{{profile.option1Value}}</td>
+                          </tr>
+                      </tbody>
+                  </table>
+   </form>
+  </wizard-step>
+  </form-wizard>

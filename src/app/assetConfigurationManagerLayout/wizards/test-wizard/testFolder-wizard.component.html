@@ -1,0 +1,873 @@
+    <form-wizard (finalSubmit)="gotoFinalSubmit($event)">  
+     
+   <!--  <wizard-step [title]="'Portal Settings'" [maxStepWidth]="'60px'" [isValid]="step12Validition" (onLoad)="pageLoaded($event)">
+              <form [formGroup]="portalSettings" style="border-left:#fff;"  novalidate (ngSubmit)="save(portalSettings.value, portalSettings.valid)">
+            <div class="row">
+              <div class="col-sm-12">
+              <p align="center">
+              <b><i>Please click Add button to enter CaptivePortal details</i>
+               <hr>
+              </b></p>       
+             </div>
+            </div>   
+       <div>
+             <div class="col-xs-8 pull-left box-tools"> 
+                    <button id="portalAddButton" class="btn btn-sm btn-success" data-toggle="tooltip" title="" value ="Enable"  (click)="portalAddProfiles($event)" ><i class="fa fa-plus"></i>Add</button>
+                </div>  
+
+                   <div class="col-xs-4 pull-right box-tools"> 
+                    <button id="deletePortalProfile" class="btn btn-sm btn-danger" data-toggle="tooltip" title="" [disabled]= "portalSelectedRowsForDeletion.length==0" (click)="deletePortalSelectedProfiles($event)"><i class="fa fa-minus"></i> Delete</button>
+                    <button id="deleteProfile" class="btn btn-sm btn-danger" data-toggle="tooltip" title=""  (click)="deleteSelectedProfiles($event)"><i class="fa fa-minus"></i> Delete</button>
+                 </div>               
+          </div>
+                   
+       
+     
+       <div *ngIf="addportalStatus=='Enable'">  
+        <br><br>
+        
+       <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group">
+                      <label for=""><b>Captive Portal</b></label>
+                     <input type="text" class="form-control" formControlName="CaptivePortal"> 
+                   
+                      <error-messages [control]="portalSettings.controls.CaptivePortal" class="text-danger"></error-messages>
+     
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>Port</b></label>
+                 <input type="text" class="form-control" formControlName="port">   
+                 <select class="form-control" formControlName="redirecturl">
+                        <option value=""><b>Select One</b></option> 
+                        <option *ngFor="let redirecturl of redirecturl" [value]="redirecturl">{{redirecturl}}</option>
+                      </select> 
+                  <error-messages [control]="portalSettings.controls.port" class="text-danger"></error-messages>
+                </div>
+              </div>
+               <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>Server</b></label>
+                 <input type="text" class="form-control" formControlName="server">   
+                
+                  <error-messages [control]="portalSettings.controls.server" class="text-danger"></error-messages>
+                </div>
+              </div>
+       </div>
+       <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group">
+                      <label for=""><b>URL</b></label>
+                     <input type="text" class="form-control" formControlName="url"> 
+                   
+                      <error-messages [control]="portalSettings.controls.url" class="text-danger"></error-messages>
+     
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>Server Fail Through</b></label>
+                 <input type="text" class="form-control" formControlName="serverFail">   
+               
+                  <error-messages [control]="portalSettings.controls.serverFail" class="text-danger"></error-messages>
+                </div>
+              </div>
+               <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>Auto White List</b></label>
+                 <input type="text" class="form-control" formControlName="AutoWhiteList">   
+               
+                  <error-messages [control]="portalSettings.controls.AutoWhiteList" class="text-danger"></error-messages>
+                </div>
+              </div>
+       </div>
+
+        <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group">
+                      <label for=""><b>Authentication Text</b></label>
+                     <input type="text" class="form-control" formControlName="AuthenticationTest"> 
+                   
+                      <error-messages [control]="portalSettings.controls.AuthenticationTest" class="text-danger"></error-messages>
+     
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for=""><b>Redirect Url</b></label>
+                 <input type="text" class="form-control" formControlName="redirecturl">   
+                
+                  <error-messages [control]="portalSettings.controls.redirecturl" class="text-danger"></error-messages>
+                </div>
+              </div>
+               
+       </div>
+
+       <div class="row">
+      <div class="col-sm-4">
+                <div class="form-group">
+                  <label>Status</label><br>
+
+                  <label>
+                <input type="radio" id="enable" value="yes"  formControlName="inUse" (click)="inUse($event)">
+                enable</label>
+                <label>
+                <input type="radio" id="disable" value="no"   formControlName="inUse" (click)="inUse($event)"/>
+                disable</label>
+                   
+                </div>
+              </div>
+      
+           <div class="col-sm-4">
+                <div class="form-group">
+                  <label> Redirection Mode</label><br>
+
+                <label>
+                <input type="radio" id="enable" value="enable"  formControlName="redirection" (click)="redirection($event)">
+                enable</label>
+                <label>
+                <input type="radio" id="disable" value="disable"   formControlName="redirection" (click)="redirection($event)"/>
+                disable</label>   
+               
+                      <error-messages [control]="myForm.controls.redirection" class="text-danger"></error-messages>
+                </div>
+              </div>   
+        </div>
+             <div>
+                   <div class="col-xs-4 pull-left box-tools"> 
+                    <button id="submitPortalProfile" class="btn  btn-primary" data-toggle="tooltip" title="" (click)="submitPortalProfiles($event)" >Submit</button>
+                </div>
+               </div>
+               <div>
+                  <div class="col-xs-4 pull-right box-tools"> 
+                   <button id="cancelPortalProfile" class="btn btn-warning" data-toggle="tooltip"  value ="Disable" title="" (click)="cancelPortalProfiles($event)" >Cancel</button>
+                </div>              
+               </div>
+          
+              <div class="row">
+                    <div class="col-sm-12">
+                     <small [ngStyle] = "{'display':showPortalTablErrorMsg}"  class="text-danger">Please select wlanNumber -> forwardType ->portType -> untag</small>
+                    </div>
+               </div>             
+        </div>  
+        <table class="table table-striped" >
+                      <thead>
+                      <tr>
+                          <th style="width: 6%"></th>
+                          <th style="width: 11%"><b>Authentication Text</b></th>
+                          <th style="width: 11%"><b>Redirect URL</b></th>
+                          <th style="width: 11%"><b>Redirection Mode</b></th>
+                          <th style="width: 11%"><b>Captive Portal</b></th>
+                          <th style="width: 11%"><b>Auto White List</b></th>
+                          <th style="width: 11%"><b>URL</b></th>
+                          <th style="width: 11%"><b>Port</b></th>
+                          <th style="width: 11%"><b>Server</b></th>
+                      </tr>    
+                      </thead>
+                      <tbody>
+                      <tr *ngFor="let profile of allPortalProfiles">
+                         <td style="width: 6%"><input type="checkbox"  (click)="maintainPortalSelectedData($event,profile)" value="{{profile.id}}" /></td>
+                          <td style="width: 22%">{{profile.AuthenticationTest}}</td>
+                          <td style="width: 22%">{{profile.redirecturl}}</td>
+                           <td style="width: 22%">{{profile.redirection}}</td>
+                          <td style="width: 22%">{{profile.CaptivePortal}}</td>                         
+                          </tr>
+                      </tbody>
+                  </table>     
+ 
+      </form>
+     </wizard-step> -->
+
+      <wizard-step [title]="'CaptivePortal Settings'" [maxStepWidth]="'80px'" [isValid]="step1Validition" (onLoad)="pageLoaded($event)">
+        <form [formGroup]="myFormCaptivePortal" style="border-left:#fff;"  novalidate (ngSubmit)="save(myFormCaptivePortal.value, myForm.valid)">
+       <!--  <label><b>External Captive Portal </b></label><br>  -->
+        <div class="row">
+      <!--        <div class="col-sm-4">
+                <div class="form-group">
+                      <label for="">Authentication Text</label>
+                      <input type="text" class="form-control" formControlName="AuthenticationTest">
+                      <small [hidden]="myForm.controls.ldapIPAddress.valid || (myForm.controls.ldapIPAddress.pristine && !submitted)" class="text-danger">
+                        LDAP IP Address is required.
+                      </small>
+                      <error-messages [control]="myForm.controls.AuthenticationTest" class="text-danger"></error-messages>
+                </div>
+              </div> -->
+              
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="">Captive Portal Name</label>
+                      <input type="text" class="form-control" formControlName="CaptivePortal" (change)="storeCaptivePortalName($event)">
+                      <!--<div *ngIf="myForm.controls['ldapPort'].hasError('required') && myForm.controls['ldapPort'].touched" class="alert alert-danger">You required.</div>
+                      <div *ngIf="myForm.controls['ldapPort'].hasError('minlength') && myForm.controls['ldapPort'].touched" class="alert alert-danger">Your minlength.</div>
+                      <div *ngIf="myForm.controls['ldapPort'].hasError('invalidPort') && myForm.controls['ldapPort'].touched" class="alert alert-danger">Your portValidation.</div>-->
+                      <!--<small *ngIf="myForm.controls['ldapPort'].hasError('minPortErr') && myForm.controls['ldapPort'].touched" class="text-danger">
+                        Port should be greaterthen 100.</small>-->
+                        <error-messages [control]="myFormCaptivePortal.controls.CaptivePortal" class="text-danger"></error-messages>
+                      <!--<small [hidden]="myForm.controls.ldapPort.valid || (myForm.controls.ldapPort.pristine && !submitted)" class="text-danger">
+                        LDAP Port Error.
+                      </small>-->
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="">Server </label>
+                      <input type="text" class="form-control" formControlName="server">
+                      <!--<small [hidden]="myForm.controls.ldapPassword.valid || (myForm.controls.ldapPassword.pristine && !submitted)" class="text-danger">
+                        LDAP Password is required.
+                      </small>-->
+                      <error-messages [control]="myFormCaptivePortal.controls.server" class="text-danger"></error-messages>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                      <label for="">Redirect URL</label>
+                      <input type="text" class="form-control" formControlName="redirecturl">
+                      <!--<small [hidden]="myForm.controls.ldapIPAddress.valid || (myForm.controls.ldapIPAddress.pristine && !submitted)" class="text-danger">
+                        LDAP IP Address is required.
+                      </small>-->
+                      <error-messages [control]="myFormCaptivePortal.controls.redirecturl" class="text-danger"></error-messages>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="">URL </label>
+                      <input type="text" class="form-control" formControlName="url">
+                      <!--<small [hidden]="myForm.controls.ldapPassword.valid || (myForm.controls.ldapPassword.pristine && !submitted)" class="text-danger">
+                        LDAP Password is required.
+                      </small>-->
+                      <error-messages [control]="myFormCaptivePortal.controls.url" class="text-danger"></error-messages>
+                 <!-- <label for="">Redirection Mode</label>  -->
+                   <!--   <input type="select" class="form-control" value="RedirectionMode" formControlName="RedirectionMode"> 
+
+                      -->
+                      
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="">Port </label>
+                      <input type="number" class="form-control" formControlName="port">
+                      <!--<small [hidden]="myForm.controls.ldapPassword.valid || (myForm.controls.ldapPassword.pristine && !submitted)" class="text-danger">
+                        LDAP Password is required.
+                      </small>-->
+                      <error-messages [control]="myFormCaptivePortal.controls.port" class="text-danger"></error-messages>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="">Auto White List</label><br>
+                  <label>
+                <input type="radio" id="enable" value="enable"  formControlName="AutoWhiteList" (click)="AutoWhiteList($event)">
+                enable</label>
+                <label>
+                <input type="radio" id="disable" value="disable"   formControlName="AutoWhiteList" (click)="AutoWhiteList($event)"/>
+                disable</label> 
+                  <!--    <input type="text" class="form-control" formControlName="AutoWhiteList">
+                      
+                      <small [hidden]="myForm.controls.ldapAdminBaseDN.valid || (myForm.controls.ldapAdminBaseDN.pristine && !submitted)" class="text-danger">
+                        LDAP Admin Base DN is required.
+                      </small>-->
+                      <error-messages [control]="myFormCaptivePortal.controls.AutoWhiteList" class="text-danger"></error-messages>
+                </div>
+              </div>
+            </div>
+              
+            <div class="row">
+              
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="">Server Fail Through </label><br>
+                   <label>
+                <input type="radio" id="enable" value="enable"  formControlName="serverFail" (click)="serverFail($event)">
+                enable</label>
+                <label>
+                <input type="radio" id="disable" value="disable"   formControlName="serverFail" (click)="serverFail($event)"/>
+                disable</label> 
+
+                     <!-- <input type="text" class="form-control" formControlName="serverFail">
+                      <small [hidden]="myForm.controls.ldapPassword.valid || (myForm.controls.ldapPassword.pristine && !submitted)" class="text-danger">
+                        LDAP Password is required.
+                      </small>-->
+                      <error-messages [control]="myFormCaptivePortal.controls.serverFail" class="text-danger"></error-messages>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label> Redirection Mode</label><br>
+
+                  <label>
+                <input type="radio" id="enable" value="enable"  formControlName="redirection" (click)="redirection($event)">
+                enable</label>
+                <label>
+                <input type="radio" id="disable" value="disable"   formControlName="redirection" (click)="redirection($event)"/>
+                disable</label> 
+                
+                <error-messages [control]="myFormCaptivePortal.controls.redirection" class="text-danger"></error-messages>
+                </div>
+              </div>
+            
+            <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="">Status</label><br>
+
+                  <label>
+                <input type="radio" id="enable" value="yes"  formControlName="inUse" (click)="inUse($event)">
+                enable</label>
+                <label>
+                <input type="radio" id="disable" value="no"   formControlName="inUse" (click)="inUse($event)"/>
+                disable</label>
+                   <!--   <input type="text" class="form-control" formControlName="inUse">
+                      <small [hidden]="myForm.controls.ldapUserName.valid || (myForm.controls.ldapUserName.pristine && !submitted)" class="text-danger">
+                        LDAP User Name is required.
+                      </small>
+                      <error-messages [control]="myForm.controls.inUse" class="text-danger"></error-messages>   -->
+                </div>
+              </div>
+            </div>
+           
+        </form>
+  </wizard-step>
+  <!--
+      <wizard-step [title]="'InternalCaptive Portal'" [maxStepWidth]="'80px'" [isValid]="step2Validition" (onLoad)="pageLoaded($event)">
+        <form [formGroup]="myForm1" style="border-left:#fff;"  novalidate (ngSubmit)="save(myForm1.value, myForm1.valid)">
+        <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group">
+                      <label for="inputFirstName">First Name</label>
+                      <input type="text" class="form-control" id="inputFirstName" placeholder="First Name">
+                      <label for="">Authentication Text</label>
+                      <input type="text" class="form-control" formControlName="authtext">
+                      <error-messages [control]="myForm1.controls.authtext" class="text-danger"></error-messages>
+                     
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="">AutoWhite List</label>
+                      <input type="number" class="form-control" formControlName="autowhite">
+                      <error-messages [control]="myForm1.controls.autowhite" class="text-danger"></error-messages>
+                      
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="">CaptivePortal Mode</label>
+                      <input type="number" class="form-control" formControlName="mode">
+                      <error-messages [control]="myForm1.controls.mode" class="text-danger"></error-messages>
+                     
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="">ExternalRedirectURL</label>
+                    
+                      <input type="text" class="form-control" formControlName="externalRedirect">
+                      <error-messages [control]="myForm1.controls.externalRedirect" class="text-danger"></error-messages>
+                      
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="">InternalRedirectURL</label>
+                     
+                      <input type="text" class="form-control" formControlName="internalRedirect">
+                      <error-messages [control]="myForm1.controls.internalRedirect" class="text-danger"></error-messages>
+                      
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="">port</label>
+                      <input type="text" class="form-control" formControlName="port">
+                      <error-messages [control]="myForm1.controls.port" class="text-danger"></error-messages>
+                      
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="">ServerFailThrough</label>
+                      <input type="password" class="form-control" formControlName="serverfail">
+                      <error-messages [control]="myForm1.controls.serverfail" class="text-danger"></error-messages>
+                     
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="">Server Name</label>
+                      <input type="password" class="form-control" formControlName="servername">
+                      <error-messages [control]="myForm1.controls.servername" class="text-danger"></error-messages>
+                      
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="">url</label>
+                      <input type="text" class="form-control" formControlName="url">
+                      <error-messages [control]="myForm1.controls.url" class="text-danger"></error-messages>
+                      
+                </div>
+              </div>
+            </div>
+        </form>
+  </wizard-step> -->
+  
+  <wizard-step [title]="'VPN Configuration'" [maxStepWidth]="'80px'" [isValid]="step3Validition" (onLoad)="pageLoaded($event)">
+        <form [formGroup]="myFormVPN" style="border-left:#fff;"  novalidate (ngSubmit)="save(myFormVPN.value, myFormVPN.valid)">
+        <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                     
+                      <label for="">VPN Primary Server</label>
+                      <input type="text" class="form-control" formControlName="vpnPrimaryServer">
+                      <error-messages [control]="myFormVPN.controls.vpnPrimaryServer" class="text-danger"></error-messages>
+                      <!--<small [hidden]="myForm1.controls.mailHost.valid || (myForm1.controls.mailHost.pristine && !submitted)" class="text-danger">
+                        Host is required.
+                      </small>-->
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                      
+                      <label for="">VPN Backup Server</label>
+                      <input type="text" class="form-control" formControlName="vpnBackupServer">
+                      <error-messages [control]="myFormVPN.controls.vpnBackupServer" class="text-danger"></error-messages>
+                      <!--<small [hidden]="myForm1.controls.mailHost.valid || (myForm1.controls.mailHost.pristine && !submitted)" class="text-danger">
+                        Host is required.
+                      </small>-->
+                </div>
+              </div>
+              
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                     
+                      <label for="">Username</label>
+                      <input type="text" class="form-control" formControlName="vpnUserName">
+                      <error-messages [control]="myFormVPN.controls.vpnUserName" class="text-danger"></error-messages>
+                      <!--<small [hidden]="myForm1.controls.mailHost.valid || (myFormVPN.controls.mailHost.pristine && !submitted)" class="text-danger">
+                        Host is required.
+                      </small>-->
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                      
+                      <label for="">Password</label>
+                      <input type="password" class="form-control" formControlName="vpnPassword">
+                      <error-messages [control]="myFormVPN.controls.vpnPassword" class="text-danger"></error-messages>
+                      <!--<small [hidden]="myForm1.controls.mailHost.valid || (myFormVPN.controls.mailHost.pristine && !submitted)" class="text-danger">
+                        Host is required.
+                      </small>-->
+                </div>
+              </div>
+            </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="form-group">
+                     
+                      <label for="">Secret Key</label>
+                      <input type="text" class="form-control" formControlName="secretKey">
+                      <error-messages [control]="myFormVPN.controls.secretKey" class="text-danger"></error-messages>
+                      <!--<small [hidden]="myForm1.controls.mailHost.valid || (myFormVPN.controls.mailHost.pristine && !submitted)" class="text-danger">
+                        Host is required.
+                      </small>-->
+                  </div>
+                </div>
+              </div>
+          
+        </form>
+  </wizard-step>
+  <wizard-step [title]="'Radius Server'" [maxStepWidth]="'80px'" [isValid]="step4Validition" (onLoad)="pageLoaded($event)">
+        <form [formGroup]="myFormRadiusServer" style="border-left:#fff;"  novalidate (ngSubmit)="save(myFormRadiusServer.value, myFormyFormRadiusServerm3.valid)">
+        <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                     
+                      <label for="">Radius Server Name</label>
+                      <input type="text" class="form-control" formControlName="radiusTemplate">
+                      <error-messages [control]="myFormRadiusServer.controls.radiusTemplate" class="text-danger"></error-messages>
+                      <!--<small [hidden]="myForm1.controls.mailHost.valid || (myForm1.controls.mailHost.pristine && !submitted)" class="text-danger">
+                        Host is required.
+                      </small>-->
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                      
+                      <label for="">Accounting Port</label>
+                      <input type="number" class="form-control" formControlName="acctPort">
+                      <error-messages [control]="myFormRadiusServer.controls.acctPort" class="text-danger"></error-messages>
+                      <!--<small [hidden]="myForm1.controls.mailHost.valid || (myForm1.controls.mailHost.pristine && !submitted)" class="text-danger">
+                        Host is required.
+                      </small>-->
+                </div>
+              </div>
+              
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                     
+                      <label for="">Authentication Port</label>
+                      <input type="number" class="form-control" formControlName="port">
+                      <error-messages [control]="myFormRadiusServer.controls.port" class="text-danger"></error-messages>
+                      <!--<small [hidden]="myForm1.controls.mailHost.valid || (myFormVPN.controls.mailHost.pristine && !submitted)" class="text-danger">
+                        Host is required.
+                      </small>-->
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                      
+                      <label for="">Secret Key</label>
+                      <input type="password" class="form-control" formControlName="key">
+                      <error-messages [control]="myFormRadiusServer.controls.key" class="text-danger"></error-messages>
+                      <!--<small [hidden]="myForm1.controls.mailHost.valid || (myFormVPN.controls.mailHost.pristine && !submitted)" class="text-danger">
+                        Host is required.
+                      </small>-->
+                </div>
+              </div>
+            </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="form-group">
+                     
+                      <label for="">Radius Server IP</label>
+                      <input type="text" class="form-control" formControlName="serverIP">
+                      <error-messages [control]="myFormRadiusServer.controls.serverIP" class="text-danger"></error-messages>
+                      <!--<small [hidden]="myForm1.controls.mailHost.valid || (myFormVPN.controls.mailHost.pristine && !submitted)" class="text-danger">
+                        Host is required.
+                      </small>-->
+                  </div>
+                </div>
+              </div>
+          
+        </form>
+  </wizard-step>
+  <wizard-step [title]="'SSID Configuration'" [maxStepWidth]="'80px'" [isValid]="step5Validition" (onLoad)="pageLoaded($event)">
+        <form [formGroup]="myFormSSID" style="border-left:#fff;"  novalidate (ngSubmit)="save(myFormSSID.value, myFormSSID.valid)">
+        <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                     
+                      <label for="">SSID Name</label>
+                      <input type="text" class="form-control" formControlName="profileName">
+                      <error-messages [control]="myFormSSID.controls.profileName" class="text-danger"></error-messages>
+                      <!--<small [hidden]="myForm1.controls.mailHost.valid || (myForm1.controls.mailHost.pristine && !submitted)" class="text-danger">
+                        Host is required.
+                      </small>-->
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                     
+                      <label for="">Radius Server Name</label>
+                      <input type="text" class="form-control" formControlName="authServer">
+                      <error-messages [control]="myFormSSID.controls.authServer" class="text-danger"></error-messages>
+                      <!--<small [hidden]="myForm1.controls.mailHost.valid || (myForm1.controls.mailHost.pristine && !submitted)" class="text-danger">
+                        Host is required.
+                      </small>-->
+                </div>
+              </div>
+        </div>
+        <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                     
+                      <label for=""> Captive Portal Type</label>
+                      <select class="form-control" formControlName="external">
+                        <option *ngFor="let captiveType of captiveTypes" [value]="captiveType.value">{{captiveType.display}}</option>
+                      </select>
+                   <!--   <input type="text" class="form-control" formControlName="profileName">  -->
+                      <error-messages [control]="myFormSSID.controls.profileName" class="text-danger"></error-messages>
+                      <!--<small [hidden]="myForm1.controls.mailHost.valid || (myForm1.controls.mailHost.pristine && !submitted)" class="text-danger">
+                        Host is required.
+                      </small>-->
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                     
+                      <label for="">Captive Portal Name</label>
+                      <input type="text" class="form-control" formControlName="extCaptive">
+                      <error-messages [control]="myFormSSID.controls.extCaptive" class="text-danger"></error-messages>
+                      <!--<small [hidden]="myForm1.controls.mailHost.valid || (myForm1.controls.mailHost.pristine && !submitted)" class="text-danger">
+                        Host is required.
+                      </small>-->
+                </div>
+              </div>
+        </div>
+        <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                     
+                      <label for=""> Failures</label>
+                      
+                      <input type="number" class="form-control" formControlName="failures">  
+                      <error-messages [control]="myFormSSID.controls.failures" class="text-danger"></error-messages>
+                      <!--<small [hidden]="myForm1.controls.mailHost.valid || (myForm1.controls.mailHost.pristine && !submitted)" class="text-danger">
+                        Host is required.
+                      </small>-->
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                     
+                      <label for="">DTIM</label>
+                      <input type="number" class="form-control" formControlName="dtim">
+                      <error-messages [control]="myFormSSID.controls.dtim" class="text-danger"></error-messages>
+                      <!--<small [hidden]="myForm1.controls.mailHost.valid || (myForm1.controls.mailHost.pristine && !submitted)" class="text-danger">
+                        Host is required.
+                      </small>-->
+                </div>
+              </div>
+        </div>
+        <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                     
+                      <label for=""> Timeout </label>
+                      
+                      <input type="number" class="form-control" formControlName="timeout">  
+                      <error-messages [control]="myFormSSID.controls.timeout" class="text-danger"></error-messages>
+                      <!--<small [hidden]="myForm1.controls.mailHost.valid || (myForm1.controls.mailHost.pristine && !submitted)" class="text-danger">
+                        Host is required.
+                      </small>-->
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                     
+                      <label for="">VLAN No</label>
+                      <input type="number" class="form-control" formControlName="vlan">
+                      <error-messages [control]="myFormSSID.controls.vlan" class="text-danger"></error-messages>
+                      <!--<small [hidden]="myForm1.controls.mailHost.valid || (myForm1.controls.mailHost.pristine && !submitted)" class="text-danger">
+                        Host is required.
+                      </small>-->
+                </div>
+              </div>
+        </div>
+        </form>
+  </wizard-step>
+   <wizard-step [title]="'WLAN Access Rule'" [maxStepWidth]="'80px'" [isValid]="step6Validition" (onLoad)="pageLoaded($event)">
+        <form [formGroup]="myFormWLANRule" style="border-left:#fff;"  novalidate (ngSubmit)="save(myFormWLANRule.value, myFormWLANRule.valid)">
+        <div class="row">
+          <div class="col-sm-6">
+                <div class="form-group">
+                     
+                      <label for="">SSID Name</label>
+                      <input type="text" class="form-control" formControlName="profileName">
+                      <error-messages [control]="myFormWLANRule.controls.profileName" class="text-danger"></error-messages>
+                      <!--<small [hidden]="myForm1.controls.mailHost.valid || (myForm1.controls.mailHost.pristine && !submitted)" class="text-danger">
+                        Host is required.
+                      </small>-->
+                </div>
+              </div>
+          </div>
+        </form>
+  </wizard-step>
+  <wizard-step [title]="'SNMP Details'" [maxStepWidth]="'80px'" [isValid]="step7Validition" (onLoad)="pageLoaded($event)">
+        <form [formGroup]="myFormSNMP" style="border-left:#fff;"  novalidate (ngSubmit)="save(myFormSNMP.value, myFormSNMP.valid)">
+        <div class="row">
+          <div class="col-sm-6">
+                <div class="form-group">
+                     
+                      <label for="">SNMP Community String</label>
+                      <input type="text" class="form-control" formControlName="communityString">
+                      <error-messages [control]="myFormSNMP.controls.communityString" class="text-danger"></error-messages>
+                      <!--<small [hidden]="myForm1.controls.mailHost.valid || (myForm1.controls.mailHost.pristine && !submitted)" class="text-danger">
+                        Host is required.
+                      </small>-->
+                </div>
+              </div>
+          </div>
+          <div class="row">
+          <div class="col-sm-6">
+                <div class="form-group">
+                     
+                      <label for="">SNMP ipAddress</label>
+                      <input type="text" class="form-control" formControlName="ip">
+                      <error-messages [control]="myFormSNMP.controls.ip" class="text-danger"></error-messages>
+                      <!--<small [hidden]="myForm1.controls.mailHost.valid || (myForm1.controls.mailHost.pristine && !submitted)" class="text-danger">
+                        Host is required.
+                      </small>-->
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                     
+                      <label for="">SNMP version</label>
+                  <!--    <input type="text" class="form-control" formControlName="snmpversion"> -->
+                      <select class="form-control" formControlName="snmpversion">
+                        <option value=""><b>Select One</b></option>
+                        <option *ngFor="let snmpversion of snmpversions" [value]="snmpversion">{{snmpversion}}</option>
+                      </select>
+                      <error-messages [control]="myFormSNMP.controls.snmpversion" class="text-danger"></error-messages>
+                      <!--<small [hidden]="myForm1.controls.mailHost.valid || (myForm1.controls.mailHost.pristine && !submitted)" class="text-danger">
+                        Host is required.
+                      </small>-->
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                     
+                      <label for="">SNMP hostname</label>
+                      <input type="text" class="form-control" formControlName="name">
+                      <error-messages [control]="myFormSNMP.controls.name" class="text-danger"></error-messages>
+                      <!--<small [hidden]="myForm1.controls.mailHost.valid || (myForm1.controls.mailHost.pristine && !submitted)" class="text-danger">
+                        Host is required.
+                      </small>-->
+                </div>
+              </div>
+          </div>
+        </form>
+  </wizard-step>
+  <wizard-step [title]="'IP DHCP Profile'" [maxStepWidth]="'80px'" [isValid]="step8Validition" (onLoad)="pageLoaded($event)">
+        <form [formGroup]="myFormDHCP" style="border-left:#fff;"  novalidate (ngSubmit)="save(myFormDHCP.value, myFormDHCP.valid)">
+        <div class="row">
+          <div class="col-sm-4">
+                <div class="form-group">
+                     
+                      <label for="">DHCP Profile Name</label>
+                      <input type="text" class="form-control" formControlName="dhcpProfileName">
+                      <error-messages [control]="myFormDHCP.controls.dhcpProfileName" class="text-danger"></error-messages>
+                      <!--<small [hidden]="myForm1.controls.mailHost.valid || (myForm1.controls.mailHost.pristine && !submitted)" class="text-danger">
+                        Host is required.
+                      </small>-->
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                     
+                      <label for="">DNS Server IP</label>
+                      <input type="text" class="form-control" formControlName="dnsServerIp">
+                      <error-messages [control]="myFormDHCP.controls.dnsServerIp" class="text-danger"></error-messages>
+                      <!--<small [hidden]="myForm1.controls.mailHost.valid || (myForm1.controls.mailHost.pristine && !submitted)" class="text-danger">
+                        Host is required.
+                      </small>-->
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                     
+                      <label for="">Exclude Ip Address </label>
+                      <input type="text" class="form-control" formControlName="routeIp">
+                      <error-messages [control]="myFormDHCP.controls.routeIp" class="text-danger"></error-messages>
+                      <!--<small [hidden]="myForm1.controls.mailHost.valid || (myForm1.controls.mailHost.pristine && !submitted)" class="text-danger">
+                        Host is required.
+                      </small>-->
+                </div>
+              </div>
+          </div>
+          <div class="row">
+          <div class="col-sm-4">
+                <div class="form-group">
+                     
+                      <label for="">Server Type</label>
+                  <!--    <input type="text" class="form-control" formControlName="serverType">   -->
+                      <select class="form-control" formControlName="serverType">
+                        <option value=""><b>Select One</b></option>
+                        <option *ngFor="let servertype of servertypes" [value]="servertype">{{servertype}}</option>
+                      </select>
+                      <error-messages [control]="myFormDHCP.controls.serverType" class="text-danger"></error-messages>
+                      <!--<small [hidden]="myForm1.controls.mailHost.valid || (myForm1.controls.mailHost.pristine && !submitted)" class="text-danger">
+                        Host is required.
+                      </small>-->
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                     
+                      <label for="">Server Vlan</label>
+                      <input type="number" class="form-control" formControlName="vlanIDStr">
+                      <error-messages [control]="myFormDHCP.controls.vlanIDStr" class="text-danger"></error-messages>
+                      <!--<small [hidden]="myForm1.controls.mailHost.valid || (myForm1.controls.mailHost.pristine && !submitted)" class="text-danger">
+                        Host is required.
+                      </small>-->
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                     
+                      <label for="">Lease Time </label>
+                      <input type="number" class="form-control" formControlName="leaseTime">
+                      <error-messages [control]="myFormDHCP.controls.leaseTime" class="text-danger"></error-messages>
+                      <!--<small [hidden]="myForm1.controls.mailHost.valid || (myForm1.controls.mailHost.pristine && !submitted)" class="text-danger">
+                        Host is required.
+                      </small>-->
+                </div>
+              </div>
+          </div>
+          <div class="row">
+          <div class="col-sm-4">
+                <div class="form-group">
+                     
+                      <label for="">Subnet Ip</label>
+                      <input type="text" class="form-control" formControlName="subnetStr">
+                      <error-messages [control]="myFormDHCP.controls.subnetStr" class="text-danger"></error-messages>
+                      <!--<small [hidden]="myForm1.controls.mailHost.valid || (myForm1.controls.mailHost.pristine && !submitted)" class="text-danger">
+                        Host is required.
+                      </small>-->
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                     
+                      <label for="">Subnet mask</label>
+                      <input type="text" class="form-control" formControlName="subnetMask">
+                      <error-messages [control]="myFormDHCP.controls.subnetMask" class="text-danger"></error-messages>
+                      <!--<small [hidden]="myForm1.controls.mailHost.valid || (myForm1.controls.mailHost.pristine && !submitted)" class="text-danger">
+                        Host is required.
+                      </small>-->
+                </div>
+              </div>
+              
+          </div>
+        </form>
+  </wizard-step>
+  <wizard-step [title]="'Device Details'" [maxStepWidth]="'80px'" [isValid]="step9Validition" (onLoad)="pageLoaded($event)">
+        <form [formGroup]="myFormDeviceDetails" style="border-left:#fff;"  novalidate (ngSubmit)="save(myFormDeviceDetails.value, myFormDeviceDetails.valid)">
+        
+          <div class="row">
+          <div class="col-sm-6">
+                <div class="form-group">
+                     
+                      <label for="">Device Name</label>
+                      <input type="text" class="form-control" formControlName="nameStr">  
+                      <!--<select class="form-control" formControlName="nameStr">
+                        <option value=""><b>Select One</b></option>
+                        <option *ngFor="let servertype of servertypes" [value]="servertype">{{servertype}}</option>
+                      </select>-->
+                      <error-messages [control]="myFormDeviceDetails.controls.nameStr" class="text-danger"></error-messages>
+                      <!--<small [hidden]="myForm1.controls.mailHost.valid || (myForm1.controls.mailHost.pristine && !submitted)" class="text-danger">
+                        Host is required.
+                      </small>-->
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                     
+                      <label for="">Device Location</label>
+                      <input type="text" class="form-control" formControlName="locationStr">
+                      <error-messages [control]="myFormDeviceDetails.controls.locationStr" class="text-danger"></error-messages>
+                      <!--<small [hidden]="myForm1.controls.mailHost.valid || (myForm1.controls.mailHost.pristine && !submitted)" class="text-danger">
+                        Host is required.
+                      </small>-->
+                </div>
+              </div>
+              
+          </div>
+          
+        </form>
+  </wizard-step>
+  </form-wizard>

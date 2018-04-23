@@ -1,0 +1,104 @@
+<form-wizard (finalSubmit)="gotoFinalSubmit($event)">
+  <wizard-step [title]="'Media Asset Details'"  (onLoad)="onPageAssetDetails($event)" [maxStepWidth]="'200px'" [isValid]="step1Validition">
+    <form [formGroup]="myFormDeployment" style="border-left:#fff;" novalidate (ngSubmit)="save(myFormMedia.value, myFormMedia.valid)">
+      <div class="row">
+        <div class="col-sm-12">
+          <p align="center">
+            <b>Select Media Asset 
+              </b></p>
+        </div>
+      </div>
+      <hr/>
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="form-group">
+            <label for=""><b>Select Media Asset Group from List</b></label><br>
+           <select class="form-control" formControlName="mediaAssetGroup">
+              <option value=""><b>Select One</b></option>
+              <option *ngFor="let device of allDevices" [value]="device">{{device}}</option>
+            </select>
+            <error-messages [control]="myFormDeployment.controls.mediaAssetGroup" class="text-danger"></error-messages>
+            
+          </div>
+        </div>
+      </div>
+    </form>
+  </wizard-step>
+  <wizard-step [title]="'Media Profile Details'" [maxStepWidth]="'200px'" [isValid]="step2Validition">
+    <form [formGroup]="myFormDeploymentProfile" style="border-left:#fff;" novalidate (ngSubmit)="save(myFormDeploymentProfile.value, myFormDeploymentProfile.valid)">
+      <div class="row">
+        <div class="col-sm-12">
+          <p align="center">
+            <b>Select Media Profile 
+              </b></p>
+        </div>
+      </div>
+      <hr/>
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="form-group">
+            <label for=""><b>Select Media Profile From List</b></label><br>
+             <select class="form-control" formControlName="mediaProfile">
+              <option value=""><b>Select One</b></option>
+              <option *ngFor="let profile of allMediaProfiles" [value]="profile">{{profile}}</option>
+            </select>
+            <error-messages [control]="myFormDeploymentProfile.controls.mediaProfile" class="text-danger"></error-messages>
+            
+          </div>
+        </div>
+      </div>
+    </form>
+  </wizard-step>
+  <wizard-step [title]="'Select Schedule'" [maxStepWidth]="'200px'" [isValid]="step3Validition">
+    <form [formGroup]="myForm3" style="border-left:#fff;" novalidate (ngSubmit)="save(myForm3.value, myForm3.valid)">
+      <div class="row">
+        <div class="col-sm-12">
+          <p align="center">
+            <b>Select Schedule
+              </b></p>
+        </div>
+      </div>
+      <hr/>
+      <div class="row">
+        <div class="col-md-12">
+          <label><b>Please select schedule type</b></label>
+        </div>
+        <div class="col-md-12">
+          <table>
+            <tbody>
+              <tr>
+                <td>
+
+                  <label>
+                      <input type="radio" value="immediately"  formControlName="selectSchedule" (click)="selectScheduleType($event)">
+                      <b>Immediately</b></label>
+
+                </td>
+              </tr>
+           <br>
+           <tr>
+            <td>
+
+              <label>
+                <input type="radio" value="addTaskForDailyUntilExecution"   formControlName="selectSchedule" (click)="selectScheduleType($event)"/>
+                <b> At</b></label>
+            </td>
+            <td>
+              <div class="col-md-12 float-md-right">
+                <div class="form-group">
+                  <input class="picker-input form-control" style="color: #000000;" [ngModel]="startTimeValue | date: 'short'" [(dateTimePicker)]="startTimeValue"
+                    readonly formControlName="startTime" (dateTimePickerChange)="startAndEndTimeChanged($event)"
+                  />
+                  <error-messages [control]="myForm3.controls.startTime" class="text-danger"></error-messages>
+                </div>
+              </div>
+          </tr>
+          
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </form>
+  </wizard-step>
+
+</form-wizard>

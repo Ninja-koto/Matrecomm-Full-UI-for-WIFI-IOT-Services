@@ -1,0 +1,56 @@
+<div>
+    
+    <div >
+ <modal  [animation]="animation" [keyboard]="keyboard" [backdrop]="'static'" (onClose)="closed()" (onDismiss)="dismissed()"
+        (onOpen)="opened()" #validationModal>
+        <form #modalForm="ngForm">
+            <modal-header [show-close]="true">
+                <h4 class="modal-title">{{currWizardOp}} Data Center Deails</h4>
+            </modal-header>
+            <modal-body>
+                <div *ngIf="addWizard||modifyWizard">
+                     <dataCenter-add-wizard [data]="currWizardData" [operation]="currWizardOp" (closeModal)="close1($event)" (closeModalWizard)="validationModal.dismiss()"></dataCenter-add-wizard>
+                     
+                </div>
+                <div *ngIf="(!addWizard)&&(!modifyWizard)">
+                      <!--Selected Operation {{currWizardOp}}-->
+                   <default-delete-wizard
+                             [rpcMethod]="'productManagerDataCenterMethod'"
+                             [context] ="'ServiceProvider DataCenter'"
+                             [deleteParams]="deleteParamForSelected" 
+                             (closeModal)="close1($event)" 
+                             (closeModalWizard)="validationModal.dismiss()">
+                        You are going to delete Data Center Details...<br>
+                        Shall we Proceed...?
+                    </default-delete-wizard>                      
+                </div>
+            </modal-body>
+            <modal-footer>
+           </modal-footer>
+        </form>
+    </modal>
+    </div>
+    <ba-card baCardClass="with-scroll table-panel">    
+   <collection-table
+        [collectionTableData]= tableData
+        [columns]= columns
+        [hideWizardButtons]=false
+        [hideSearchBox]=false
+        tableID = "dataCenterTable"
+        tableTitle ="Data Centers"
+        addButtonID="addDataCenterDetails"
+        modifyButtonID="modifyDataCenterDetails"
+        deleteButtonID="deleteDataCenterDetails"
+        enableUnselectOnExit="yes"
+        [rowsOnPage] = 3
+        sortBy = "dataCenterName"
+        sortOrder = "asc"
+        [rowsOnPageButtons] = [1,3,5,10,15]
+        (deleteButtonClicked)="validationModal.open('lg')"
+        (addModifyButtonClicked)="validationModal.open('lg')"
+        (selectedData) = "selectedRowData($event)"
+        (selectedWizardOperation) = "selectedWizardOperation($event)"
+        >
+    </collection-table>
+    </ba-card>
+</div>
